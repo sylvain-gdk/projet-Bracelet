@@ -19,7 +19,7 @@
     <string name="dimensionBraceletHint">longueur en millimètres</string>
     <string name="dimensionBraceletMessage">Le bracelet doit avoir une longueur entre 20 et 60 millimètres.</string>
 
-    <string name="prixCoutantPieceLabel">Prix: $</string>
+    <string name="prixCoutantPieceLabel">Prix:</string>
     <string name="prixCoutantPieceHint">prix coutant</string>
     <string name="prixCoutantPieceMessage">Il doit y avoir un prix.</string>
 

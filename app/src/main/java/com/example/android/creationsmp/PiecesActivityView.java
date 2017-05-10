@@ -32,21 +32,14 @@ public class PiecesActivityView extends AppCompatActivity {
 
     private void setPiece(Pieces piece) {
 
-        codePiece.append(String.valueOf(piece.getCodePiece()));
-        nomPiece.append(piece.getNomPiece().toString());
-        descriptionPiece.append(piece.getNomPiece().toString());
-        dimensionPiece.append(String.valueOf(piece.getDimensionPiece()) + "mm");
-        prixCoutantPiece.append(String.valueOf(piece.getPrixCoutantPiece()));
-        qtyPiece.append(String.valueOf(piece.getQtyPiece()));
-        typePiece.append(piece.getTypePiece().toString());
+        codePiece.setText(String.valueOf(piece.getCodePiece()));
+        nomPiece.setText(String.valueOf(piece.getNomPiece()));
+        descriptionPiece.setText(String.valueOf(piece.getDescriptionPiece()));
+        dimensionPiece.setText(String.valueOf(piece.getDimensionPiece()) + " mm");
+        prixCoutantPiece.setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
+        qtyPiece.setText(String.valueOf(piece.getQtyPiece()));
+        typePiece.setText(String.valueOf(piece.getTypePiece()));
 
-        /*codePiece.setText(piece.getCodePiece());
-        nomPiece.setText(piece.getNomPiece());
-        descriptionPiece.setText(piece.getDescriptionPiece());
-        dimensionPiece.setText(piece.getDimensionPiece() + "mm");
-        prixCoutantPiece.setText((int) piece.getPrixCoutantPiece());
-        qtyPiece.setText(piece.getQtyPiece());
-        typePiece.setText(piece.getTypePiece());*/
     }
 
 }

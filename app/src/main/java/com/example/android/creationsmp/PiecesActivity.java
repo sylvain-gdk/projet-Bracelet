@@ -87,22 +87,6 @@ public class PiecesActivity extends AppCompatActivity {
         piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
         piece.setTypePiece(type);
 
-        /*piece.setCodePiece(323);
-        piece.setNomPiece("Perle");
-        piece.setDescriptionPiece("Une très belle pièce");
-        piece.setDimensionPiece(2);
-        piece.setPrixCoutantPiece(0.75);
-        piece.setQtyPiece(32);
-        piece.setTypePiece("Perle d'eau douce");*/
-
-        /*piece.setCodePiece(codePiece.getInputType());
-        piece.setNomPiece(nomPiece.toString());
-        piece.setDescriptionPiece(descriptionPiece.toString());
-        piece.setDimensionPiece(dimensionPiece.getInputType());
-        piece.setPrixCoutantPiece(prixCoutantPiece.getInputType());
-        piece.setQtyPiece(qtyPiece.getInputType());
-        piece.setTypePiece(typePiece.toString());*/
-
         //inventaireP.addToInventairePieces(piece);
 
         String confirm = ("La pièce '" + nomPiece.getText() + "' est ajouté à l'inventaire.");
