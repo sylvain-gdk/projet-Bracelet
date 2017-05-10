@@ -1,0 +1,44 @@
+<resources>
+    <string name="appName">Les Créations MP</string>
+
+    <string name="codePieceLabel">#</string>
+    <string name="codePieceHint">code</string>
+    <string name="codePieceMessage">Le code doit avoir entre 1 et 4 chiffres.</string>
+
+    <string name="nomPieceLabel">Nom:</string>
+    <string name="nomPieceHint">nom de la pièce</string>
+    <string name="nomPieceMessage">Le nom doit avoir au min. 3 charactères</string>
+
+    <string name="descriptionPieceLabel">Desc:</string>
+    <string name="descriptionPieceHint">description</string>
+
+    <string name="dimensionPieceLabel">Dimensions:</string>
+    <string name="dimensionPieceHint">largeur en millimètres</string>
+    <string name="dimensionPieceMessage">La pièce doit avoir une largeur entre 4 et 15 millimètres.</string>
+
+    <string name="dimensionBraceletHint">longueur en millimètres</string>
+    <string name="dimensionBraceletMessage">Le bracelet doit avoir une longueur entre 20 et 60 millimètres.</string>
+
+    <string name="prixCoutantPieceLabel">Prix: $</string>
+    <string name="prixCoutantPieceHint">prix coutant</string>
+    <string name="prixCoutantPieceMessage">Il doit y avoir un prix.</string>
+
+    <string name="qtyPieceLabel">Quantité:</string>
+    <string name="qtyPieceHint">qté en inventaire</string>
+
+    <string name="photoPieceHint">photo</string>
+
+    <string name="typePieceLabel">Type:</string>
+    <string name="typePieceHint">choisir une catégorie</string>
+    <string name="typePieceMessage">Il doit y avoir une catégorie.</string>
+
+    <string name="ajouterPieceLabel">Ajouter</string>
+    <string name="annulerAjouterPieceLabel">Annuler</string>
+
+    <string name="ajouterPieceLabelMain">Ajouter une Pièce</string>
+    <string name="voirPieces">Voir les Pièces</string>
+    <string name="ajouterBracelet">Faire un Bracelet</string>
+    <string name="voirBracelets">Voir les Bracelets</string>
+
+
+</resources>

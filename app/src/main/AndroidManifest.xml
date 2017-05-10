@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.android.creationsmp">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_cmp"
+        android:label="@string/appName"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".PiecesActivity"
+            android:label="Ajouter une Pièce"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".PiecesActivityView"
+            android:label="Pièce"
+            android:theme="@style/AppTheme" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categorie_pierre_spacers">
+        <item>métal - or</item>
+        <item>métal - argent</item>
+        <item>métal - bronze</item>
+        <item>crystal</item>
+        <item>pierre précieuse</item>
+        <item>pierre de lave</item>
+        <item>os</item>
+        <item>bois</item>
+        <item>plastique</item>
+    </string-array>
+</resources>

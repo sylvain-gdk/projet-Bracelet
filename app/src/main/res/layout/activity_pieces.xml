@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.creationsmp.PiecesActivity"
+    android:weightSum="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/codePieceLabel"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/codePiece"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/codePieceHint"
+            android:inputType="numberSigned"
+            android:layout_weight="0.12" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/nomPieceLabel"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/nomPiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:hint="@string/nomPieceHint"
+            android:inputType="textPersonName" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/descriptionPieceLabel"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/descriptionPiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/descriptionPieceHint"
+            android:inputType="textMultiLine" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/dimensionPieceLabel"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/dimensionPiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dimensionPieceHint"
+            android:inputType="numberSigned"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/prixCoutantPieceLabel"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/prixCoutantPiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prixCoutantPieceHint"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/qtyPieceLabel"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/qtyPiece"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/qtyPieceHint"
+            android:inputType="numberSigned" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="5dp"
+                android:text="@string/typePieceLabel"
+                android:paddingTop="15dp"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/typePiece"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/typePieceHint"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:layout_gravity="center_horizontal">
+
+
+        <Button
+            android:id="@+id/ajouterPieceBouton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="ajouterPieceListener"
+            android:layout_weight="1"
+            android:text="@string/ajouterPieceLabel" />
+
+        <Button
+            android:id="@+id/annulerAjouterPieceBouton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="annulerAjouterPieceListener"
+            android:layout_weight="1"
+            android:text="@string/annulerAjouterPieceLabel" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
+

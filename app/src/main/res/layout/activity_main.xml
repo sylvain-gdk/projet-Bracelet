@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.creationsmp.MainActivity"
+    android:weightSum="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/ajouterPiece"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ajouterPieceLabelMain"
+        android:layout_weight="0.06"
+        android:onClick="ajouterPieceListener"/>
+
+    <Button
+        android:id="@+id/voirPieces"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/voirPieces"
+        android:layout_weight="0.06"
+        android:onClick="voirPiecesListener"/>
+
+    <Button
+        android:id="@+id/ajouterBracelet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ajouterBracelet"
+        android:layout_weight="0.06"
+        android:onClick="ajouterBraceletListener"/>
+
+    <Button
+        android:id="@+id/voirBracelets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/voirBracelets"
+        android:layout_weight="0.06"
+        android:onClick="voirBraceletsListener"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_weight="0.56"
+        android:scaleType="centerInside"
+        android:paddingTop="20dp"
+        app:srcCompat="@drawable/big_cmp" />
+
+</LinearLayout>
+
