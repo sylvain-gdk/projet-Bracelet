@@ -10,9 +10,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class PiecesActivity extends AppCompatActivity {
 
-    private InventairePieces inventaireP;
+    //private InventairePieces inventairePieces;
+
+    private ArrayList<Pieces> inventairePieces;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
     private Spinner typePiece;
@@ -22,6 +26,8 @@ public class PiecesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pieces);
+
+        inventairePieces = new ArrayList<>();
 
         codePiece = (EditText) findViewById(R.id.codePiece);
         nomPiece = (EditText) findViewById(R.id.nomPiece);
@@ -87,7 +93,7 @@ public class PiecesActivity extends AppCompatActivity {
         piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
         piece.setTypePiece(type);
 
-        //inventaireP.addToInventairePieces(piece);
+        inventairePieces.add(piece);
 
         String confirm = ("La pièce '" + nomPiece.getText() + "' est ajouté à l'inventaire.");
         Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
@@ -107,5 +113,40 @@ public class PiecesActivity extends AppCompatActivity {
     public void annulerAjouterPieceListener(View view) {
 
         finish();
+    }
+
+
+    /*private class Inventaire extends ArrayAdapter<Pieces>{
+
+        public Inventaire() {
+            super(PiecesActivity.this, android.R.layout.simple_list_item_1, inventairePieces);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece;
+
+            if(convertView == null)
+                convertView = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, parent, false);
+
+            Pieces piece = inventairePieces.get(position);
+
+            codePiece = (TextView) findViewById(R.id.codePiece);
+            nomPiece = (TextView) findViewById(R.id.nomPiece);
+            descriptionPiece = (TextView) findViewById(R.id.descriptionPiece);
+            dimensionPiece = (TextView) findViewById(R.id.dimensionPiece);
+            prixCoutantPiece = (TextView) findViewById(R.id.prixCoutantPiece);
+            qtyPiece = (TextView) findViewById(R.id.qtyPiece);
+            typePiece = (TextView) findViewById(R.id.typePiece);
+
+
+
+            return convertView;
+        }
+    }*/
+
+    public ArrayList<Pieces> getInventairePieces() {
+        return inventairePieces;
     }
 }

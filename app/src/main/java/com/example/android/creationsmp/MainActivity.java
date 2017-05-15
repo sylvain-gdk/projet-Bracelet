@@ -15,8 +15,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inventaireP = new InventairePieces();
-
     }
 
     /**
@@ -35,12 +33,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void voirPiecesListener(View view) {
 
-        inventaireP.getInventairePieces().indexOf(piece);
-
-        int result = 1;
-        Intent pieceIntent = new Intent(this, PiecesActivityView.class);
-        pieceIntent.putExtra("pieceView", inventaireP);
-        startActivityForResult(pieceIntent, result);
+        Intent activityCalling = new Intent(this, InventairePiecesActivity.class);
+        startActivity(activityCalling);
 
     }
 

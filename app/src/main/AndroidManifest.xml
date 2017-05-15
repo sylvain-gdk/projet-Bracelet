@@ -21,7 +21,11 @@
             android:theme="@style/AppTheme" />
 
         <activity android:name=".PiecesActivityView"
-            android:label="Pièce"
+        android:label="Pièce"
+        android:theme="@style/AppTheme" />
+
+        <activity android:name=".InventairePiecesActivity"
+            android:label="Inventaire des Pièces"
             android:theme="@style/AppTheme" />
 
     </application>

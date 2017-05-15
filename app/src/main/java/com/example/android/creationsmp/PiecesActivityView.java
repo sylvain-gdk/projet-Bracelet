@@ -3,6 +3,7 @@ package com.example.android.creationsmp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 public class PiecesActivityView extends AppCompatActivity {
@@ -42,4 +43,13 @@ public class PiecesActivityView extends AppCompatActivity {
 
     }
 
+
+    public void voirListeListener(View view) {
+
+        final int result = 1;
+        Intent pieceIntent = new Intent(this, InventairePiecesActivity.class).putExtra("pieceView", piece);
+        startActivityForResult(pieceIntent, result);
+
+        finish();
+    }
 }

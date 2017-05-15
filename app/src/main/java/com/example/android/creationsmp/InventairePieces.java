@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class InventairePieces implements Serializable {
 
     private ArrayList<Pieces> inventairePieces;
-    private Pieces piece;
 
     public InventairePieces() {
         inventairePieces = new ArrayList<>();
