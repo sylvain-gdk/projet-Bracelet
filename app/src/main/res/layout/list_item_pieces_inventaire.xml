@@ -3,5 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
+    android:textSize="18sp"
     android:layout_gravity="center_vertical"
     android:id="@+id/list_item_pieces_inventaire_textview" />
