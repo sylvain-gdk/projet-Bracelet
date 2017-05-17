@@ -15,16 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".PiecesActivity"
+        <activity
+            android:name=".PieceActivity"
             android:label="Ajouter une Pièce"
             android:theme="@style/AppTheme" />
-
-        <activity android:name=".PiecesActivityView"
-        android:label="Pièce"
-        android:theme="@style/AppTheme" />
-
-        <activity android:name=".InventairePiecesActivity"
+        <activity
+            android:name=".PieceActivityView"
+            android:label="Pièce"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".InventairePiecesActivity"
             android:label="Inventaire des Pièces"
             android:theme="@style/AppTheme" />
 

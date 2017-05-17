@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by sylvain on 2017-04-10.
  */
 
-public class Pieces implements Serializable {
+public class PieceModel implements Serializable {
 
     private int codePiece;
     private String nomPiece;
@@ -19,7 +19,7 @@ public class Pieces implements Serializable {
     private Image photoPiece;
     private String typePiece;
 
-    /*public Pieces(int codePiece, String nomPiece, String descriptionPiece, int dimensionPiece, double prixCoutantPiece, int qtyPiece, String typePiece) {
+    /*public PieceModel(int codePiece, String nomPiece, String descriptionPiece, int dimensionPiece, double prixCoutantPiece, int qtyPiece, String typePiece) {
         this.codePiece = codePiece;
         this.nomPiece = nomPiece;
         this.descriptionPiece = descriptionPiece;
@@ -29,7 +29,7 @@ public class Pieces implements Serializable {
         this.typePiece = typePiece;
     }*/
 
-    public Pieces() {
+    public PieceModel() {
 
     }
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".InventairePiecesActivity"
+    tools:context=".InventairePiecesFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
     <ListView
-        android:id="@+id/fragment_pieces_inventaire_listview"
+        android:id="@+id/listview_pieces_inventaire"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -9,21 +9,21 @@ import java.util.ArrayList;
 
 public class InventairePieces implements Serializable {
 
-    private ArrayList<Pieces> inventairePieces;
+    private ArrayList<PieceModel> inventairePieces;
 
     public InventairePieces() {
         inventairePieces = new ArrayList<>();
     }
 
-    public ArrayList<Pieces> getInventairePieces() {
+    public ArrayList<PieceModel> getInventairePieces() {
         return inventairePieces;
     }
 
-    public void addToInventairePieces(Pieces piece) {
+    public void addToInventairePieces(PieceModel piece) {
         inventairePieces.add(piece);
     }
 
-    public void removeFromInventairePieces(Pieces piece) {
+    public void removeFromInventairePieces(PieceModel piece) {
         inventairePieces.remove(piece);
     }
 

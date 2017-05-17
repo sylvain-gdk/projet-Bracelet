@@ -7,7 +7,7 @@ public class InventairePiecesActivity extends AppCompatActivity {
 
 
     private InventairePieces inventairePieces;
-    private Pieces piece;
+    private PieceModel piece;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class InventairePiecesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pieces_inventaire);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_pieces_inventaire_container, new InventairePieceFragment())
+                    .add(R.id.activity_pieces_inventaire_container, new InventairePiecesFragment())
                     .commit();
         }
     }
@@ -26,7 +26,7 @@ public class InventairePiecesActivity extends AppCompatActivity {
      */
     /*public void montrerPieceListener(String item) {
 
-        Pieces piece = new Pieces();
+        PieceModel piece = new PieceModel();
 
         piece.setCodePiece(3245);
         piece.setNomPiece(item);
@@ -39,7 +39,7 @@ public class InventairePiecesActivity extends AppCompatActivity {
         //inventaireP.addToInventairePieces(piece);
 
         final int result = 1;
-        Intent pieceIntent = new Intent(this, PiecesActivityView.class).putExtra("pieceView", piece);
+        Intent pieceIntent = new Intent(this, PieceActivityView.class).putExtra("pieceView", piece);
         startActivityForResult(pieceIntent, result);
 
         finish();

@@ -12,11 +12,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class PiecesActivity extends AppCompatActivity {
+public class PieceActivity extends AppCompatActivity {
 
     //private InventairePieces inventairePieces;
 
-    private ArrayList<Pieces> inventairePieces;
+    private ArrayList<PieceModel> inventairePieces;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
     private Spinner typePiece;
@@ -25,26 +25,27 @@ public class PiecesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pieces);
+        setContentView(R.layout.activity_piece);
 
         inventairePieces = new ArrayList<>();
 
-        codePiece = (EditText) findViewById(R.id.codePiece);
-        nomPiece = (EditText) findViewById(R.id.nomPiece);
-        descriptionPiece = (EditText) findViewById(R.id.descriptionPiece);
-        dimensionPiece = (EditText) findViewById(R.id.dimensionPiece);
-        prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece);
-        qtyPiece = (EditText) findViewById(R.id.qtyPiece);
+        codePiece = (EditText) findViewById(R.id.codePiece_edit);
+        nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
+        descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
+        dimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
+        prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
+        qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
 
         addItemsToUnitTypeSpinner();
         addListenerToUnitTypeSpinner();
+
 
 
     }
 
     public void addItemsToUnitTypeSpinner() {
 
-        typePiece = (Spinner) findViewById(R.id.typePiece);
+        typePiece = (Spinner) findViewById(R.id.typePiece_edit);
 
         ArrayAdapter<CharSequence> unitTypeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.categorie_pierre_spacers, android.R.layout.simple_spinner_item);
 
@@ -55,7 +56,7 @@ public class PiecesActivity extends AppCompatActivity {
 
     public void addListenerToUnitTypeSpinner() {
 
-        typePiece = (Spinner) findViewById(R.id.typePiece);
+        typePiece = (Spinner) findViewById(R.id.typePiece_edit);
 
         typePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -77,13 +78,13 @@ public class PiecesActivity extends AppCompatActivity {
      */
     public void ajouterPieceListener(View view) {
 
-        //Pieces piece = new Pieces(323, "Roche", "une roche", 3, 4, 5, "caillou");
+        //PieceModel piece = new PieceModel(323, "Roche", "une roche", 3, 4, 5, "caillou");
 
-        /*Pieces piece = new Pieces(Integer.parseInt(codePiece.getText().toString()), nomPiece.getText().toString(),
+        /*PieceModel piece = new PieceModel(Integer.parseInt(codePiece.getText().toString()), nomPiece.getText().toString(),
                 descriptionPiece.getText().toString(), Integer.parseInt(dimensionPiece.getText().toString()),
                 Integer.parseInt(prixCoutantPiece.getText().toString()), Integer.parseInt(qtyPiece.getText().toString()), type);*/
 
-        Pieces piece = new Pieces();
+        PieceModel piece = new PieceModel();
 
         piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()));
         piece.setNomPiece(nomPiece.getText().toString());
@@ -98,9 +99,8 @@ public class PiecesActivity extends AppCompatActivity {
         String confirm = ("La pièce '" + nomPiece.getText() + "' est ajouté à l'inventaire.");
         Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
 
-        final int result = 1;
-        Intent pieceIntent = new Intent(this, PiecesActivityView.class).putExtra("pieceView", piece);
-        startActivityForResult(pieceIntent, result);
+        Intent intent = new Intent(this, PieceActivityView.class).putExtra(Intent.EXTRA_TEXT, piece.getNomPiece());
+        startActivity(intent);
 
         finish();
 
@@ -116,29 +116,30 @@ public class PiecesActivity extends AppCompatActivity {
     }
 
 
-    /*private class Inventaire extends ArrayAdapter<Pieces>{
+    /*private class Inventaire extends ArrayAdapter<PieceModel>{
 
-        public Inventaire() {
-            super(PiecesActivity.this, android.R.layout.simple_list_item_1, inventairePieces);
+        public Inventaire(@NonNull Context context, @LayoutRes int resource) {
+            super(context, resource);
         }
 
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
             TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece;
 
             if(convertView == null)
                 convertView = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, parent, false);
 
-            Pieces piece = inventairePieces.get(position);
+            PieceModel piece = inventairePieces.get(position);
 
-            codePiece = (TextView) findViewById(R.id.codePiece);
-            nomPiece = (TextView) findViewById(R.id.nomPiece);
-            descriptionPiece = (TextView) findViewById(R.id.descriptionPiece);
-            dimensionPiece = (TextView) findViewById(R.id.dimensionPiece);
-            prixCoutantPiece = (TextView) findViewById(R.id.prixCoutantPiece);
-            qtyPiece = (TextView) findViewById(R.id.qtyPiece);
-            typePiece = (TextView) findViewById(R.id.typePiece);
+            codePiece = (EditText) view.findViewById(R.id.codePiece_edit);
+            nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
+            descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
+            dimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
+            prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
+            qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
+            typePiece = (EditText) findViewById(R.id.typePiece_edit);
 
 
 
@@ -146,7 +147,8 @@ public class PiecesActivity extends AppCompatActivity {
         }
     }*/
 
-    public ArrayList<Pieces> getInventairePieces() {
+    public ArrayList<PieceModel> getInventairePieces() {
         return inventairePieces;
     }
+
 }

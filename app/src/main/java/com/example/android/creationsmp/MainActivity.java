@@ -8,7 +8,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     private InventairePieces inventaireP;
-    private Pieces piece;
+    private PieceModel piece;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void ajouterPieceListener(View view) {
 
-        Intent activityCalling = new Intent(this, PiecesActivity.class);
+        Intent activityCalling = new Intent(this, PieceActivity.class);
         startActivity(activityCalling);
     }
 

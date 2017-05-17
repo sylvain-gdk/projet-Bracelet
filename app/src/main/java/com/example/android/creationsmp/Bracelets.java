@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Bracelets {
 
-    ArrayList<Pieces> bracelet;
+    ArrayList<PieceModel> bracelet;
 
     private int codeBracelet;
     private String nomBracelet;
@@ -23,16 +23,16 @@ public class Bracelets {
 
     public Bracelets() {}
 
-    public ArrayList<Pieces> getBracelet() {
+    public ArrayList<PieceModel> getBracelet() {
         return bracelet;
     }
 
-    public void addBracelet(Pieces piece) {
+    public void addBracelet(PieceModel piece) {
         bracelet = new ArrayList();
         bracelet.add(piece);
     }
 
-    public void removeBracelet(Pieces piece) {
+    public void removeBracelet(PieceModel piece) {
         bracelet.remove(piece);
     }
 
