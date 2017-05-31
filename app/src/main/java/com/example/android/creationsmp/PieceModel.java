@@ -96,4 +96,9 @@ public class PieceModel implements Serializable {
     public void setTypePiece(String typePiece) {
         this.typePiece = typePiece;
     }
+
+    @Override
+    public String toString(){
+        return this.getNomPiece();
+    }
 }

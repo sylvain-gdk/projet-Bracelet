@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 /**
  * Created by sylvain on 2017-05-16.
  */
@@ -19,6 +17,7 @@ import java.util.ArrayList;
 public class InventairePiecesFragment extends Fragment {
 
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
+    private InventairePieces inventairePieces;
 
     public InventairePiecesFragment() {
     }
@@ -28,6 +27,9 @@ public class InventairePiecesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
+
+        Intent intent = getActivity().getIntent();
+        inventairePieces = (InventairePieces) intent.getSerializableExtra(Intent.EXTRA_TEXT);
     }
 
     /*@Override
@@ -54,7 +56,7 @@ public class InventairePiecesFragment extends Fragment {
         /*String[] Pieces = {"Pierre de Lune", "Perle Noire",
                 "Os Rond", "Pierre de Lave ronde", "Pierre de Lave longue", "Bois d'Acajou"};*/
 
-        final ArrayList<PieceModel> Pieces = new ArrayList();
+        //ArrayList<PieceModel> Pieces = new ArrayList();
 
         PieceModel piece = new PieceModel();
         piece.setCodePiece(3652);
@@ -65,22 +67,12 @@ public class InventairePiecesFragment extends Fragment {
         piece.setQtyPiece(32);
         piece.setTypePiece("Plastique");
 
-        Pieces.add(piece);
-
-        for(PieceModel item : Pieces) {
-            System.out.println(item.getCodePiece());
-            System.out.println(item.getNomPiece());
-            System.out.println(item.getDescriptionPiece());
-            System.out.println(item.getDimensionPiece());
-            System.out.println(item.getPrixCoutantPiece());
-            System.out.println(item.getQtyPiece());
-            System.out.println(item.getTypePiece());
-        };
+        inventairePieces.addToInventairePieces(piece);
 
         inventairePiecesAdapter = new ArrayAdapter<PieceModel>(
                 getActivity(),
                 R.layout.liste_pieces_inventaire,
-                R.id.liste_pieces_inventaire_textview, Pieces);
+                R.id.liste_pieces_inventaire_textview, inventairePieces.getInventairePieces());
 
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
 

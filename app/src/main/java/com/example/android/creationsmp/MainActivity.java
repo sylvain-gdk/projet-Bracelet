@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    private InventairePieces inventaireP;
-    private PieceModel piece;
+    private InventairePieces inventairePieces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
     }
 
     /**
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void ajouterPieceListener(View view) {
 
-        Intent activityCalling = new Intent(this, PieceActivity.class);
+        Intent activityCalling = new Intent(this, PieceActivity.class).putExtra(Intent.EXTRA_TEXT, inventairePieces);
         startActivity(activityCalling);
     }
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void voirPiecesListener(View view) {
 
-        Intent activityCalling = new Intent(this, InventairePiecesActivity.class);
+        Intent activityCalling = new Intent(this, InventairePiecesActivity.class).putExtra(Intent.EXTRA_TEXT, inventairePieces);
         startActivity(activityCalling);
 
     }
