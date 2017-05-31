@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 public class PieceActivityView extends AppCompatActivity {
 
-    //private PieceModel piece;
     private TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece;
 
     @Override
@@ -76,8 +75,15 @@ public class PieceActivityView extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
 
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-                String piece = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece);
+                PieceModel piece = (PieceModel) intent.getSerializableExtra(Intent.EXTRA_TEXT);
+                ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf(piece.getCodePiece()));
+                ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
+                ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
+                ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()));
+                ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()));
+                ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
+                ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
+
             }
             return rootView;
         }

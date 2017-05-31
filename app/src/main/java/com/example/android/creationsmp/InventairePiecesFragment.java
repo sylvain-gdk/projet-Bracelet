@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by sylvain on 2017-05-16.
@@ -19,7 +18,7 @@ import java.util.Arrays;
 
 public class InventairePiecesFragment extends Fragment {
 
-    private ArrayAdapter<String> inventairePiecesAdapter;
+    private ArrayAdapter<PieceModel> inventairePiecesAdapter;
 
     public InventairePiecesFragment() {
     }
@@ -52,20 +51,40 @@ public class InventairePiecesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        String[] Pieces = {"Pierre de Lune", "Perle Noire",
-                "Os Rond", "Pierre de Lave ronde", "Pierre de Lave longue", "Bois d'Acajou"};
+        /*String[] Pieces = {"Pierre de Lune", "Perle Noire",
+                "Os Rond", "Pierre de Lave ronde", "Pierre de Lave longue", "Bois d'Acajou"};*/
 
-        ArrayList<String> piece = new ArrayList<>(Arrays.asList(Pieces));
+        final ArrayList<PieceModel> Pieces = new ArrayList();
 
-        inventairePiecesAdapter = new ArrayAdapter<String>(
+        PieceModel piece = new PieceModel();
+        piece.setCodePiece(3652);
+        piece.setNomPiece("Pierre de lune");
+        piece.setDescriptionPiece("une très belle pierre");
+        piece.setDimensionPiece(3);
+        piece.setPrixCoutantPiece(5);
+        piece.setQtyPiece(32);
+        piece.setTypePiece("Plastique");
+
+        Pieces.add(piece);
+
+        for(PieceModel item : Pieces) {
+            System.out.println(item.getCodePiece());
+            System.out.println(item.getNomPiece());
+            System.out.println(item.getDescriptionPiece());
+            System.out.println(item.getDimensionPiece());
+            System.out.println(item.getPrixCoutantPiece());
+            System.out.println(item.getQtyPiece());
+            System.out.println(item.getTypePiece());
+        };
+
+        inventairePiecesAdapter = new ArrayAdapter<PieceModel>(
                 getActivity(),
                 R.layout.liste_pieces_inventaire,
-                R.id.liste_pieces_inventaire_textview,
-                piece);
+                R.id.liste_pieces_inventaire_textview, Pieces);
 
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
 
-        final ListView inventairePiecesAdapterView = (ListView) rootView.findViewById(R.id.listview_pieces_inventaire);
+        ListView inventairePiecesAdapterView = (ListView) rootView.findViewById(R.id.listview_pieces_inventaire);
 
         inventairePiecesAdapterView.setAdapter(inventairePiecesAdapter);
 
@@ -76,9 +95,10 @@ public class InventairePiecesFragment extends Fragment {
                 /*String item = "Vous avez choisi '" + inventairePiecesAdapter.getItem(i) + "'";
                 Toast.makeText(getActivity(), item, Toast.LENGTH_LONG).show();*/
 
-                String piece = inventairePiecesAdapter.getItem(i);
+                PieceModel piece = inventairePiecesAdapter.getItem(i);
 
-                Intent intent = new Intent(getActivity(), PieceActivityView.class).putExtra(Intent.EXTRA_TEXT, piece);
+                Intent intent = new Intent(getActivity(), PieceActivityView.class);
+                intent.putExtra(Intent.EXTRA_TEXT, piece);
                 startActivity(intent);
 
             }
@@ -87,5 +107,6 @@ public class InventairePiecesFragment extends Fragment {
         return rootView;
 
     }
+
 
 }
