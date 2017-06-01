@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class PieceActivityView extends AppCompatActivity {
 
-    private TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece;
+    private TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece, categoriePiece;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class PieceActivityView extends AppCompatActivity {
                     .add(R.id.activity_piece_view_container, new PlaceholderFragment())
                     .commit();
         }
+
 
         /*Intent intent = getIntent();
         piece = (PieceModel) intent.getSerializableExtra("pieceView");
@@ -47,14 +48,17 @@ public class PieceActivityView extends AppCompatActivity {
         prixCoutantPiece.setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
         qtyPiece.setText(String.valueOf(piece.getQtyPiece()));
         typePiece.setText(String.valueOf(piece.getTypePiece()));
+        categoriePiece.setText(String.valueOf(piece.getCategoriePiece()));
+
 
     }
 
 
     public void voirListeListener(View view) {
 
-        Intent intent = new Intent(this, InventairePiecesActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, InventairePiecesActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT, inventairePieces);
+        startActivity(intent);*/
 
         finish();
     }
@@ -83,6 +87,7 @@ public class PieceActivityView extends AppCompatActivity {
                 ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()));
                 ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
                 ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
+                ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
 
             }
             return rootView;

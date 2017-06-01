@@ -10,24 +10,23 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class PieceActivity extends AppCompatActivity {
 
     //private InventairePieces inventairePieces;
 
-    private ArrayList<PieceModel> inventairePieces;
+    private InventairePieces inventairePieces;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
-    private Spinner typePiece;
-    private String type;
+    private Spinner typePiece, categoriePiece;
+    private String type, categorie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece);
 
-        inventairePieces = new ArrayList<>();
+        Intent intent = this.getIntent();
+        inventairePieces = (InventairePieces) intent.getSerializableExtra(Intent.EXTRA_TEXT);
 
         codePiece = (EditText) findViewById(R.id.codePiece_edit);
         nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
@@ -36,25 +35,22 @@ public class PieceActivity extends AppCompatActivity {
         prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
         qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
 
-        addItemsToUnitTypeSpinner();
-        addListenerToUnitTypeSpinner();
-
-
+        addItemsToTypeSpinner();
+        addListenerToTypeSpinner();
+        addItemsToCategorieSpinner();
+        addListenerToCategorieSpinner();
 
     }
 
-    public void addItemsToUnitTypeSpinner() {
+    public void addItemsToTypeSpinner() {
 
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
-
-        ArrayAdapter<CharSequence> unitTypeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.categorie_pierre_spacers, android.R.layout.simple_spinner_item);
-
-        unitTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        typePiece.setAdapter(unitTypeSpinnerAdapter);
+        ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
+        typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typePiece.setAdapter(typeSpinnerAdapter);
     }
 
-    public void addListenerToUnitTypeSpinner() {
+    public void addListenerToTypeSpinner() {
 
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
 
@@ -63,6 +59,32 @@ public class PieceActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 String itemSelectedInSpinner = adapterView.getItemAtPosition(pos).toString();
                 type = itemSelectedInSpinner;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //TODO
+            }
+        });
+    }
+
+    public void addItemsToCategorieSpinner() {
+
+        categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
+        ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
+        categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriePiece.setAdapter(categorieSpinnerAdapter);
+    }
+
+    public void addListenerToCategorieSpinner() {
+
+        categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
+
+        categoriePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                String itemSelectedInSpinner = adapterView.getItemAtPosition(pos).toString();
+                categorie = itemSelectedInSpinner;
             }
 
             @Override
@@ -93,13 +115,15 @@ public class PieceActivity extends AppCompatActivity {
         piece.setPrixCoutantPiece(Integer.parseInt(prixCoutantPiece.getText().toString()));
         piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
         piece.setTypePiece(type);
+        piece.setTypePiece(categorie);
 
-        inventairePieces.add(piece);
+        inventairePieces.addToInventairePieces(piece);
 
         String confirm = ("La pièce '" + nomPiece.getText() + "' est ajouté à l'inventaire.");
         Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(this, PieceActivityView.class).putExtra(Intent.EXTRA_TEXT, piece.getNomPiece());
+        Intent intent = new Intent(this, PieceActivityView.class);
+        intent.putExtra(Intent.EXTRA_TEXT, piece);
         startActivity(intent);
 
         finish();
@@ -146,9 +170,5 @@ public class PieceActivity extends AppCompatActivity {
             return convertView;
         }
     }*/
-
-    public ArrayList<PieceModel> getInventairePieces() {
-        return inventairePieces;
-    }
 
 }

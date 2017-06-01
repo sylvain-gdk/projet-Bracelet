@@ -16,8 +16,10 @@ public class PieceModel implements Serializable {
     private int dimensionPiece;
     private double prixCoutantPiece;
     private int qtyPiece;
-    private Image photoPiece;
     private String typePiece;
+    private String categoriePiece;
+    private Image photoPiece;
+
 
     /*public PieceModel(int codePiece, String nomPiece, String descriptionPiece, int dimensionPiece, double prixCoutantPiece, int qtyPiece, String typePiece) {
         this.codePiece = codePiece;
@@ -97,8 +99,16 @@ public class PieceModel implements Serializable {
         this.typePiece = typePiece;
     }
 
+    public String getCategoriePiece() {
+        return categoriePiece;
+    }
+
+    public void setCategoriePiece(String categoriePiece) {
+        this.categoriePiece = categoriePiece;
+    }
+
     @Override
     public String toString(){
-        return this.getNomPiece();
+        return this.getNomPiece() + "      " + "[" + this.getQtyPiece() + "]";
     }
 }

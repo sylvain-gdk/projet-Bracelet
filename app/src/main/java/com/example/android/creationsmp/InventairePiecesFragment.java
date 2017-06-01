@@ -65,7 +65,8 @@ public class InventairePiecesFragment extends Fragment {
         piece.setDimensionPiece(3);
         piece.setPrixCoutantPiece(5);
         piece.setQtyPiece(32);
-        piece.setTypePiece("Plastique");
+        piece.setTypePiece("Bille");
+        piece.setCategoriePiece("Plastique");
 
         inventairePieces.addToInventairePieces(piece);
 

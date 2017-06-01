@@ -29,8 +29,12 @@
     <string name="photoPieceHint">photo</string>
 
     <string name="typePieceLabel">Type:</string>
-    <string name="typePieceHint">choisir une catégorie</string>
-    <string name="typePieceMessage">Il doit y avoir une catégorie.</string>
+    <string name="typePieceHint">choisir un type</string>
+    <string name="typePieceMessage">Il doit y avoir un type.</string>
+
+    <string name="categoriePieceLabel">Catégorie:</string>
+    <string name="categoriePieceHint">choisir une catégorie</string>
+    <string name="categoriePieceMessage">Il doit y avoir une catégorie.</string>
 
     <string name="ajouterPieceLabel">Ajouter</string>
     <string name="annulerAjouterPieceLabel">Annuler</string>

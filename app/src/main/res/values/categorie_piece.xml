@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categorie_piece">
+        <item>Métal - Or</item>
+        <item>Métal - Argent</item>
+        <item>Métal - Bronze</item>
+        <item>Crystal</item>
+        <item>Pierre précieuse</item>
+        <item>Perle</item>
+        <item>Pierre de lave</item>
+        <item>Os</item>
+        <item>Bois</item>
+        <item>Plastique</item>
+    </string-array>
+</resources>
