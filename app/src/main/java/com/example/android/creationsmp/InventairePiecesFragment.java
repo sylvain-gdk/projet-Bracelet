@@ -22,11 +22,10 @@ import java.util.ArrayList;
 public class InventairePiecesFragment extends Fragment {
 
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
-    private ArrayList<PieceModel> inventairePieces;
+    private InventairePieces inventairePieces;
     private PieceModel piece;
 
     public InventairePiecesFragment() {
-
     }
 
     @Override
@@ -51,7 +50,7 @@ public class InventairePiecesFragment extends Fragment {
             }
         });
 
-        inventairePieces = new ArrayList<>();
+        inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
 
         ajouterDebug();
 
@@ -61,7 +60,7 @@ public class InventairePiecesFragment extends Fragment {
                 getActivity(),
                 R.layout.liste_pieces_inventaire,
                 R.id.liste_pieces_inventaire_textview,
-                inventairePieces);
+                inventairePieces.getInventairePieces());
 
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
 
@@ -88,14 +87,14 @@ public class InventairePiecesFragment extends Fragment {
     }
     
     protected void ajouterPiece(PieceModel piece){
-        inventairePieces.add(piece);
+        inventairePieces.addToInventairePieces(piece);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         piece = (PieceModel) data.getSerializableExtra("to InventairePieceFragment");
-        inventairePieces.add(piece);
+        inventairePieces.addToInventairePieces(piece);
         inventairePiecesAdapter.notifyDataSetChanged();
         printListDebug();
     }
@@ -112,12 +111,12 @@ public class InventairePiecesFragment extends Fragment {
         piece.setTypePiece("Bille");
         piece.setCategoriePiece("Plastique");
 
-        inventairePieces.add(piece);
+        inventairePieces.addToInventairePieces(piece);
     }
 
     private void printListDebug(){
-        for(int i = 0; i < inventairePieces.size(); i++){
-            String confirm = ("La pièce '" + inventairePieces.get(i).getNomPiece() + "' est dans l'inventaire.");
+        for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++){
+            String confirm = ("La pièce '" + inventairePieces.getInventairePieces().get(i).getNomPiece() + "' est dans l'inventaire.");
             Toast.makeText(getContext(), confirm, Toast.LENGTH_LONG).show();
         }
     }
