@@ -109,6 +109,6 @@ public class PieceModel implements Serializable {
 
     @Override
     public String toString(){
-        return this.getNomPiece() + "      " + "[" + this.getQtyPiece() + "]";
+        return "#" + this.getCodePiece() + "  " + this.getNomPiece() + "  " + "[ " + this.getQtyPiece() + " ]";
     }
 }

@@ -2,13 +2,18 @@ package com.example.android.creationsmp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by sylvain on 2017-05-16.
@@ -17,9 +22,11 @@ import android.widget.ListView;
 public class InventairePiecesFragment extends Fragment {
 
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
-    private InventairePieces inventairePieces;
+    private ArrayList<PieceModel> inventairePieces;
+    private PieceModel piece;
 
     public InventairePiecesFragment() {
+
     }
 
     @Override
@@ -27,53 +34,34 @@ public class InventairePiecesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
-
-        Intent intent = getActivity().getIntent();
-        inventairePieces = (InventairePieces) intent.getSerializableExtra(Intent.EXTRA_TEXT);
     }
-
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.forecastfragment, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-            updateWeather();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        /*String[] Pieces = {"Pierre de Lune", "Perle Noire",
-                "Os Rond", "Pierre de Lave ronde", "Pierre de Lave longue", "Bois d'Acajou"};*/
+        FloatingActionButton fab = (FloatingActionButton) container.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                final int result = 1;
+                Intent intent = new Intent(getActivity(), PieceActivity.class).putExtra("to PieceActivity", piece);
+                startActivityForResult(intent, result);
+            }
+        });
 
-        //ArrayList<PieceModel> Pieces = new ArrayList();
+        inventairePieces = new ArrayList<>();
 
-        PieceModel piece = new PieceModel();
-        piece.setCodePiece(3652);
-        piece.setNomPiece("Pierre de lune");
-        piece.setDescriptionPiece("une très belle pierre");
-        piece.setDimensionPiece(3);
-        piece.setPrixCoutantPiece(5);
-        piece.setQtyPiece(32);
-        piece.setTypePiece("Bille");
-        piece.setCategoriePiece("Plastique");
+        ajouterDebug();
 
-        inventairePieces.addToInventairePieces(piece);
+        printListDebug();
 
-        inventairePiecesAdapter = new ArrayAdapter<PieceModel>(
+        inventairePiecesAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.liste_pieces_inventaire,
-                R.id.liste_pieces_inventaire_textview, inventairePieces.getInventairePieces());
+                R.id.liste_pieces_inventaire_textview,
+                inventairePieces);
 
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
 
@@ -85,20 +73,53 @@ public class InventairePiecesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                /*String item = "Vous avez choisi '" + inventairePiecesAdapter.getItem(i) + "'";
-                Toast.makeText(getActivity(), item, Toast.LENGTH_LONG).show();*/
-
                 PieceModel piece = inventairePiecesAdapter.getItem(i);
-
-                Intent intent = new Intent(getActivity(), PieceActivityView.class);
-                intent.putExtra(Intent.EXTRA_TEXT, piece);
-                startActivity(intent);
-
+                startActivity(new Intent(getActivity(), PieceActivityView.class).putExtra(Intent.EXTRA_TEXT, piece));
             }
         });
 
         return rootView;
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+    
+    protected void ajouterPiece(PieceModel piece){
+        inventairePieces.add(piece);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        piece = (PieceModel) data.getSerializableExtra("to InventairePieceFragment");
+        inventairePieces.add(piece);
+        inventairePiecesAdapter.notifyDataSetChanged();
+        printListDebug();
+    }
+
+
+    private void ajouterDebug(){
+        PieceModel piece = new PieceModel();
+        piece.setCodePiece(3652);
+        piece.setNomPiece("Pierre de lune");
+        piece.setDescriptionPiece("une très belle pierre");
+        piece.setDimensionPiece(3);
+        piece.setPrixCoutantPiece(5);
+        piece.setQtyPiece(32);
+        piece.setTypePiece("Bille");
+        piece.setCategoriePiece("Plastique");
+
+        inventairePieces.add(piece);
+    }
+
+    private void printListDebug(){
+        for(int i = 0; i < inventairePieces.size(); i++){
+            String confirm = ("La pièce '" + inventairePieces.get(i).getNomPiece() + "' est dans l'inventaire.");
+            Toast.makeText(getContext(), confirm, Toast.LENGTH_LONG).show();
+        }
     }
 
 

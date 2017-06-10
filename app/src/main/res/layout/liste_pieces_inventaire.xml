@@ -4,5 +4,5 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:textSize="18sp"
-    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
     android:id="@+id/liste_pieces_inventaire_textview" />

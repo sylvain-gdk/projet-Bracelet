@@ -3,18 +3,16 @@ package com.example.android.creationsmp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class PieceActivity extends AppCompatActivity {
 
-    //private InventairePieces inventairePieces;
-
-    private InventairePieces inventairePieces;
+    private PieceModel piece;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
     private Spinner typePiece, categoriePiece;
@@ -25,8 +23,7 @@ public class PieceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece);
 
-        Intent intent = this.getIntent();
-        inventairePieces = (InventairePieces) intent.getSerializableExtra(Intent.EXTRA_TEXT);
+        this.piece = new PieceModel();
 
         codePiece = (EditText) findViewById(R.id.codePiece_edit);
         nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
@@ -40,6 +37,16 @@ public class PieceActivity extends AppCompatActivity {
         addItemsToCategorieSpinner();
         addListenerToCategorieSpinner();
 
+        Intent intent = this.getIntent();
+        piece = (PieceModel) intent.getSerializableExtra("to PieceActivity");
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //startActivity(new Intent(this, InventairePiecesActivity.class).putExtra(Intent.EXTRA_TEXT, inventairePieces));
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     public void addItemsToTypeSpinner() {
@@ -100,12 +107,6 @@ public class PieceActivity extends AppCompatActivity {
      */
     public void ajouterPieceListener(View view) {
 
-        //PieceModel piece = new PieceModel(323, "Roche", "une roche", 3, 4, 5, "caillou");
-
-        /*PieceModel piece = new PieceModel(Integer.parseInt(codePiece.getText().toString()), nomPiece.getText().toString(),
-                descriptionPiece.getText().toString(), Integer.parseInt(dimensionPiece.getText().toString()),
-                Integer.parseInt(prixCoutantPiece.getText().toString()), Integer.parseInt(qtyPiece.getText().toString()), type);*/
-
         PieceModel piece = new PieceModel();
 
         piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()));
@@ -115,16 +116,10 @@ public class PieceActivity extends AppCompatActivity {
         piece.setPrixCoutantPiece(Integer.parseInt(prixCoutantPiece.getText().toString()));
         piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
         piece.setTypePiece(type);
-        piece.setTypePiece(categorie);
+        piece.setCategoriePiece(categorie);
 
-        inventairePieces.addToInventairePieces(piece);
-
-        String confirm = ("La pièce '" + nomPiece.getText() + "' est ajouté à l'inventaire.");
-        Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
-
-        Intent intent = new Intent(this, PieceActivityView.class);
-        intent.putExtra(Intent.EXTRA_TEXT, piece);
-        startActivity(intent);
+        Intent intent = new Intent(this, InventairePiecesActivity.class).putExtra("to InventairePieceFragment", piece);
+        setResult(RESULT_OK, intent);
 
         finish();
 
@@ -138,37 +133,5 @@ public class PieceActivity extends AppCompatActivity {
 
         finish();
     }
-
-
-    /*private class Inventaire extends ArrayAdapter<PieceModel>{
-
-        public Inventaire(@NonNull Context context, @LayoutRes int resource) {
-            super(context, resource);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece;
-
-            if(convertView == null)
-                convertView = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, parent, false);
-
-            PieceModel piece = inventairePieces.get(position);
-
-            codePiece = (EditText) view.findViewById(R.id.codePiece_edit);
-            nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
-            descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
-            dimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
-            prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
-            qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
-            typePiece = (EditText) findViewById(R.id.typePiece_edit);
-
-
-
-            return convertView;
-        }
-    }*/
 
 }

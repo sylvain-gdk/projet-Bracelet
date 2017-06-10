@@ -12,6 +12,7 @@ public class InventairePieces implements Serializable {
     private ArrayList<PieceModel> inventairePieces;
 
     public InventairePieces(ArrayList<PieceModel> inventairePieces) {
+
         this.inventairePieces = inventairePieces;
     }
 
