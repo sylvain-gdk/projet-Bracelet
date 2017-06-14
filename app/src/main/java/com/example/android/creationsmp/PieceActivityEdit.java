@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class PieceActivity extends AppCompatActivity {
+public class PieceActivityEdit extends AppCompatActivity {
 
     private PieceModel piece;
 
@@ -21,7 +21,7 @@ public class PieceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_piece);
+        setContentView(R.layout.activity_piece_edit);
 
         this.piece = new PieceModel();
 
@@ -38,7 +38,7 @@ public class PieceActivity extends AppCompatActivity {
         addListenerToCategorieSpinner();
 
         Intent intent = this.getIntent();
-        piece = (PieceModel) intent.getSerializableExtra("to PieceActivity");
+        piece = (PieceModel) intent.getSerializableExtra("to PieceActivityEdit");
 
     }
 
@@ -101,29 +101,69 @@ public class PieceActivity extends AppCompatActivity {
         });
     }
 
+    /*private void printErreurCapture(int code){
+        String erreur = "";
+
+        switch(code){
+            case 1:
+                erreur = ("Le code doit avoir entre 1 et 4 chiffres");
+                break;
+            case 2:
+                erreur = ("Le nom de la pièce ne peut être vide");
+                break;
+            case 3:
+                erreur = ("La description de la pièce ne peut être vide");
+                break;
+            case 4:
+                erreur = ("La dimenssion doit être entre 4 et 15 mm");
+                break;
+            case 5:
+                erreur = ("Le prix doit être au format 0.00");
+                break;
+            case 6:
+                erreur = ("Vous avez oubliez de remplir une case");
+                break;
+        }
+        Toast.makeText(this, erreur, Toast.LENGTH_LONG).show();
+
+    }*/
+
+
+
     /**
      * Ajoute la pièce à l’inventaire et retourne au menu principal
      * @param view
      */
     public void ajouterPieceListener(View view) {
-
         PieceModel piece = new PieceModel();
+        if(!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
+            codePiece.setError("Le code doit avoir entre 1 et 4 chiffres");
+            codePiece.requestFocus();
+        }else if(!piece.setNomPiece(nomPiece.getText().toString())) {
+            nomPiece.setError("Le nom de la pièce ne peut être vide");
+            nomPiece.requestFocus();
+        }else if(!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
+            descriptionPiece.setError("La description de la pièce ne peut être vide");
+            descriptionPiece.requestFocus();
+        }else if(!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
+            dimensionPiece.setError("La dimension doit être entre 4 et 15 mm");
+            dimensionPiece.requestFocus();
+        }else if(!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
+            prixCoutantPiece.setError("Le prix ne peut être 0 et doit être au format 0.00");
+            prixCoutantPiece.requestFocus();
+        }else if(piece.getCodePiece() > 0) {
+            piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
+            piece.setTypePiece(type);
+            piece.setCategoriePiece(categorie);
 
-        piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()));
-        piece.setNomPiece(nomPiece.getText().toString());
-        piece.setDescriptionPiece(descriptionPiece.getText().toString());
-        piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()));
-        piece.setPrixCoutantPiece(Integer.parseInt(prixCoutantPiece.getText().toString()));
-        piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
-        piece.setTypePiece(type);
-        piece.setCategoriePiece(categorie);
+            Intent intent = new Intent(this, InventairePiecesActivity.class).putExtra("to InventairePieceFragment", piece);
+            setResult(RESULT_OK, intent);
 
-        Intent intent = new Intent(this, InventairePiecesActivity.class).putExtra("to InventairePieceFragment", piece);
-        setResult(RESULT_OK, intent);
-
-        finish();
-
+            finish();
+        }
     }
+
+
 
     /**
      * Retourne au menu principal

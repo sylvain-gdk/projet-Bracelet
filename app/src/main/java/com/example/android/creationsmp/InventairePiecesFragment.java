@@ -45,16 +45,14 @@ public class InventairePiecesFragment extends Fragment {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
                 final int result = 1;
-                Intent intent = new Intent(getActivity(), PieceActivity.class).putExtra("to PieceActivity", piece);
+                Intent intent = new Intent(getActivity(), PieceActivityEdit.class).putExtra("to PieceActivityEdit", piece);
                 startActivityForResult(intent, result);
             }
         });
 
         inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
 
-        ajouterDebug();
-
-        printListDebug();
+        //ajouterDebug();
 
         inventairePiecesAdapter = new ArrayAdapter<>(
                 getActivity(),
@@ -92,16 +90,25 @@ public class InventairePiecesFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         piece = (PieceModel) data.getSerializableExtra("to InventairePieceFragment");
         inventairePieces.addToInventairePieces(piece);
         inventairePiecesAdapter.notifyDataSetChanged();
-        printListDebug();
+        printConfirmerAjout(piece);
     }
 
 
+    private void printConfirmerAjout(PieceModel piece){
+        for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
+            if(i == inventairePieces.getInventairePieces().indexOf(piece)) {
+                String confirm = ("La pièce '" + piece.getNomPiece() + "' est ajouté.");
+                Toast.makeText(getContext(), confirm, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void ajouterDebug(){
-        PieceModel piece = new PieceModel();
+        piece = new PieceModel();
         piece.setCodePiece(3652);
         piece.setNomPiece("Pierre de lune");
         piece.setDescriptionPiece("une très belle pierre");

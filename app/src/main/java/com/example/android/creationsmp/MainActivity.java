@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void ajouterPieceListener(View view) {
 
-        startActivity(new Intent(this, PieceActivity.class));
+        startActivity(new Intent(this, PieceActivityEdit.class));
     }
 
     /**

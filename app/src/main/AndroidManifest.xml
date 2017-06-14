@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PieceActivity"
+            android:name=".PieceActivityEdit"
             android:label="Ajouter une Pièce"
             android:theme="@style/AppTheme"
             android:parentActivityName="MainActivity" >

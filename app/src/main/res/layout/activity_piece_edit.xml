@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.creationsmp.PieceActivity"
+    tools:context="com.example.android.creationsmp.PieceActivityEdit"
     android:weightSum="1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/codePieceHint"
             android:inputType="numberSigned"
+            android:selectAllOnFocus="true"
             android:layout_weight="0.12" />
 
     </LinearLayout>
@@ -50,7 +51,8 @@
             android:layout_height="wrap_content"
             android:elevation="0dp"
             android:hint="@string/nomPieceHint"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true" />
 
     </LinearLayout>
 
@@ -72,7 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/descriptionPieceHint"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:selectAllOnFocus="true" />
 
     </LinearLayout>
 
@@ -94,7 +97,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/dimensionPieceHint"
-            android:inputType="numberSigned"/>
+            android:inputType="numberSigned"
+            android:selectAllOnFocus="true" />
 
     </LinearLayout>
 
@@ -116,7 +120,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prixCoutantPieceHint"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:selectAllOnFocus="true" />
 
     </LinearLayout>
 
@@ -137,7 +142,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/qtyPieceHint"
-            android:inputType="numberSigned" />
+            android:inputType="numberSigned"
+            android:selectAllOnFocus="true"  />
 
     </LinearLayout>
 
@@ -164,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/typePieceHint"
+                android:text="Choisir"
                 android:spinnerMode="dropdown" />
 
         </LinearLayout>
@@ -193,6 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/categoriePieceHint"
+                android:text="Choisir"
                 android:spinnerMode="dropdown" />
 
         </LinearLayout>

@@ -3,6 +3,8 @@ package com.example.android.creationsmp;
 import android.media.Image;
 
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by sylvain on 2017-04-10.
@@ -11,10 +13,10 @@ import java.io.Serializable;
 public class PieceModel implements Serializable {
 
     private int codePiece;
-    private String nomPiece;
-    private String descriptionPiece;
+    private String nomPiece = "";
+    private String descriptionPiece = "";
     private int dimensionPiece;
-    private double prixCoutantPiece;
+    private double prixCoutantPiece = 0.00;
     private int qtyPiece;
     private String typePiece;
     private String categoriePiece;
@@ -35,75 +37,112 @@ public class PieceModel implements Serializable {
 
     }
 
-    public int getCodePiece() {
+    protected int getCodePiece() {
         return codePiece;
     }
 
-    public void setCodePiece(int codePiece) {
-        this.codePiece = codePiece;
+    protected boolean setCodePiece(int codPiece) {
+        boolean pass;
+        if (codPiece > 0 && codPiece < 9999){
+            this.codePiece = codPiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
-    public String getNomPiece() {
+    protected String getNomPiece() {
         return nomPiece;
     }
 
-    public void setNomPiece(String nomPiece) {
-        this.nomPiece = nomPiece;
+    protected boolean setNomPiece(String nomPiece) {
+        boolean pass;
+        if (!nomPiece.isEmpty()) {
+            this.nomPiece = nomPiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
-    public String getDescriptionPiece() {
+    protected String getDescriptionPiece() {
         return descriptionPiece;
     }
 
-    public void setDescriptionPiece(String descPiece) {
-        this.descriptionPiece = descPiece;
+    protected boolean setDescriptionPiece(String descPiece) {
+        boolean pass;
+        if (!descPiece.isEmpty()) {
+            this.descriptionPiece = descPiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
-    public int getDimensionPiece() {
+    protected int getDimensionPiece() {
         return dimensionPiece;
     }
 
-    public void setDimensionPiece(int dimensionPiece) {
-        this.dimensionPiece = dimensionPiece;
+    protected boolean setDimensionPiece(int dimPiece) {
+        boolean pass;
+        if (dimPiece > 3 && dimPiece < 16) {
+            this.dimensionPiece = dimPiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
-    public double getPrixCoutantPiece() {
+    protected double getPrixCoutantPiece() {
         return prixCoutantPiece;
     }
 
-    public void setPrixCoutantPiece(double prixCoutantPiece) {
-        this.prixCoutantPiece = prixCoutantPiece;
+    protected boolean setPrixCoutantPiece(double prixCoutantPiece) {
+        boolean pass;
+        Pattern p = Pattern.compile("^(?:0|[1-9]\\d{0,1})(?:\\.\\d{1,2})");
+        Matcher m = p.matcher(String.valueOf(prixCoutantPiece));
+        if (prixCoutantPiece > 0) { //m.matches()
+            this.prixCoutantPiece = prixCoutantPiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
-    public int getQtyPiece() {
+    protected int getQtyPiece() {
         return qtyPiece;
     }
 
-    public void setQtyPiece(int qtyPiece) {
+    protected void setQtyPiece(int qtyPiece) {
         this.qtyPiece = qtyPiece;
     }
 
-    public Image getPhotoPiece() {
+    protected Image getPhotoPiece() {
         return photoPiece;
     }
 
-    public void setPhotoPiece(Image photoPiece) {
+    protected void setPhotoPiece(Image photoPiece) {
         this.photoPiece = photoPiece;
     }
 
-    public String getTypePiece() {
+    protected String getTypePiece() {
         return typePiece;
     }
 
-    public void setTypePiece(String typePiece) {
+    protected void setTypePiece(String typePiece) {
         this.typePiece = typePiece;
     }
 
-    public String getCategoriePiece() {
+    protected String getCategoriePiece() {
         return categoriePiece;
     }
 
-    public void setCategoriePiece(String categoriePiece) {
+    protected void setCategoriePiece(String categoriePiece) {
         this.categoriePiece = categoriePiece;
     }
 
