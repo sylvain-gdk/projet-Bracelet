@@ -2,8 +2,8 @@ package com.example.android.creationsmp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 public class PieceActivityEdit extends AppCompatActivity {
 
+    private InventairePieces inventairePieces;
     private PieceModel piece;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
@@ -38,21 +39,15 @@ public class PieceActivityEdit extends AppCompatActivity {
         addListenerToCategorieSpinner();
 
         Intent intent = this.getIntent();
-        piece = (PieceModel) intent.getSerializableExtra("to PieceActivityEdit");
+        piece = (PieceModel) intent.getSerializableExtra("ajouterPiece");
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //startActivity(new Intent(this, InventairePiecesActivity.class).putExtra(Intent.EXTRA_TEXT, inventairePieces));
-        finish();
-        return super.onOptionsItemSelected(item);
     }
 
     public void addItemsToTypeSpinner() {
 
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
-        ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter
+                .createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typePiece.setAdapter(typeSpinnerAdapter);
     }
@@ -78,7 +73,8 @@ public class PieceActivityEdit extends AppCompatActivity {
     public void addItemsToCategorieSpinner() {
 
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
-        ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter
+                .createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriePiece.setAdapter(categorieSpinnerAdapter);
     }
@@ -101,76 +97,59 @@ public class PieceActivityEdit extends AppCompatActivity {
         });
     }
 
-    /*private void printErreurCapture(int code){
-        String erreur = "";
-
-        switch(code){
-            case 1:
-                erreur = ("Le code doit avoir entre 1 et 4 chiffres");
-                break;
-            case 2:
-                erreur = ("Le nom de la pièce ne peut être vide");
-                break;
-            case 3:
-                erreur = ("La description de la pièce ne peut être vide");
-                break;
-            case 4:
-                erreur = ("La dimenssion doit être entre 4 et 15 mm");
-                break;
-            case 5:
-                erreur = ("Le prix doit être au format 0.00");
-                break;
-            case 6:
-                erreur = ("Vous avez oubliez de remplir une case");
-                break;
-        }
-        Toast.makeText(this, erreur, Toast.LENGTH_LONG).show();
-
-    }*/
-
-
 
     /**
      * Ajoute la pièce à l’inventaire et retourne au menu principal
      * @param view
      */
     public void ajouterPieceListener(View view) {
+
         PieceModel piece = new PieceModel();
-        if(!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-            codePiece.setError("Le code doit avoir entre 1 et 4 chiffres");
-            codePiece.requestFocus();
-        }else if(!piece.setNomPiece(nomPiece.getText().toString())) {
-            nomPiece.setError("Le nom de la pièce ne peut être vide");
-            nomPiece.requestFocus();
-        }else if(!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-            descriptionPiece.setError("La description de la pièce ne peut être vide");
-            descriptionPiece.requestFocus();
-        }else if(!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-            dimensionPiece.setError("La dimension doit être entre 4 et 15 mm");
-            dimensionPiece.requestFocus();
-        }else if(!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-            prixCoutantPiece.setError("Le prix ne peut être 0 et doit être au format 0.00");
-            prixCoutantPiece.requestFocus();
-        }else if(piece.getCodePiece() > 0) {
-            piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
-            piece.setTypePiece(type);
-            piece.setCategoriePiece(categorie);
 
-            Intent intent = new Intent(this, InventairePiecesActivity.class).putExtra("to InventairePieceFragment", piece);
-            setResult(RESULT_OK, intent);
+        try{
+            if(!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
+                codePiece.setError("Le code doit avoir entre 1 et 4 chiffres");
+                codePiece.requestFocus();
+            }else if(!piece.setNomPiece(nomPiece.getText().toString())) {
+                nomPiece.setError("Le nom de la pièce ne peut être vide");
+                nomPiece.requestFocus();
+            }else if(!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
+                descriptionPiece.setError("La description de la pièce ne peut être vide");
+                descriptionPiece.requestFocus();
+            }else if(!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
+                dimensionPiece.setError("La dimension doit être entre 4 et 15 mm");
+                dimensionPiece.requestFocus();
+            }else if(!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
+                prixCoutantPiece.setError("Le prix ne peut être 0 et doit être au format 0.00");
+                prixCoutantPiece.requestFocus();
+            }else if(piece.getCodePiece() > 0) {
+                piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
+                piece.setTypePiece(type);
+                piece.setCategoriePiece(categorie);
 
-            finish();
+                Intent intent = new Intent(this, InventairePiecesActivity.class)
+                        .putExtra("nouvellePiece", piece);
+                setResult(RESULT_OK, intent);
+
+                finish();
+            }
+        }catch(NumberFormatException e){
+            Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
         }
     }
 
 
+    private void validateCode(){
+
+    }
 
     /**
      * Retourne au menu principal
      * @param view
      */
     public void annulerAjouterPieceListener(View view) {
-
+        setResult(RESULT_CANCELED);
         finish();
     }
 

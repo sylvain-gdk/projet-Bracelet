@@ -2,31 +2,32 @@
     <string name="appName">Les Créations MP</string>
 
     <string name="codePieceLabel">#</string>
-    <string name="codePieceHint">code de la pièce</string>
-    <string name="codePieceMessage">Le code doit avoir entre 1 et 5 chiffres</string>
+    <string name="codePieceHint">code</string>
+    <string name="codePieceMessage">Le code doit avoir entre 1 et 4 chiffres</string>
 
     <string name="nomPieceLabel">Nom:</string>
     <string name="nomPieceHint"></string>
-    <string name="nomPieceMessage">Le nom doit avoir au min. 3 charactères</string>
+    <string name="nomPieceMessage">Le nom de la pièce ne peut être vide</string>
 
     <string name="descriptionPieceLabel">Desc:</string>
     <string name="descriptionPieceHint"></string>
+    <string name="descriptionPieceMessage">La description de la pièce ne peut être vide</string>
 
     <string name="dimensionPieceLabel">Dimensions:</string>
-    <string name="dimensionPieceHint">largeur (4-15 mm)</string>
-    <string name="dimensionPieceMessage">La pièce doit avoir une largeur entre 4 et 15 millimètres</string>
+    <string name="dimensionLargeurPieceHint">largeur (4-15 mm)</string>
+    <string name="dimensionLongueurPieceHint">longueur (30-600 mm)</string>
+    <string name="dimensionLargeurPieceMessage">La largeur doit être entre 4 et 15 mm</string>
+    <string name="dimensionLongueurPieceMessage">La longueur doit être entre 30 et 600 mm</string>
 
     <string name="dimensionBraceletHint">longueur (20-60 mm)</string>
     <string name="dimensionBraceletMessage">Le bracelet doit avoir une longueur entre 20 et 60 millimètres</string>
 
     <string name="prixCoutantPieceLabel">Prix:</string>
-    <string name="prixCoutantPieceHint">coutant (0.00)</string>
-    <string name="prixCoutantPieceMessage">Il doit y avoir un prix</string>
+    <string name="prixCoutantPieceHint">coutant (0.00 $)</string>
+    <string name="prixCoutantPieceMessage">Le prix ne peut être 0 et doit être au format 0.00</string>
 
     <string name="qtyPieceLabel">Quantité:</string>
     <string name="qtyPieceHint">en inventaire</string>
-
-    <string name="photoPieceHint">photo</string>
 
     <string name="typePieceLabel">Type:</string>
     <string name="typePieceHint">choisir un type</string>
@@ -36,8 +37,13 @@
     <string name="categoriePieceHint">choisir une catégorie</string>
     <string name="categoriePieceMessage">Il doit y avoir une catégorie</string>
 
+    <string name="photoPieceLabel">Photo:</string>
+    <string name="photoPieceHint">photo</string>
+
     <string name="ajouterPieceLabel">Ajouter</string>
     <string name="annulerAjouterPieceLabel">Annuler</string>
+
+    <string name="retourPieces">Retour aux Pièces</string>
 
     <string name="ajouterPieceLabelMain">Ajouter une Pièce</string>
     <string name="voirPieces">Voir les Pièces</string>

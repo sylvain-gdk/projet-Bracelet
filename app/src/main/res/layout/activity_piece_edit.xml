@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.creationsmp.PieceActivityEdit"
-    android:weightSum="1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:orientation="vertical">
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="20dp"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,16 +23,16 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/codePieceLabel"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/codePiece_edit"
-            android:layout_width="wrap_content"
+            android:layout_width="86dp"
             android:layout_height="wrap_content"
             android:hint="@string/codePieceHint"
             android:inputType="numberSigned"
             android:selectAllOnFocus="true"
-            android:layout_weight="0.12" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -43,16 +47,16 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/nomPieceLabel"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/nomPiece_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="0dp"
             android:hint="@string/nomPieceHint"
             android:inputType="textPersonName"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -67,7 +71,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/descriptionPieceLabel"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/descriptionPiece_edit"
@@ -75,7 +79,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/descriptionPieceHint"
             android:inputType="textMultiLine"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -90,15 +95,16 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/dimensionPieceLabel"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/dimensionPiece_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/dimensionPieceHint"
+            android:hint="@string/dimensionLargeurPieceHint"
             android:inputType="numberSigned"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -113,7 +119,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/prixCoutantPieceLabel"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/prixCoutantPiece_edit"
@@ -121,7 +127,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/prixCoutantPieceHint"
             android:inputType="numberDecimal"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -135,7 +142,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/qtyPieceLabel"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/qtyPiece_edit"
@@ -143,93 +150,112 @@
             android:layout_height="wrap_content"
             android:hint="@string/qtyPieceHint"
             android:inputType="numberSigned"
-            android:selectAllOnFocus="true"  />
+            android:selectAllOnFocus="true"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:text="@string/typePieceLabel"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/typePiece_edit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingRight="5dp"
-                android:text="@string/typePieceLabel"
-                android:paddingTop="15dp"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/typePiece_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/typePieceHint"
-                android:text="Choisir"
-                android:spinnerMode="dropdown" />
-
-        </LinearLayout>
+            android:layout_height="29dp"
+            android:layout_margin="5dp"
+            android:background="@color/colorField"
+            android:hint="@string/typePieceHint"
+            android:popupBackground="?attr/colorButtonNormal"
+            android:spinnerMode="dropdown"
+            android:textSize="16sp"/>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:text="@string/categoriePieceLabel"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/categoriePiece_edit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingRight="5dp"
-                android:text="@string/categoriePieceLabel"
-                android:paddingTop="15dp"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/categoriePiece_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/categoriePieceHint"
-                android:text="Choisir"
-                android:spinnerMode="dropdown" />
-
-        </LinearLayout>
+            android:layout_height="29dp"
+            android:layout_margin="5dp"
+            android:background="@color/colorField"
+            android:hint="@string/categoriePieceHint"
+            android:popupBackground="?attr/colorButtonNormal"
+            android:spinnerMode="dropdown"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingRight="5dp"
+            android:text="@string/photoPieceLabel"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/photoPiece_image"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop"
+            android:background="@color/colorField"
+            app:srcCompat="@drawable/temp_beeds" />
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:layout_gravity="center_horizontal">
+        android:paddingTop="20dp">
 
 
         <Button
             android:id="@+id/ajouterPieceBouton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="ajouterPieceListener"
             android:layout_weight="1"
+            android:onClick="ajouterPieceListener"
             android:text="@string/ajouterPieceLabel" />
 
         <Button
             android:id="@+id/annulerAjouterPieceBouton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="annulerAjouterPieceListener"
             android:layout_weight="1"
+            android:onClick="annulerAjouterPieceListener"
             android:text="@string/annulerAjouterPieceLabel" />
 
 

@@ -9,22 +9,38 @@ import java.util.ArrayList;
 
 public class InventairePieces implements Serializable {
 
+    //liste de pièce en inventaire
     private ArrayList<PieceModel> inventairePieces;
 
+    /**
+     * Construit une liste de pièce
+     * @param inventairePieces liste de pièce en inventaire
+     */
     public InventairePieces(ArrayList<PieceModel> inventairePieces) {
-
         this.inventairePieces = inventairePieces;
     }
 
-    public ArrayList<PieceModel> getInventairePieces() {
+    /**
+     * Accède à la liste de pièce en inventaire
+     * @return la liste de pièce en inventaire
+     */
+    protected ArrayList<PieceModel> getInventairePieces() {
         return inventairePieces;
     }
 
-    public void addToInventairePieces(PieceModel piece) {
+    /**
+     * Ajoute une pièce à l'inventaire
+     * @param piece la pièce à ajouter
+     */
+    protected void addToInventairePieces(PieceModel piece) {
         inventairePieces.add(piece);
     }
 
-    public void removeFromInventairePieces(PieceModel piece) {
+    /**
+     * Retire une pièce de l'inventaire
+     * @param piece la pièce à retirer
+     */
+    protected void removeFromInventairePieces(PieceModel piece) {
         inventairePieces.remove(piece);
     }
 

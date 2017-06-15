@@ -1,5 +1,6 @@
 package com.example.android.creationsmp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by sylvain on 2017-05-16.
@@ -21,12 +28,12 @@ import java.util.ArrayList;
 
 public class InventairePiecesFragment extends Fragment {
 
+    // Adapteur pour la liste de pièces
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
+    // Accède à la classe de liste de pièces
     private InventairePieces inventairePieces;
+    // Accède à la classe de pièces
     private PieceModel piece;
-
-    public InventairePiecesFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,65 +45,93 @@ public class InventairePiecesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // Affiche un bouton flotant pour ajouter des pièces
         FloatingActionButton fab = (FloatingActionButton) container.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                final int result = 1;
-                Intent intent = new Intent(getActivity(), PieceActivityEdit.class).putExtra("to PieceActivityEdit", piece);
-                startActivityForResult(intent, result);
+            final int RESULT = 1;
+            Intent intent = new Intent(getActivity(), PieceActivityEdit.class);
+            intent.putExtra("ajouterPiece", piece);
+            startActivityForResult(intent, RESULT);
             }
         });
 
+        // Créé une liste de pièces
         inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
+        // Importe un fichier qui contient une liste de pièces sauvegardé dans la nouvelle liste "inventairePieces"
+        this.readInventairePiece();
 
-        //ajouterDebug();
-
+        // Créé un adapteur pour la liste de pièces
         inventairePiecesAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.liste_pieces_inventaire,
                 R.id.liste_pieces_inventaire_textview,
                 inventairePieces.getInventairePieces());
 
+        // Créé la vue de la liste de pièces à partir d'un fragment et l'attache à l'adapteur
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
 
         ListView inventairePiecesAdapterView = (ListView) rootView.findViewById(R.id.listview_pieces_inventaire);
-
         inventairePiecesAdapterView.setAdapter(inventairePiecesAdapter);
 
+        // Accède à l'activité pour voir une pièce en cliquant sur un item de la liste
         inventairePiecesAdapterView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 PieceModel piece = inventairePiecesAdapter.getItem(i);
-                startActivity(new Intent(getActivity(), PieceActivityView.class).putExtra(Intent.EXTRA_TEXT, piece));
+                Intent intent = new Intent(getActivity(), PieceActivityView.class).putExtra("voirPiece", piece);
+                startActivity(intent);
             }
         });
 
         return rootView;
-
     }
 
+    /**
+     * Option pour revenir au parent et sauvegarder la liste de pièces
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        this.writeInventairePiece();
         return super.onOptionsItemSelected(item);
-    }
-    
-    protected void ajouterPiece(PieceModel piece){
-        inventairePieces.addToInventairePieces(piece);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        piece = (PieceModel) data.getSerializableExtra("to InventairePieceFragment");
-        inventairePieces.addToInventairePieces(piece);
-        inventairePiecesAdapter.notifyDataSetChanged();
-        printConfirmerAjout(piece);
+        if(resultCode == RESULT_OK) {
+            piece = (PieceModel) data.getSerializableExtra("nouvellePiece");
+            inventairePieces.addToInventairePieces(piece);
+            this.writeInventairePiece();
+            inventairePiecesAdapter.notifyDataSetChanged();
+            printConfirmerAjout(piece);
+        }
     }
 
+    private void writeInventairePiece(){
+        try {
+            FileOutputStream outputFile = this.getContext().openFileOutput("InventairePiece.ser", Context.MODE_PRIVATE);
+            ObjectOutputStream outputStream = new ObjectOutputStream(outputFile);
+            outputStream.writeObject(inventairePieces);
+            outputStream.close();
+            outputFile.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void readInventairePiece(){
+        try {
+            FileInputStream inputFile = this.getContext().openFileInput("InventairePiece.ser");
+            ObjectInputStream inputStream = new ObjectInputStream(inputFile);
+            inventairePieces = (InventairePieces) inputStream.readObject();
+            inputStream.close();
+            inputFile.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private void printConfirmerAjout(PieceModel piece){
         for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
@@ -106,27 +141,4 @@ public class InventairePiecesFragment extends Fragment {
             }
         }
     }
-
-    private void ajouterDebug(){
-        piece = new PieceModel();
-        piece.setCodePiece(3652);
-        piece.setNomPiece("Pierre de lune");
-        piece.setDescriptionPiece("une très belle pierre");
-        piece.setDimensionPiece(3);
-        piece.setPrixCoutantPiece(5);
-        piece.setQtyPiece(32);
-        piece.setTypePiece("Bille");
-        piece.setCategoriePiece("Plastique");
-
-        inventairePieces.addToInventairePieces(piece);
-    }
-
-    private void printListDebug(){
-        for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++){
-            String confirm = ("La pièce '" + inventairePieces.getInventairePieces().get(i).getNomPiece() + "' est dans l'inventaire.");
-            Toast.makeText(getContext(), confirm, Toast.LENGTH_LONG).show();
-        }
-    }
-
-
 }

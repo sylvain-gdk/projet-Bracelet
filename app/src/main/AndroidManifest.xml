@@ -17,20 +17,13 @@
         <activity
             android:name=".PieceActivityEdit"
             android:label="Ajouter une Pièce"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+            android:theme="@style/AppTheme">
+
         </activity>
         <activity
             android:name=".PieceActivityView"
             android:label="Pièce"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="InventairePiecesActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="InventairePiecesActivity" />
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".InventairePiecesActivity"
