@@ -49,7 +49,7 @@ public class PieceActivityView extends AppCompatActivity {
 
             View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
 
-            ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf(piece.getCodePiece()));
+            ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
             ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
             ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
             ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");

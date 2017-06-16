@@ -214,22 +214,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingRight="5dp"
-            android:text="@string/photoPieceLabel"
-            android:textSize="16sp" />
-
         <ImageView
             android:id="@+id/photoPiece_image"
             android:layout_width="match_parent"
             android:layout_height="63dp"
-            android:layout_margin="10dp"
-            android:scaleType="centerCrop"
             android:background="@color/colorField"
-            app:srcCompat="@drawable/temp_beeds" />
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_add_a_photo_black_48dp" />
 
 
     </LinearLayout>

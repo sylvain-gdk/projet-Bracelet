@@ -13,7 +13,7 @@
     <string name="descriptionPieceHint"></string>
     <string name="descriptionPieceMessage">La description de la pièce ne peut être vide</string>
 
-    <string name="dimensionPieceLabel">Dimensions:</string>
+    <string name="dimensionPieceLabel">Dim:</string>
     <string name="dimensionLargeurPieceHint">largeur (4-15 mm)</string>
     <string name="dimensionLongueurPieceHint">longueur (30-600 mm)</string>
     <string name="dimensionLargeurPieceMessage">La largeur doit être entre 4 et 15 mm</string>
@@ -26,14 +26,14 @@
     <string name="prixCoutantPieceHint">coutant (0.00 $)</string>
     <string name="prixCoutantPieceMessage">Le prix ne peut être 0 et doit être au format 0.00</string>
 
-    <string name="qtyPieceLabel">Quantité:</string>
+    <string name="qtyPieceLabel">Qté:</string>
     <string name="qtyPieceHint">en inventaire</string>
 
     <string name="typePieceLabel">Type:</string>
     <string name="typePieceHint">choisir un type</string>
     <string name="typePieceMessage">Il doit y avoir un type</string>
 
-    <string name="categoriePieceLabel">Catégorie:</string>
+    <string name="categoriePieceLabel">Cat:</string>
     <string name="categoriePieceHint">choisir une catégorie</string>
     <string name="categoriePieceMessage">Il doit y avoir une catégorie</string>
 
@@ -46,9 +46,9 @@
     <string name="retourPieces">Retour aux Pièces</string>
 
     <string name="ajouterPieceLabelMain">Ajouter une Pièce</string>
-    <string name="voirPieces">Voir les Pièces</string>
+    <string name="voirPieces">Pièces</string>
     <string name="ajouterBracelet">Faire un Bracelet</string>
-    <string name="voirBracelets">Voir les Bracelets</string>
+    <string name="voirBracelets">Bracelets</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>

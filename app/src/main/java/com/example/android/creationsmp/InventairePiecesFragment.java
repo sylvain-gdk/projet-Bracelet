@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,6 +86,22 @@ public class InventairePiecesFragment extends Fragment {
             }
         });
 
+        inventairePiecesAdapterView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int i, long id) {
+                PieceModel piece = inventairePiecesAdapter.getItem(i);
+                printConfirmerState(piece, "supprimée");
+                inventairePieces.removeFromInventairePieces(piece);
+                writeInventairePiece();
+                inventairePiecesAdapter.notifyDataSetChanged();
+
+                Log.v("long clicked","pos: " + i);
+
+                return true;
+            }
+        });
+
         return rootView;
     }
 
@@ -105,7 +122,7 @@ public class InventairePiecesFragment extends Fragment {
             inventairePieces.addToInventairePieces(piece);
             this.writeInventairePiece();
             inventairePiecesAdapter.notifyDataSetChanged();
-            printConfirmerAjout(piece);
+            printConfirmerState(piece, "ajoutée");
         }
     }
 
@@ -133,12 +150,15 @@ public class InventairePiecesFragment extends Fragment {
         }
     }
 
-    private void printConfirmerAjout(PieceModel piece){
+    private void printConfirmerState(PieceModel piece, String state){
+        String confirm = state;
         for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
-            if(i == inventairePieces.getInventairePieces().indexOf(piece)) {
-                String confirm = ("La pièce '" + piece.getNomPiece() + "' est ajouté.");
-                Toast.makeText(getContext(), confirm, Toast.LENGTH_SHORT).show();
+            if(i == inventairePieces.getInventairePieces().indexOf(piece) && state.equals("ajoutée")) {
+                confirm = ("La pièce '" + piece.getNomPiece() + "' est " + state + ".");
+            }else if(i == inventairePieces.getInventairePieces().indexOf(piece) && state.equals("supprimée")) {
+                confirm = ("La pièce '" + piece.getNomPiece() + "' est " + state + ".");
             }
         }
+        Toast.makeText(getContext(), confirm, Toast.LENGTH_SHORT).show();
     }
 }
