@@ -21,13 +21,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * Created by sylvain on 2017-05-16.
  */
 
-public class InventairePiecesFragment extends Fragment {
+public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSuppressionFragment.ConfirmSuppressionObserver
 
     // Adapteur pour la liste de pièces
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
@@ -35,6 +33,8 @@ public class InventairePiecesFragment extends Fragment {
     private InventairePieces inventairePieces;
     // Accède à la classe de pièces
     private PieceModel piece;
+
+    int result;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,10 +51,11 @@ public class InventairePiecesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            final int RESULT = 1;
-            Intent intent = new Intent(getActivity(), PieceActivityEdit.class);
-            intent.putExtra("ajouterPiece", piece);
-            startActivityForResult(intent, RESULT);
+                result = 1;
+                Intent intent = new Intent(getActivity(), PieceActivityEdit.class);
+                intent.putExtra("piece", piece);
+                intent.putExtra("inventairePieces", inventairePieces);
+                startActivityForResult(intent, result);
             }
         });
 
@@ -80,9 +81,12 @@ public class InventairePiecesFragment extends Fragment {
         inventairePiecesAdapterView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                PieceModel piece = inventairePiecesAdapter.getItem(i);
-                Intent intent = new Intent(getActivity(), PieceActivityView.class).putExtra("voirPiece", piece);
-                startActivity(intent);
+                piece = inventairePiecesAdapter.getItem(i);
+                result = 1;
+                Intent intent = new Intent(getActivity(), PieceActivityView.class);
+                intent.putExtra("piece", piece);
+                intent.putExtra("inventairePieces", inventairePieces);
+                startActivityForResult(intent, result);
             }
         });
 
@@ -90,11 +94,13 @@ public class InventairePiecesFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int i, long id) {
-                PieceModel piece = inventairePiecesAdapter.getItem(i);
-                printConfirmerState(piece, "supprimée");
-                inventairePieces.removeFromInventairePieces(piece);
-                writeInventairePiece();
-                inventairePiecesAdapter.notifyDataSetChanged();
+                piece = inventairePiecesAdapter.getItem(i);
+                ConfirmeSuppressionFragment dialogFrag = new ConfirmeSuppressionFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("piece",piece);
+                dialogFrag.setArguments(args);
+                dialogFrag.setTargetFragment(InventairePiecesFragment.this, 2);
+                dialogFrag.show(getFragmentManager(), "dialog");
 
                 Log.v("long clicked","pos: " + i);
 
@@ -102,8 +108,10 @@ public class InventairePiecesFragment extends Fragment {
             }
         });
 
+
         return rootView;
     }
+
 
     /**
      * Option pour revenir au parent et sauvegarder la liste de pièces
@@ -117,12 +125,18 @@ public class InventairePiecesFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            piece = (PieceModel) data.getSerializableExtra("nouvellePiece");
+        if(resultCode == 1) {
+            piece = (PieceModel) data.getSerializableExtra("piece");
             inventairePieces.addToInventairePieces(piece);
             this.writeInventairePiece();
             inventairePiecesAdapter.notifyDataSetChanged();
             printConfirmerState(piece, "ajoutée");
+        }
+        else if(resultCode == 2){
+            inventairePieces.removeFromInventairePieces(piece);
+            this.writeInventairePiece();
+            inventairePiecesAdapter.notifyDataSetChanged();
+            printConfirmerState(piece, "supprimée");
         }
     }
 
@@ -161,4 +175,9 @@ public class InventairePiecesFragment extends Fragment {
         }
         Toast.makeText(getContext(), confirm, Toast.LENGTH_SHORT).show();
     }
+
+    /*@Override
+    public void updateResult(int result) {
+        this.result = result;
+    }*/
 }

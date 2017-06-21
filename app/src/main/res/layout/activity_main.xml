@@ -13,8 +13,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="80dp"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -29,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:onClick="voirPiecesListener"
-            android:text="@string/voirPieces"
+            android:text="@string/piecesLabel"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -37,8 +38,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="80dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -53,7 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:onClick="voirBraceletsListener"
-            android:text="@string/voirBracelets"
+            android:text="@string/braceletsLabel"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
 
     </LinearLayout>

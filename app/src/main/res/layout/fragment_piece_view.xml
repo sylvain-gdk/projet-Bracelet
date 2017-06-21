@@ -47,21 +47,30 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/nomPiece_text"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="@color/colorField"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nomPiece_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="60dp"
         android:layout_marginRight="30dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -193,15 +202,6 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
-
-
-            <Button
-                android:id="@+id/voirListeBouton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:onClick="voirListeListener"
-                android:text="@string/retourPieces" />
 
 
     </LinearLayout>

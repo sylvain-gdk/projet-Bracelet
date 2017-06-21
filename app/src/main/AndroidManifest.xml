@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_cmp"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/appName"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -16,18 +16,22 @@
         </activity>
         <activity
             android:name=".PieceActivityEdit"
-            android:label="Ajouter une Pièce"
+            android:label="@string/ajouterPieceBoutonLabel"
             android:theme="@style/AppTheme">
 
         </activity>
         <activity
             android:name=".PieceActivityView"
-            android:label="Pièce"
-            android:theme="@style/AppTheme">
+            android:label="@string/piecesLabel"
+            android:theme="@style/AppTheme"
+            android:parentActivityName="InventairePiecesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="InventairePiecesActivity" />
         </activity>
         <activity
             android:name=".InventairePiecesActivity"
-            android:label="Inventaire des Pièces"
+            android:label="@string/inventairePieceLabel"
             android:theme="@style/AppTheme"
             android:parentActivityName="MainActivity" >
             <meta-data

@@ -220,7 +220,8 @@
             android:layout_height="63dp"
             android:background="@color/colorField"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_add_a_photo_black_48dp" />
+            app:srcCompat="@drawable/ic_add_a_photo_black_48dp"
+            android:layout_marginTop="20dp"/>
 
 
     </LinearLayout>
@@ -239,7 +240,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="ajouterPieceListener"
-            android:text="@string/ajouterPieceLabel" />
+            android:text="@string/ajouterBoutonLabel" />
 
         <Button
             android:id="@+id/annulerAjouterPieceBouton"
@@ -247,7 +248,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="annulerAjouterPieceListener"
-            android:text="@string/annulerAjouterPieceLabel" />
+            android:text="@string/annulerBoutonLabel" />
 
 
     </LinearLayout>

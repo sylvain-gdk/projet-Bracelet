@@ -40,18 +40,17 @@
     <string name="photoPieceLabel">Photo:</string>
     <string name="photoPieceHint">photo</string>
 
-    <string name="ajouterPieceLabel">Ajouter</string>
-    <string name="annulerAjouterPieceLabel">Annuler</string>
+    <string name="ajouterBoutonLabel">Ajouter</string>
+    <string name="annulerBoutonLabel">Annuler</string>
 
-    <string name="retourPieces">Retour aux Pièces</string>
-
-    <string name="ajouterPieceLabelMain">Ajouter une Pièce</string>
-    <string name="voirPieces">Pièces</string>
-    <string name="ajouterBracelet">Faire un Bracelet</string>
-    <string name="voirBracelets">Bracelets</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="retourPiecesBoutonLabel">Retour aux Pièces</string>
+    <string name="ajouterPieceBoutonLabel">Ajouter une Pièce</string>
+    <string name="ajouterBraceletBoutonLabel">Faire un Bracelet</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="piecesLabel">Pièces</string>
+    <string name="inventairePieceLabel">Inventaire de Pièces</string>
+    <string name="braceletsLabel">Bracelets</string>
+    <string name="inventaireBraceletLabel">Inventaire de Bracelets</string>
 
 
 </resources>

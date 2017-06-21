@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,9 +14,10 @@ public class PieceActivityView extends AppCompatActivity {
 
     private TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece, categoriePiece;
 
+    // Accède à la classe de liste de pièces
     private InventairePieces inventairePieces;
-    protected PieceModel piece;
-
+    // Accède à la classe de pièces
+    private PieceModel piece;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +28,25 @@ public class PieceActivityView extends AppCompatActivity {
                     .add(R.id.activity_piece_view_container, new PlaceholderFragment())
                     .commit();
         }
+        Intent intent = this.getIntent();
+        piece = (PieceModel) intent.getSerializableExtra("piece");
+        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
     }
 
     public void voirListeListener(View view) {
         finish();
+    }
+
+    /**
+     * Option pour revenir au parent
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, InventairePiecesActivity.class)
+                .putExtra("inventairePieces", inventairePieces);
+        setResult(RESULT_OK, intent);
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -45,9 +62,11 @@ public class PieceActivityView extends AppCompatActivity {
                                  Bundle savedInstanceState) {
 
             Intent intent = getActivity().getIntent();
-            PieceModel piece = (PieceModel) intent.getSerializableExtra("voirPiece");
+            PieceModel piece = (PieceModel) intent.getSerializableExtra("piece");
 
             View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
+
+            getActivity().setTitle(piece.getNomPiece());
 
             ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
             ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());

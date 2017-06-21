@@ -1,19 +1,22 @@
 package com.example.android.creationsmp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 public class PieceActivityEdit extends AppCompatActivity {
 
     private InventairePieces inventairePieces;
-    private PieceModel piece;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
     private Spinner typePiece, categoriePiece;
@@ -24,7 +27,10 @@ public class PieceActivityEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_edit);
 
-        this.piece = new PieceModel();
+        this.inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
+
+        Intent intent = this.getIntent();
+        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
 
         codePiece = (EditText) findViewById(R.id.codePiece_edit);
         nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
@@ -37,9 +43,6 @@ public class PieceActivityEdit extends AppCompatActivity {
         addListenerToTypeSpinner();
         addItemsToCategorieSpinner();
         addListenerToCategorieSpinner();
-
-        Intent intent = this.getIntent();
-        piece = (PieceModel) intent.getSerializableExtra("ajouterPiece");
 
     }
 
@@ -103,45 +106,66 @@ public class PieceActivityEdit extends AppCompatActivity {
      * @param view
      */
     public void ajouterPieceListener(View view) {
-
+        boolean pass = true;
         PieceModel piece = new PieceModel();
 
         try{
-            if(!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-                codePiece.setError("Le code doit avoir entre 1 et 4 chiffres");
-                codePiece.requestFocus();
-            }else if(!piece.setNomPiece(nomPiece.getText().toString())) {
-                nomPiece.setError("Le nom de la pièce ne peut être vide");
-                nomPiece.requestFocus();
-            }else if(!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                descriptionPiece.setError("La description de la pièce ne peut être vide");
-                descriptionPiece.requestFocus();
-            }else if(!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-                dimensionPiece.setError("La dimension doit être entre 4 et 15 mm");
-                dimensionPiece.requestFocus();
-            }else if(!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-                prixCoutantPiece.setError("Le prix ne peut être 0 et doit être au format 0.00");
-                prixCoutantPiece.requestFocus();
-            }else if(piece.getCodePiece() > 0) {
-                piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
-                piece.setTypePiece(type);
-                piece.setCategoriePiece(categorie);
 
-                Intent intent = new Intent(this, InventairePiecesActivity.class)
-                        .putExtra("nouvellePiece", piece);
-                setResult(RESULT_OK, intent);
+            /*for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++){
+                if(inventairePieces.getInventairePieces().get(i)
+                        .getCodePiece() == Integer.parseInt(codePiece.getText().toString()))
+                    codePiece.setError("Le code existe déja");
+                    codePiece.requestFocus();
+            }*/
 
-                finish();
+            for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
+                if (inventairePieces.getInventairePieces().get(i)
+                        .getCodePiece() == Integer.parseInt(codePiece.getText().toString())) {
+                    showError("Ce code existe déja", codePiece);
+                    pass = false;
+                } else if(pass){
+                    if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
+                        showError("Le code doit avoir entre 1 et 4 chiffres", codePiece);
+                    } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
+                        showError("Le nom de la pièce ne peut être vide", nomPiece);
+                    } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
+                        showError("La description de la pièce ne peut être vide", descriptionPiece);
+                    } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
+                        showError("La dimension doit être entre 4 et 15 mm", dimensionPiece);
+                    } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
+                        showError("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
+                    } else if (piece.getCodePiece() > 0) {
+                        piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
+                        piece.setTypePiece(type);
+                        piece.setCategoriePiece(categorie);
+
+                        Intent intent = new Intent(this, InventairePiecesActivity.class)
+                                .putExtra("piece", piece);
+                        setResult(1, intent);
+
+                        finish();
+                    }
+                }
             }
+
+
         }catch(NumberFormatException e){
             Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
         }
+
+
     }
 
 
-    private void validateCode(){
-
+    private void showError(String error, EditText textField){
+        textField.requestFocus();
+        textField.setError(error);
+        InputMethodManager im = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (im != null) {
+            // only will trigger it if no physical keyboard is open
+            im.showSoftInput(textField, 0);
+        }
     }
 
     /**
