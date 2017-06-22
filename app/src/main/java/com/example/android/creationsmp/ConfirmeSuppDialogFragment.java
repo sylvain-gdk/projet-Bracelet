@@ -14,7 +14,7 @@ import static android.app.Activity.RESULT_CANCELED;
  * Created by sylvain on 2017-06-20.
  */
 
-public class ConfirmeSuppressionFragment extends DialogFragment {
+public class ConfirmeSuppDialogFragment extends DialogFragment {
 
     // Accède à la classe de pièces
     private PieceModel piece;
@@ -27,7 +27,7 @@ public class ConfirmeSuppressionFragment extends DialogFragment {
 
         AlertDialog.Builder dialogue = new AlertDialog.Builder(getActivity());
 
-        dialogue.setTitle("Attention");
+        dialogue.setTitle("Attention!");
         dialogue.setMessage("Êtes-vous certain de vouloir supprimer '" + piece.getNomPiece() + "'?");
 
         // Add text for a positive button

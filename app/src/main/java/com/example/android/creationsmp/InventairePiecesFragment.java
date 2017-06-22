@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Created by sylvain on 2017-05-16.
  */
 
-public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSuppressionFragment.ConfirmSuppressionObserver
+public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSuppDialogFragment.ConfirmSuppressionObserver
 
     // Adapteur pour la liste de pièces
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
@@ -51,11 +51,10 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                result = 1;
-                Intent intent = new Intent(getActivity(), PieceActivityEdit.class);
+                Intent intent = new Intent(getActivity(), PieceEditActivity.class);
                 intent.putExtra("piece", piece);
                 intent.putExtra("inventairePieces", inventairePieces);
-                startActivityForResult(intent, result);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -82,20 +81,20 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 piece = inventairePiecesAdapter.getItem(i);
-                result = 1;
-                Intent intent = new Intent(getActivity(), PieceActivityView.class);
+                Intent intent = new Intent(getActivity(), PieceViewActivity.class);
                 intent.putExtra("piece", piece);
                 intent.putExtra("inventairePieces", inventairePieces);
-                startActivityForResult(intent, result);
+                startActivityForResult(intent, 1);
+
+                Log.v("short clicked","pos: " + i);
             }
         });
-
+        // Supprime une pièce en cliquant sur un item de la liste longuement
         inventairePiecesAdapterView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int i, long id) {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long id) {
                 piece = inventairePiecesAdapter.getItem(i);
-                ConfirmeSuppressionFragment dialogFrag = new ConfirmeSuppressionFragment();
+                ConfirmeSuppDialogFragment dialogFrag = new ConfirmeSuppDialogFragment();
                 Bundle args = new Bundle();
                 args.putSerializable("piece",piece);
                 dialogFrag.setArguments(args);

@@ -15,13 +15,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PieceActivityEdit"
+            android:name=".PieceEditActivity"
             android:label="@string/ajouterPieceBoutonLabel"
             android:theme="@style/AppTheme">
 
         </activity>
         <activity
-            android:name=".PieceActivityView"
+            android:name=".PieceViewActivity"
             android:label="@string/piecesLabel"
             android:theme="@style/AppTheme"
             android:parentActivityName="InventairePiecesActivity" >

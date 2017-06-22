@@ -14,7 +14,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class PieceActivityEdit extends AppCompatActivity {
+public class PieceEditActivity extends AppCompatActivity {
 
     private InventairePieces inventairePieces;
 
