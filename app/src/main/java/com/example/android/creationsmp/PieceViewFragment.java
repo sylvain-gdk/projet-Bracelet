@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,8 +13,6 @@ import android.widget.TextView;
  */
 
 public class PieceViewFragment extends Fragment {
-
-    private TextView codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece, typePiece, categoriePiece;
 
     // Accède à la classe de liste de pièces
     private InventairePieces inventairePieces;
@@ -29,16 +26,6 @@ public class PieceViewFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    /**
-     * Option pour revenir au parent
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /*Intent intent = new Intent();
-        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_CANCELED, intent);*/
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +33,8 @@ public class PieceViewFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         piece = (PieceModel) intent.getSerializableExtra("piece");
         inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+
+        Bundle args = new Bundle();
 
         View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
 

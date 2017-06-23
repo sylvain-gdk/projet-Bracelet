@@ -175,6 +175,7 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         Toast.makeText(getContext(), confirm, Toast.LENGTH_SHORT).show();
     }
 
+
     /*@Override
     public void updateResult(int result) {
         this.result = result;
