@@ -34,7 +34,8 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
     // Accède à la classe de pièces
     private PieceModel piece;
 
-    int result;
+    // L'ensemble pièce et inventaire
+    private Bundle bundle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,17 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
                 Intent intent = new Intent(getActivity(), PieceViewActivity.class);
                 intent.putExtra("piece", piece);
                 intent.putExtra("inventairePieces", inventairePieces);
+                intent.putExtra("position", i);
                 startActivityForResult(intent, 1);
+
+                /*piece = inventairePiecesAdapter.getItem(i);
+                PieceViewFragment Frag = new PieceViewFragment();
+                bundle = new Bundle();
+                bundle.putSerializable("piece",piece);
+                bundle.putSerializable("inventairePieces",inventairePieces);
+                bundle.putInt("position", i);
+                Frag.setArguments(bundle);
+                Frag.setTargetFragment(InventairePiecesFragment.this, 1);*/
 
                 Log.v("short clicked","pos: " + i);
             }
@@ -95,9 +106,10 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long id) {
                 piece = inventairePiecesAdapter.getItem(i);
                 ConfirmeSuppDialogFragment dialogFrag = new ConfirmeSuppDialogFragment();
-                Bundle args = new Bundle();
-                args.putSerializable("piece",piece);
-                dialogFrag.setArguments(args);
+                bundle = new Bundle();
+                bundle.putSerializable("piece",piece);
+                bundle.putSerializable("inventairePieces",inventairePieces);
+                dialogFrag.setArguments(bundle);
                 dialogFrag.setTargetFragment(InventairePiecesFragment.this, 2);
                 dialogFrag.show(getFragmentManager(), "dialog");
 
