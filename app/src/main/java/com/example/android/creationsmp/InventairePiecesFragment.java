@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 /**
  * Created by sylvain on 2017-05-16.
+ * This class is the inventory of items PieceModel
  */
 
 public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSuppDialogFragment.ConfirmSuppressionObserver
@@ -83,9 +84,8 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 piece = inventairePiecesAdapter.getItem(i);
                 Intent intent = new Intent(getActivity(), PieceViewActivity.class);
-                intent.putExtra("piece", piece);
                 intent.putExtra("inventairePieces", inventairePieces);
-                intent.putExtra("position", i);
+                intent.putExtra("posClicked", i);
                 startActivityForResult(intent, 1);
 
                 /*piece = inventairePiecesAdapter.getItem(i);
@@ -100,7 +100,7 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
                 Log.v("short clicked","pos: " + i);
             }
         });
-        // Supprime une pièce en cliquant sur un item de la liste longuement
+        // Supprime une pièce en cliquant longuement sur un item de la liste
         inventairePiecesAdapterView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long id) {

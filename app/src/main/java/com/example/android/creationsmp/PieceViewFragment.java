@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 /**
  * Created by sylvain on 2017-06-22.
+ * This is the fragment for the details of each item
  */
 
 public class PieceViewFragment extends Fragment {
@@ -20,21 +21,18 @@ public class PieceViewFragment extends Fragment {
     // Accède à la classe de pièces
     private PieceModel piece;
 
-    private int position;
+    private int positionViewPager;
 
-    protected static PieceViewFragment create(int pos, int position, PieceModel piece, InventairePieces inventairePieces) {
+    private int positionClicked;
+
+
+    protected static PieceViewFragment create(int posViewPager, int posClicked, InventairePieces inventairePieces) {
         PieceViewFragment fragment = new PieceViewFragment();
         Bundle args = new Bundle();
-        args.putInt("position", pos);
-        args.putSerializable("piece", inventairePieces.getInventairePieces().get(pos));
-        args.putSerializable("inventairePieces", inventairePieces);
+        args.putInt("posViewPager", posViewPager); //the position from the overriden method getItem() in PieceViewActivity$InventairePiecesPagerAdapter
+        args.putInt("posClicked", posClicked); //the position when it was clicked in inventairePiecesFragment
+        args.putSerializable("inventairePieces", inventairePieces); //the collection of items PieceModel (inventory)
         fragment.setArguments(args);
-
-        Log.v("Fragment", "Pos: " + pos);
-        Log.v("Fragment", "Position: " + position);
-        Log.v("Fragment" , "Piece: " + piece.getNomPiece());
-        Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());
-
         return fragment;
 
     }
@@ -42,24 +40,31 @@ public class PieceViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
-
-        if(getArguments() != null) {
-            position = getArguments().getInt("position");
-            piece = (PieceModel) getArguments().getSerializable("piece");
-            inventairePieces = (InventairePieces) getArguments().getSerializable("inventairePieces");
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        if(getArguments() != null) {
+            positionClicked = getArguments().getInt("posClicked");
+            positionViewPager = getArguments().getInt("posViewPager");
+            inventairePieces = (InventairePieces) getArguments().getSerializable("inventairePieces");
+            piece = inventairePieces.getInventairePieces().get(positionViewPager);
+        }
+
+
+        Log.v("Fragment", "Pos View: " + positionViewPager);
+        Log.v("Fragment", "Pos Clicked: " + positionClicked);
+        Log.v("Fragment" , "Piece: " + piece.getNomPiece());
+        Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());
+
         View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
 
-        getActivity().setTitle(piece.getNomPiece());
+        getActivity().setTitle(piece.getNomPiece()); //the title in the action bar
         
+        // the item card
         ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
         ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
         ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());

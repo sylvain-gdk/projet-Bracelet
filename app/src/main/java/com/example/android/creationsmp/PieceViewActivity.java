@@ -7,7 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+/**
+ * Created by sylvain on 2017-05-16.
+ * This class is the Activity for the details of each item
+ */
 
 public class PieceViewActivity extends AppCompatActivity {
 
@@ -36,9 +40,8 @@ public class PieceViewActivity extends AppCompatActivity {
 
         // receives the intent
         Intent intent = this.getIntent();
-        piece = (PieceModel) intent.getSerializableExtra("piece");
         inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
-        position = (int) intent.getSerializableExtra("position");
+        position = (int) intent.getSerializableExtra("posClicked");
 
         // sends a bundle to the fragment
         /*Fragment frag = new PieceViewFragment();
@@ -52,10 +55,6 @@ public class PieceViewActivity extends AppCompatActivity {
         inventairePiecesPagerAdapter = new InventairePiecesPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.activity_piece_view_container);
         mViewPager.setAdapter(inventairePiecesPagerAdapter);
-
-        Log.v("Activity", "Position: " + position);
-        Log.v("Activity" , "Piece: " + piece.getNomPiece());
-        Log.v("Activity", "Inventaire: " + inventairePieces.getInventairePieces().size());
     }
 
     public class InventairePiecesPagerAdapter extends FragmentStatePagerAdapter {
@@ -65,11 +64,12 @@ public class PieceViewActivity extends AppCompatActivity {
         }
 
         @Override
-        public Fragment getItem(int pos) {
-            return PieceViewFragment.create(pos, position, piece, inventairePieces);
+        public Fragment getItem(int posView) {
+            return PieceViewFragment.create(posView, position, inventairePieces);
         }
 
         @Override
+        //the amount of items in the inventory
         public int getCount() {
             return inventairePieces.getInventairePieces().size();
         }
