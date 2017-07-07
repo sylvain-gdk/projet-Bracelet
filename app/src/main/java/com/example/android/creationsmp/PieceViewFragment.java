@@ -1,5 +1,6 @@
 package com.example.android.creationsmp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,26 +16,23 @@ import android.widget.TextView;
 
 public class PieceViewFragment extends Fragment {
 
+    protected OnSwipeTouchListener onSwipeTouchListener;
 
     // Accède à la classe de liste de pièces
     private InventairePieces inventairePieces;
     // Accède à la classe de pièces
     private PieceModel piece;
 
-    private int positionViewPager;
-
     private int positionClicked;
 
-
-    protected static PieceViewFragment create(int posViewPager, int posClicked, InventairePieces inventairePieces) {
+    protected static PieceViewFragment create(int posClicked, InventairePieces inventairePieces) {
         PieceViewFragment fragment = new PieceViewFragment();
         Bundle args = new Bundle();
-        args.putInt("posViewPager", posViewPager); //the position from the overriden method getItem() in PieceViewActivity$InventairePiecesPagerAdapter
+        //args.putInt("posViewPager", posViewPager); //the position from the overriden method getItem() in PieceViewActivity$InventairePiecesPagerAdapter
         args.putInt("posClicked", posClicked); //the position when it was clicked in inventairePiecesFragment
         args.putSerializable("inventairePieces", inventairePieces); //the collection of items PieceModel (inventory)
         fragment.setArguments(args);
         return fragment;
-
     }
 
     @Override
@@ -47,22 +45,45 @@ public class PieceViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if(getArguments() != null) {
-            positionClicked = getArguments().getInt("posClicked");
-            positionViewPager = getArguments().getInt("posViewPager");
-            inventairePieces = (InventairePieces) getArguments().getSerializable("inventairePieces");
-            piece = inventairePieces.getInventairePieces().get(positionViewPager);
-        }
+        View rootView = inflater.inflate(R.layout.fragment_piece_view, null, false);
 
+        // receives the intent
+        Intent intent = getActivity().getIntent();
+        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+        positionClicked = (int) intent.getSerializableExtra("posClicked");
+        //piece = (PieceModel) intent.getSerializableExtra("piece");
+        piece = inventairePieces.getInventairePieces().get(positionClicked);
 
-        Log.v("Fragment", "Pos View: " + positionViewPager);
+        rootView.setOnTouchListener(new OnSwipeTouchListener(getContext()){
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+                Log.v("Fragment", "onSwipeRight - ");
+                if (positionClicked > 0) {
+                    positionClicked--;
+                    piece = inventairePieces.getInventairePieces().get(positionClicked);
+                    Log.v("Fragment", "Pos Clicked: " + positionClicked);
+                    Log.v("Fragment" , "Piece: " + piece.getNomPiece());
+                    Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());                }
+            }
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+                Log.v("Fragment", "onSwipeLeft + ");
+                if(positionClicked < inventairePieces.getInventairePieces().size()-1) {
+                    positionClicked++;
+                    piece = inventairePieces.getInventairePieces().get(positionClicked);
+                    Log.v("Fragment", "Pos Clicked: " + positionClicked);
+                    Log.v("Fragment" , "Piece: " + piece.getNomPiece());
+                    Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());                }
+            }
+        });
+
+        getActivity().setTitle(piece.getNomPiece()); //the title in the action bar
+
         Log.v("Fragment", "Pos Clicked: " + positionClicked);
         Log.v("Fragment" , "Piece: " + piece.getNomPiece());
         Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());
-
-        View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
-
-        getActivity().setTitle(piece.getNomPiece()); //the title in the action bar
         
         // the item card
         ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));

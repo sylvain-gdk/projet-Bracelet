@@ -85,17 +85,20 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
                 piece = inventairePiecesAdapter.getItem(i);
                 Intent intent = new Intent(getActivity(), PieceViewActivity.class);
                 intent.putExtra("inventairePieces", inventairePieces);
+                //intent.putExtra("piece", piece);
                 intent.putExtra("posClicked", i);
                 startActivityForResult(intent, 1);
 
                 /*piece = inventairePiecesAdapter.getItem(i);
                 PieceViewFragment Frag = new PieceViewFragment();
                 bundle = new Bundle();
-                bundle.putSerializable("piece",piece);
+                //bundle.putSerializable("piece",piece);
                 bundle.putSerializable("inventairePieces",inventairePieces);
-                bundle.putInt("position", i);
+                bundle.putInt("posClicked", i);
                 Frag.setArguments(bundle);
                 Frag.setTargetFragment(InventairePiecesFragment.this, 1);*/
+
+                //PieceViewFragment.create(i, inventairePieces);
 
                 Log.v("short clicked","pos: " + i);
             }
