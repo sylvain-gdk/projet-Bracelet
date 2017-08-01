@@ -161,8 +161,10 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             outputStream.writeObject(inventairePieces);
             outputStream.close();
             outputFile.close();
+            Log.v("––> Wrote to ", "InventairePiece.ser");
         } catch (Exception ex) {
             ex.printStackTrace();
+            Log.v("––> Cannot write to ", "InventairePiece.ser");
         }
     }
 
@@ -173,8 +175,24 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             inventairePieces = (InventairePieces) inputStream.readObject();
             inputStream.close();
             inputFile.close();
+            Log.v("––> Loaded ", "InventairePiece.ser");
+            if(inventairePieces.getInventairePieces().size() < 1) {
+                Log.v("––> Loaded ", "but file is empty... writing default value");
+                PieceModel piece = new PieceModel();
+                piece.setCodePiece(3625);
+                piece.setNomPiece("Pièce Temporaire");
+                piece.setDescriptionPiece("Description temporaire");
+                piece.setDimensionPiece(3);
+                piece.setPrixCoutantPiece(0.95);
+                piece.setQtyPiece(23);
+                piece.setTypePiece("type");
+                piece.setCategoriePiece("categorie");
+                inventairePieces.addToInventairePieces(piece);
+                this.writeInventairePiece();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
+            Log.v("––> Cannot read ", "InventairePiece.ser");
         }
     }
 

@@ -14,7 +14,6 @@ public class PieceViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_view);
-        PieceViewFragment frag;
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_piece_view_container, new PieceViewFragment())

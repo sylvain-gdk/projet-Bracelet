@@ -45,7 +45,7 @@ public class PieceViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_piece_view, null, false);
+        final View rootView = inflater.inflate(R.layout.fragment_piece_view, null, false);
 
         // receives the intent
         Intent intent = getActivity().getIntent();
@@ -54,32 +54,8 @@ public class PieceViewFragment extends Fragment {
         //piece = (PieceModel) intent.getSerializableExtra("piece");
         piece = inventairePieces.getInventairePieces().get(positionClicked);
 
-        rootView.setOnTouchListener(new OnSwipeTouchListener(getContext()){
-            @Override
-            public void onSwipeRight() {
-                super.onSwipeRight();
-                Log.v("Fragment", "onSwipeRight - ");
-                if (positionClicked > 0) {
-                    positionClicked--;
-                    piece = inventairePieces.getInventairePieces().get(positionClicked);
-                    Log.v("Fragment", "Pos Clicked: " + positionClicked);
-                    Log.v("Fragment" , "Piece: " + piece.getNomPiece());
-                    Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());                }
-            }
-            @Override
-            public void onSwipeLeft() {
-                super.onSwipeLeft();
-                Log.v("Fragment", "onSwipeLeft + ");
-                if(positionClicked < inventairePieces.getInventairePieces().size()-1) {
-                    positionClicked++;
-                    piece = inventairePieces.getInventairePieces().get(positionClicked);
-                    Log.v("Fragment", "Pos Clicked: " + positionClicked);
-                    Log.v("Fragment" , "Piece: " + piece.getNomPiece());
-                    Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());                }
-            }
-        });
-
-        getActivity().setTitle(piece.getNomPiece()); //the title in the action bar
+        // sets the title in the action bar
+        getActivity().setTitle(piece.getNomPiece());
 
         Log.v("Fragment", "Pos Clicked: " + positionClicked);
         Log.v("Fragment" , "Piece: " + piece.getNomPiece());
@@ -94,6 +70,67 @@ public class PieceViewFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
         ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
         ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
+
+        rootView.setOnTouchListener(new OnSwipeTouchListener(getContext()){
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+                Log.v("Fragment", "onSwipeRight - ");
+                if (positionClicked > 0) {
+                    positionClicked--;
+                    piece = inventairePieces.getInventairePieces().get(positionClicked);
+
+                    // sets the title in the action bar
+                    getActivity().setTitle(piece.getNomPiece());
+
+                    // the item card
+                    ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
+                    ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
+                    ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
+                    ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");
+                    ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
+                    ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
+                    ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
+                    ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
+
+                    Log.v("Fragment", "Pos Clicked: " + positionClicked);
+                    Log.v("Fragment" , "Piece: " + piece.getNomPiece());
+                    Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());
+
+                    SlideAnimationUtil.slideInFromLeft(getContext(), getView());
+
+                }
+            }
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+                Log.v("Fragment", "onSwipeLeft + ");
+                if(positionClicked < inventairePieces.getInventairePieces().size()-1) {
+                    positionClicked++;
+                    piece = inventairePieces.getInventairePieces().get(positionClicked);
+
+                    // sets the title in the action bar
+                    getActivity().setTitle(piece.getNomPiece());
+
+                    // the item card
+                    ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
+                    ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
+                    ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
+                    ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");
+                    ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
+                    ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
+                    ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
+                    ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
+
+                    Log.v("Fragment", "Pos Clicked: " + positionClicked);
+                    Log.v("Fragment" , "Piece: " + piece.getNomPiece());
+                    Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());
+
+                    SlideAnimationUtil.slideInFromRight(getContext(), getView());
+
+                }
+            }
+        });
 
         return rootView;
     }
