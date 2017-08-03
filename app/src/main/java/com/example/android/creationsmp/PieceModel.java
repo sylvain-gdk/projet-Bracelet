@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by sylvain on 2017-04-10.
+ * This is the Model
  */
 
 public class PieceModel implements Serializable {
@@ -24,18 +25,18 @@ public class PieceModel implements Serializable {
 
 
     /**
-     * Accède au le code pièce
-     * @return le code de la pièce
+     * Gets the code
+     * @return the code
      */
     protected int getCodePiece() {
         return codePiece;
     }
 
     /**
-     * Setter pour le code pièce
-     * Vérifie si le code est entre 1 et 4 chiffres
-     * @param codPiece le code de la pièce
-     * @return true si valide
+     * Sets the code
+     * Checks if the code has between 1 and 4 digits
+     * @param codPiece the code
+     * @return true if valid
      */
     protected boolean setCodePiece(int codPiece) {
         boolean pass;
@@ -49,18 +50,18 @@ public class PieceModel implements Serializable {
     }
 
     /**
-     * Accède au nom de la pièce
-     * @return le nom de la pièce
+     * Gets the name
+     * @return the name
      */
     protected String getNomPiece() {
         return nomPiece;
     }
 
     /**
-     * Setter pour le nom de la pièce
-     * Vérifie si le nom n'est pas vide
-     * @param nomPiece le nom de la pièce
-     * @return true si valide
+     * Sets the name
+     * Checks if name is not empty
+     * @param nomPiece the name
+     * @return true if valid
      */
     protected boolean setNomPiece(String nomPiece) {
         boolean pass;
@@ -74,18 +75,18 @@ public class PieceModel implements Serializable {
     }
 
     /**
-     * Accède à la description de la pièce
-     * @return la description de la pièce
+     * Gets the description
+     * @return the description
      */
     protected String getDescriptionPiece() {
         return descriptionPiece;
     }
 
     /**
-     * Setter pour la description de la pièce
-     * Vérifie si la description n'est pas vide
-     * @param descPiece la description de la pièce
-     * @return true si valide
+     * Sets the description
+     * Checks if description is not empty
+     * @param descPiece the description
+     * @return true if valid
      */
     protected boolean setDescriptionPiece(String descPiece) {
         boolean pass;
@@ -99,18 +100,18 @@ public class PieceModel implements Serializable {
     }
 
     /**
-     * Accède à la dimension de la pièce
-     * @return la dimension de la pièce
+     * Gets the dimension
+     * @return the dimension
      */
     protected int getDimensionPiece() {
         return dimensionPiece;
     }
 
     /**
-     * Setter pour la dimension de la pièce
-     * Vérifie si la dimension n'est pas vide
-     * @param dimPiece la dimension de la pièce
-     * @return true si valide
+     * Sets the dimension
+     * Checks if dimension is not empty
+     * @param dimPiece the dimension
+     * @return true if valid
      */
     protected boolean setDimensionPiece(int dimPiece) {
         boolean pass;
@@ -125,8 +126,8 @@ public class PieceModel implements Serializable {
 
 
     /**
-     * Accède au prix coutant de la pièce
-     * @return le prix coutant de la pièce
+     * Gets the price
+     * @return the price
      */
     protected double getPrixCoutantPiece() {
         return prixCoutantPiece;
@@ -134,10 +135,10 @@ public class PieceModel implements Serializable {
 
 
     /**
-     * Setter pour le prix coutant de la pièce
-     * Vérifie si le prix coutant respecte un format 0.00
-     * @param prixCoutantPiece le prix coutant de la pièce
-     * @return true si valide
+     * Sets the price
+     * Checks if price is in format 0.00
+     * @param prixCoutantPiece the price
+     * @return true if valid
      */
     protected boolean setPrixCoutantPiece(double prixCoutantPiece) {
         boolean pass;
@@ -153,72 +154,72 @@ public class PieceModel implements Serializable {
     }
 
     /**
-     * Accède à la quantité de pièces en inventaire
-     * @return la quantité de pièces en inventaire
+     * Gets the quantity in inventory
+     * @return the quantity in inventory
      */
     protected int getQtyPiece() {
         return qtyPiece;
     }
 
     /**
-     * Setter pour la quantité de pièces en inventaire
-     * @param qtyPiece la quantité de pièces en inventaire
+     * Sets the quantity in inventory
+     * @param qtyPiece the quantity in inventory
      */
     protected void setQtyPiece(int qtyPiece) {
         this.qtyPiece = qtyPiece;
     }
 
     /**
-     * Accède à la photo de la pièce
-     * @return la photo de la pièce
+     * Gets the picture
+     * @return the picture
      */
     protected Image getPhotoPiece() {
         return photoPiece;
     }
 
     /**
-     * Setter pour la photo de la pièce
-     * @param photoPiece la photo de la pièce
+     * Sets the picture
+     * @param photoPiece the picture
      */
     protected void setPhotoPiece(Image photoPiece) {
         this.photoPiece = photoPiece;
     }
 
     /**
-     * Accède au type de pièce
-     * @return le type de pièce
+     * Gets the type
+     * @return the type
      */
     protected String getTypePiece() {
         return typePiece;
     }
 
     /**
-     * Setter pour le type de pièce
-     * @param typePiece le type de pièce
+     * Sets the type
+     * @param typePiece the type
      */
     protected void setTypePiece(String typePiece) {
         this.typePiece = typePiece;
     }
 
     /**
-     * Accède à la catégorie de la pièce
-     * @return la catégorie de la pièce
+     * Gets the category
+     * @return the category
      */
     protected String getCategoriePiece() {
         return categoriePiece;
     }
 
     /**
-     * Setter pour la catégorie de la pièce
-     * @param categoriePiece la catégorie de la pièce
+     * Sets the category
+     * @param categoriePiece the category
      */
     protected void setCategoriePiece(String categoriePiece) {
         this.categoriePiece = categoriePiece;
     }
 
     /**
-     * formatage d'une rangée dans la liste de pièce
-     * @return le format de la rangée
+     * Formats a row in the inventory list
+     * @return the row format
      */
     @Override
     public String toString(){

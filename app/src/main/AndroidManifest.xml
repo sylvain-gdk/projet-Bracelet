@@ -16,14 +16,12 @@
         </activity>
         <activity
             android:name=".PieceEditActivity"
-            android:label="@string/ajouterPieceBoutonLabel"
-            android:theme="@style/AppTheme">
+            android:label="@string/ajouterPieceBoutonLabel">
 
         </activity>
         <activity
             android:name=".PieceViewActivity"
             android:label="@string/piecesLabel"
-            android:theme="@style/AppTheme"
             android:parentActivityName="InventairePiecesActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -32,7 +30,6 @@
         <activity
             android:name=".InventairePiecesActivity"
             android:label="@string/inventairePieceLabel"
-            android:theme="@style/AppTheme"
             android:parentActivityName="MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

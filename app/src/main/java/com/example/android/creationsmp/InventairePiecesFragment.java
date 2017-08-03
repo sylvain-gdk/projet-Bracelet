@@ -23,20 +23,17 @@ import java.util.ArrayList;
 
 /**
  * Created by sylvain on 2017-05-16.
- * This class is the inventory of items PieceModel
+ * This class is the fragment for the inventory of items PieceModel
  */
 
-public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSuppDialogFragment.ConfirmSuppressionObserver
+public class InventairePiecesFragment extends Fragment{
 
-    // Adapteur pour la liste de pièces
+    //An adapter for the inventory of objects "piece"
     private ArrayAdapter<PieceModel> inventairePiecesAdapter;
-    // Accède à la classe de liste de pièces
+    //Accesses the InventairePieces class
     private InventairePieces inventairePieces;
-    // Accède à la classe de pièces
+    //Accesses the PieceModel class
     private PieceModel piece;
-
-    // L'ensemble pièce et inventaire
-    private Bundle bundle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,11 +45,12 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Affiche un bouton flotant pour ajouter des pièces
+        //Shows a floating plus sign to add a new object "piece" to the inventory
         FloatingActionButton fab = (FloatingActionButton) container.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Shows the activity to add a new object "piece" to the inventory
                 Intent intent = new Intent(getActivity(), PieceEditActivity.class);
                 intent.putExtra("piece", piece);
                 intent.putExtra("inventairePieces", inventairePieces);
@@ -60,56 +58,46 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             }
         });
 
-        // Créé une liste de pièces
+        //Creates an inventory list of objects "piece"
         inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
-        // Importe un fichier qui contient une liste de pièces sauvegardé dans la nouvelle liste "inventairePieces"
+
+        //Imports a file that contains the inventory of objects "piece"
         this.readInventairePiece();
 
-        // Créé un adapteur pour la liste de pièces
+        //Creates an adapter for the inventory of objects "piece"
         inventairePiecesAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.liste_pieces_inventaire,
                 R.id.liste_pieces_inventaire_textview,
                 inventairePieces.getInventairePieces());
 
-        // Créé la vue de la liste de pièces à partir d'un fragment et l'attache à l'adapteur
+        //Creates a view for the inventory
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
 
+        //Creates a list form the inventory and binds it to the adapter
         ListView inventairePiecesAdapterView = (ListView) rootView.findViewById(R.id.listview_pieces_inventaire);
         inventairePiecesAdapterView.setAdapter(inventairePiecesAdapter);
 
-        // Accède à l'activité pour voir une pièce en cliquant sur un item de la liste
+        //Shows the detail activity of an object "piece" when an item from the list is clicked rapidly
         inventairePiecesAdapterView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 piece = inventairePiecesAdapter.getItem(i);
                 Intent intent = new Intent(getActivity(), PieceViewActivity.class);
                 intent.putExtra("inventairePieces", inventairePieces);
-                //intent.putExtra("piece", piece);
                 intent.putExtra("posClicked", i);
                 startActivityForResult(intent, 1);
-
-                /*piece = inventairePiecesAdapter.getItem(i);
-                PieceViewFragment Frag = new PieceViewFragment();
-                bundle = new Bundle();
-                //bundle.putSerializable("piece",piece);
-                bundle.putSerializable("inventairePieces",inventairePieces);
-                bundle.putInt("posClicked", i);
-                Frag.setArguments(bundle);
-                Frag.setTargetFragment(InventairePiecesFragment.this, 1);*/
-
-                //PieceViewFragment.create(i, inventairePieces);
 
                 Log.v("short clicked","pos: " + i);
             }
         });
-        // Supprime une pièce en cliquant longuement sur un item de la liste
+        //Shows an alert dialog before removing an object "piece" from the inventory when an item from the list is clicked longer
         inventairePiecesAdapterView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long id) {
                 piece = inventairePiecesAdapter.getItem(i);
                 ConfirmeSuppDialogFragment dialogFrag = new ConfirmeSuppDialogFragment();
-                bundle = new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("piece",piece);
                 bundle.putSerializable("inventairePieces",inventairePieces);
                 dialogFrag.setArguments(bundle);
@@ -128,7 +116,7 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
 
 
     /**
-     * Option pour revenir au parent et sauvegarder la liste de pièces
+     * Option to return to parent activity and save the inventory of objects "piece" in a file
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,6 +124,12 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Return result for an object "piece" that was handled in another activity: added or removed depending on a code
+     * @param requestCode the request code
+     * @param resultCode the returning code that tells how to handle the object
+     * @param data the intent that was returned
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -154,6 +148,9 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         }
     }
 
+    /**
+     * Saves the inventory of objects "piece" in a file
+     */
     private void writeInventairePiece(){
         try {
             FileOutputStream outputFile = this.getContext().openFileOutput("InventairePiece.ser", Context.MODE_PRIVATE);
@@ -168,6 +165,9 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         }
     }
 
+    /**
+     * Reads the inventory of objects "piece" from a file
+     */
     private void readInventairePiece(){
         try {
             FileInputStream inputFile = this.getContext().openFileInput("InventairePiece.ser");
@@ -176,6 +176,7 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
             inputStream.close();
             inputFile.close();
             Log.v("––> Loaded ", "InventairePiece.ser");
+            //Creates an object "piece" as default if the file is empty
             if(inventairePieces.getInventairePieces().size() < 1) {
                 Log.v("––> Loaded ", "but file is empty... writing default value");
                 PieceModel piece = new PieceModel();
@@ -196,6 +197,11 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         }
     }
 
+    /**
+     * Prints the status of an object "piece" in a Toast style
+     * @param piece the object from the inventory
+     * @param state the status of the object
+     */
     private void printConfirmerState(PieceModel piece, String state){
         String confirm = state;
         for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
@@ -208,9 +214,4 @@ public class InventairePiecesFragment extends Fragment{ //implements ConfirmeSup
         Toast.makeText(getContext(), confirm, Toast.LENGTH_SHORT).show();
     }
 
-
-    /*@Override
-    public void updateResult(int result) {
-        this.result = result;
-    }*/
 }

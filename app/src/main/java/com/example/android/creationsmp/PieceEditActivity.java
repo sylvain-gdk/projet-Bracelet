@@ -11,11 +11,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import java.util.ArrayList;
+
+/**
+ * Created by sylvain on 2017-04-10.
+ * This class is where the objects PieceModel are created/modified
+ */
 
 public class PieceEditActivity extends AppCompatActivity {
 
+    //Accesses the InventairePieces class
     private InventairePieces inventairePieces;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
@@ -27,11 +32,14 @@ public class PieceEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_edit);
 
+        //Creates an inventory list of objects "piece"
         this.inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
 
+        //Gets the inventory list from an intent
         Intent intent = this.getIntent();
         inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
 
+        //Sets the details of the object "piece"
         codePiece = (EditText) findViewById(R.id.codePiece_edit);
         nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
         descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
@@ -46,6 +54,9 @@ public class PieceEditActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Adds items to the Type spinner
+     */
     public void addItemsToTypeSpinner() {
 
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
@@ -55,10 +66,14 @@ public class PieceEditActivity extends AppCompatActivity {
         typePiece.setAdapter(typeSpinnerAdapter);
     }
 
+    /**
+     * Adds a listener to the Type spinner
+     */
     public void addListenerToTypeSpinner() {
 
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
 
+        //Sets the type on item selection
         typePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -73,6 +88,9 @@ public class PieceEditActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Adds items to the Categorie spinner
+     */
     public void addItemsToCategorieSpinner() {
 
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
@@ -82,10 +100,14 @@ public class PieceEditActivity extends AppCompatActivity {
         categoriePiece.setAdapter(categorieSpinnerAdapter);
     }
 
+    /**
+     * Adds a listener to the Categorie spinner
+     */
     public void addListenerToCategorieSpinner() {
 
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
 
+        //Sets the categorie on item selection
         categoriePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -102,22 +124,15 @@ public class PieceEditActivity extends AppCompatActivity {
 
 
     /**
-     * Ajoute la pièce à l’inventaire et retourne au menu principal
+     * Returns an object "piece" to InventairePieceActivity with an intent if all fields are valid
      * @param view
      */
     public void ajouterPieceListener(View view) {
         boolean pass = true;
         PieceModel piece = new PieceModel();
 
+        //Field validation
         try{
-
-            /*for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++){
-                if(inventairePieces.getInventairePieces().get(i)
-                        .getCodePiece() == Integer.parseInt(codePiece.getText().toString()))
-                    codePiece.setError("Le code existe déja");
-                    codePiece.requestFocus();
-            }*/
-
             for(int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
                 if (inventairePieces.getInventairePieces().get(i)
                         .getCodePiece() == Integer.parseInt(codePiece.getText().toString())) {
@@ -150,6 +165,7 @@ public class PieceEditActivity extends AppCompatActivity {
 
 
         }catch(NumberFormatException e){
+            //Shows the error on screen with Snackbar
             Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
         }
@@ -158,18 +174,23 @@ public class PieceEditActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Selects the field where an error happened and makes the keyboard visible
+     * @param error the error that was triggered
+     * @param textField the field where the error happened
+     */
     private void showError(String error, EditText textField){
         textField.requestFocus();
         textField.setError(error);
         InputMethodManager im = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (im != null) {
-            // only will trigger it if no physical keyboard is open
+            //Will only trigger if no physical keyboard is open
             im.showSoftInput(textField, 0);
         }
     }
 
     /**
-     * Retourne au menu principal
+     * Returns to the main activity on cancel
      * @param view
      */
     public void annulerAjouterPieceListener(View view) {
