@@ -3,11 +3,9 @@ package com.example.android.creationsmp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 /**
@@ -16,8 +14,6 @@ import android.widget.TextView;
  */
 
 public class PieceViewFragment extends Fragment {
-
-    private OnSwipeTouchListener onSwipeTouchListener;
 
     //Accesses the InventairePieces class
     private InventairePieces inventairePieces;
@@ -30,88 +26,37 @@ public class PieceViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        //Gets the inventory from an intent
+        Intent intent = getActivity().getIntent();
+        positionClicked = intent.getIntExtra("posClicked", -1);
+        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.fragment_piece_view, null, false);
+        final View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
 
-        //Receives the intent for the inventory and item position
-        Intent intent = getActivity().getIntent();
-        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
-        positionClicked = (int) intent.getSerializableExtra("posClicked");
-        piece = inventairePieces.getInventairePieces().get(positionClicked);
+        //Gets the item position from a bundle
+        Bundle args = getArguments();
 
-        updateCard(rootView);
+        if(args != null) {
+            positionClicked = args.getInt("position");
+            piece = inventairePieces.getInventairePieces().get(positionClicked);
 
-        /**
-         * Implements the swipe gesture for left/right
-         */
-        rootView.setOnTouchListener(new OnSwipeTouchListener(this.getContext()){
-            @Override
-            public void onSwipeRight() {
-                super.onSwipeRight();
-
-                Log.v("Fragment", "onSwipeRight - ");
-
-                if (positionClicked > 0) {
-                    positionClicked--;
-                    piece = inventairePieces.getInventairePieces().get(positionClicked);
-                    
-                    getView().startAnimation(AnimationUtils.loadAnimation(
-                            getContext(), R.anim.slide_from_left
-                    ));
-
-                    updateCard(rootView);
-
-                }
-            }
-            @Override
-            public void onSwipeLeft() {
-                super.onSwipeLeft();
-
-                Log.v("Fragment", "onSwipeLeft + ");
-
-                if(positionClicked < inventairePieces.getInventairePieces().size()-1) {
-                    positionClicked++;
-                    piece = inventairePieces.getInventairePieces().get(positionClicked);
-
-                    getView().startAnimation(AnimationUtils.loadAnimation(
-                            getContext(), R.anim.slide_from_right
-                    ));
-
-                    updateCard(rootView);
-
-                }
-            }
-        });
-
+            //Sets the object's details
+            ((TextView) rootView.findViewById(R.id.invCount_text)).setText(String.valueOf("(" + (positionClicked + 1) + "/" + inventairePieces.getInventairePieces().size()) + ")");
+            ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
+            ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
+            ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
+            ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");
+            ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
+            ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
+            ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
+            ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
+        }
         return rootView;
     }
-
-    /**
-     * Updates the details of the object
-     * @param view the working view
-     */
-    public void updateCard(View view){
-        //Sets the title in the action bar
-        getActivity().setTitle(piece.getNomPiece() + "   " + (positionClicked + 1) + "/" + inventairePieces.getInventairePieces().size());
-
-        //The object's details
-        ((TextView) view.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
-        ((TextView) view.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
-        ((TextView) view.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
-        ((TextView) view.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");
-        ((TextView) view.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
-        ((TextView) view.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
-        ((TextView) view.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
-        ((TextView) view.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
-
-        Log.v("Fragment", "Pos Clicked: " + positionClicked);
-        Log.v("Fragment" , "Piece: " + piece.getNomPiece());
-        Log.v("Fragment", "Inventaire: " + inventairePieces.getInventairePieces().size());
-    }
-
 }
