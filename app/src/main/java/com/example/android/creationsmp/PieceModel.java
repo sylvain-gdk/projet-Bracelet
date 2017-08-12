@@ -1,7 +1,6 @@
 package com.example.android.creationsmp;
 
-import android.media.Image;
-
+import java.io.File;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +20,7 @@ public class PieceModel implements Serializable {
     private int qtyPiece;
     private String typePiece;
     private String categoriePiece;
-    private Image photoPiece;
+    private File photoPiece;
 
 
     /**
@@ -173,7 +172,7 @@ public class PieceModel implements Serializable {
      * Gets the picture
      * @return the picture
      */
-    protected Image getPhotoPiece() {
+    protected File getPhotoPiece() {
         return photoPiece;
     }
 
@@ -181,7 +180,7 @@ public class PieceModel implements Serializable {
      * Sets the picture
      * @param photoPiece the picture
      */
-    protected void setPhotoPiece(Image photoPiece) {
+    protected void setPhotoPiece(File photoPiece) {
         this.photoPiece = photoPiece;
     }
 

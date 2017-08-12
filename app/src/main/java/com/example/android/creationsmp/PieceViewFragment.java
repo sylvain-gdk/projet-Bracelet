@@ -1,11 +1,14 @@
 package com.example.android.creationsmp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -56,7 +59,39 @@ public class PieceViewFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
             ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
             ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
+
+            //If there's an image, use it, otherwise use default image
+            if(piece.getPhotoPiece() != null){
+                ImageView imageView = (ImageView) rootView.findViewById(R.id.photoPiece_image);
+                imageView.setImageBitmap(getPhotoPieceSize(piece.getPhotoPiece().getAbsolutePath()));
+            }
         }
         return rootView;
+    }
+
+    /**
+     * Creates a scaled down version of the picture
+     * @param mCurrentPhotoPath the path of the picture
+     * @return scaled down version of the picture
+     */
+    private Bitmap getPhotoPieceSize(String mCurrentPhotoPath) {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // How much to scale down the image
+        int scaleFactor = 4;
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+        return bitmap;
     }
 }

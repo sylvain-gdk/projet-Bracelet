@@ -8,17 +8,19 @@
         android:label="@string/appName"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".PieceEditActivity"
             android:label="@string/ajouterPieceBoutonLabel">
-
         </activity>
+
         <activity
             android:name=".PieceViewActivity"
             android:label="@string/piecesLabel"
@@ -27,6 +29,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="InventairePiecesActivity" />
         </activity>
+
         <activity
             android:name=".InventairePiecesActivity"
             android:label="@string/inventairePieceLabel"
@@ -35,6 +38,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
         </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
     </application>
 
 </manifest>

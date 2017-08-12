@@ -215,13 +215,14 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/photoPiece_image"
+            android:id="@+id/cameraIcon"
             android:layout_width="match_parent"
             android:layout_height="63dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorField"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_add_a_photo_black_48dp"
-            android:layout_marginTop="20dp"/>
+            android:onClick="prendrePhotoListener"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_add_a_photo_black_48dp" />
 
 
     </LinearLayout>

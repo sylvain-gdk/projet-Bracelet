@@ -17,9 +17,9 @@
         <ImageView
             android:id="@+id/photoPiece_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="205dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/temp_beeds" />
+            app:srcCompat="@drawable/no_image" />
 
     </LinearLayout>
 
