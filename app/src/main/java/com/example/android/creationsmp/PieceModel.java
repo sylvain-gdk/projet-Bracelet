@@ -22,7 +22,6 @@ public class PieceModel implements Serializable {
     private String categoriePiece;
     private File photoPiece;
 
-
     /**
      * Gets the code
      * @return the code
@@ -39,7 +38,7 @@ public class PieceModel implements Serializable {
      */
     protected boolean setCodePiece(int codPiece) {
         boolean pass;
-        if (codPiece > 0 && codPiece < 9999){
+        if (codPiece > 0 && codPiece < 10000){
             this.codePiece = codPiece;
             pass = true;
         }else
@@ -217,11 +216,20 @@ public class PieceModel implements Serializable {
     }
 
     /**
-     * Formats a row in the inventory list
-     * @return the row format
+     * Formats a row in the collection's list
+     * @return the formatted row
      */
     @Override
     public String toString(){
-        return "#" + this.getCodePiece() + "  " + this.getNomPiece() + "  " + "[ " + this.getQtyPiece() + " ]";
+        return "#" + this.getCodePiece() + "  " + this.getNomPiece() + "  " + "( " + this.getQtyPiece() + " )";
+    }
+
+    /**
+     * Compares the code
+     * @param piece the object
+     * @return not sure about that one
+     */
+    public int compareTo(PieceModel piece) {
+        return Integer.compare(codePiece, piece.codePiece);
     }
 }

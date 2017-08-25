@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.creationsmp.PieceEditActivity"
+    tools:context="com.example.android.creationsmp.PieceAddActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="30dp"
@@ -236,12 +236,12 @@
 
 
         <Button
-            android:id="@+id/modifierPieceBouton"
+            android:id="@+id/ajouterPieceBouton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="modifierPieceListener"
-            android:text="@string/modifierBoutonLabel" />
+            android:onClick="ajouterPieceListener"
+            android:text="@string/ajouterBoutonLabel" />
 
         <Button
             android:id="@+id/annulerAjouterPieceBouton"

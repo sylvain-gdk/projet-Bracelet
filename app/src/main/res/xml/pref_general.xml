@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditTextPreference
+        android:title="Code"
+        android:key="Code"
+        android:defaultValue="911"
+        android:inputType="text"
+        android:singleLine="true">
+    </EditTextPreference>
+
+</PreferenceScreen>

@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 /**
  * Created by sylvain on 2017-05-16.
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class PieceViewActivity extends AppCompatActivity {
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments representing
      * each object in a collection. We use a {@link android.support.v4.app.FragmentStatePagerAdapter}
@@ -22,6 +25,9 @@ public class PieceViewActivity extends AppCompatActivity {
      * allowing navigation between objects in a potentially large collection.
      */
     PieceViewPagerAdapter pieceViewPagerAdapter;
+
+    // Accesses the InventairePieces class
+    private InventairePieces inventairePieces;
 
     /**
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
@@ -38,17 +44,43 @@ public class PieceViewActivity extends AppCompatActivity {
                     .add(R.id.activity_piece_view_container, new PieceViewFragment())
                     .commit();
 
-            // Create an adapter that when requested, will return a fragment representing an object in
-            // the collection.
+            // Create an adapter that when requested, will return a fragment of an object PieceModel in the collection
             pieceViewPagerAdapter = new PieceViewPagerAdapter(getSupportFragmentManager());
-            // Set up the ViewPager, attaching the adapter.
+            // Setup the ViewPager, attaching the adapter.
             mViewPager = (ViewPager) findViewById(R.id.activity_piece_view_container);
             mViewPager.setAdapter(pieceViewPagerAdapter);
 
-            //Receives the position of the item peviously clicked in the inventory list
+            // Receives the position of the object when peviously clicked in the collection's list InventairePiecesFragment
             Intent intent = getIntent();
-            mViewPager.setCurrentItem(intent.getIntExtra("posClicked", -1));
+            mViewPager.setCurrentItem(intent.getIntExtra("position", -1));
+            inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        // Opens PieceEditActivity to modify the object
+        if (id == R.id.action_piece) {
+            Intent intent = new Intent(this, PieceEditActivity.class);
+            intent.putExtra("position", mViewPager.getCurrentItem());
+            intent.putExtra("inventairePieces", inventairePieces);
+            startActivity(intent);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -57,7 +89,7 @@ public class PieceViewActivity extends AppCompatActivity {
      */
     public class PieceViewPagerAdapter extends FragmentStatePagerAdapter {
 
-        //Accesses the InventairePieces class
+        // Accesses the InventairePieces class
         private InventairePieces inventairePieces;
 
         public PieceViewPagerAdapter(FragmentManager fm) {
@@ -70,6 +102,7 @@ public class PieceViewActivity extends AppCompatActivity {
         /**
          * Gets the item position on swipe gestures
          * sends the detail fragment in a bundle
+         *
          * @param position the item position from swipe gesture
          * @return the new fragment details
          */
@@ -83,8 +116,9 @@ public class PieceViewActivity extends AppCompatActivity {
         }
 
         /**
-         * Gets the size of the inventory from an intent
-         * @return the size of the inventory
+         * Gets the size of the collection
+         *
+         * @return the size of the collection
          */
         @Override
         public int getCount() {

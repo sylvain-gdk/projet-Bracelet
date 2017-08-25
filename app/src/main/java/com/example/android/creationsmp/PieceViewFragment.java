@@ -18,11 +18,11 @@ import android.widget.TextView;
 
 public class PieceViewFragment extends Fragment {
 
-    //Accesses the InventairePieces class
+    // Accesses the InventairePieces class
     private InventairePieces inventairePieces;
-    //Accesses the PieceModel class
+    // Accesses the PieceModel class
     private PieceModel piece;
-    //The object's position in the inventory list
+    // The object's position in the collection
     private int positionClicked;
 
     @Override
@@ -30,9 +30,9 @@ public class PieceViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        //Gets the inventory from an intent
+        // Gets the collection and position of an object PieceModel from an intent
         Intent intent = getActivity().getIntent();
-        positionClicked = intent.getIntExtra("posClicked", -1);
+        positionClicked = intent.getIntExtra("position", -1);
         inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
     }
 
@@ -42,14 +42,14 @@ public class PieceViewFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_piece_view, container, false);
 
-        //Gets the item position from a bundle
+        // Gets the object's position from a bundle
         Bundle args = getArguments();
 
         if(args != null) {
             positionClicked = args.getInt("position");
             piece = inventairePieces.getInventairePieces().get(positionClicked);
 
-            //Sets the object's details
+            // Sets the object's details
             ((TextView) rootView.findViewById(R.id.invCount_text)).setText(String.valueOf("(" + (positionClicked + 1) + "/" + inventairePieces.getInventairePieces().size()) + ")");
             ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
             ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
@@ -60,7 +60,7 @@ public class PieceViewFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
             ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
 
-            //If there's an image, use it, otherwise use default image
+            // Gets the image of an object PieceModel or uses default image if null
             if(piece.getPhotoPiece() != null){
                 ImageView imageView = (ImageView) rootView.findViewById(R.id.photoPiece_image);
                 imageView.setImageBitmap(getPhotoPieceSize(piece.getPhotoPiece().getAbsolutePath()));

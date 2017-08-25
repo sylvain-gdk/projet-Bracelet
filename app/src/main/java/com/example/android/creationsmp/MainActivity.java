@@ -13,36 +13,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Places an icon inside the action bar
+        // Places an icon inside the action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setLogo(R.mipmap.ic_actionbar);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-
     }
 
 
     /**
-     * Starts an activity to add an object "piece" to the inventory
+     * Starts an activity to add an object PieceModel to the collection
      * @param view
      */
     public void ajouterPieceListener(View view) {
 
-        startActivity(new Intent(this, PieceEditActivity.class));
+        startActivity(new Intent(this, PieceAddActivity.class));
     }
 
     /**
-     * Starts an activity to show the "piece" inventory as a list
+     * Starts an activity to show the collection of objets PieceModel
      * @param view
      */
     public void voirPiecesListener(View view) {
 
         startActivity(new Intent(this, InventairePiecesActivity.class));
-
     }
 
     /**
-     * Starts an activity to add an object "bracelet" to the inventory
+     * Starts an activity to add an object "bracelet" to a collection
      * @param view
      */
     public void ajouterBraceletListener(View view) {
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Starts an activity to show the "bracelet" inventory as a list
+     * Starts an activity to show the "bracelet" collection as a list
      * @param view
      */
     public void voirBraceletsListener(View view) {

@@ -41,16 +41,26 @@
     <string name="photoPieceHint">photo</string>
 
     <string name="ajouterBoutonLabel">Ajouter</string>
+    <string name="modifierBoutonLabel">Modifier</string>
     <string name="annulerBoutonLabel">Annuler</string>
 
     <string name="retourPiecesBoutonLabel">Retour aux Pièces</string>
     <string name="ajouterPieceBoutonLabel">Ajouter une Pièce</string>
+    <string name="modifierPieceBoutonLabel">Modifier une Pièce</string>
     <string name="ajouterBraceletBoutonLabel">Faire un Bracelet</string>
-    <string name="action_settings">Settings</string>
     <string name="piecesLabel">Pièces</string>
     <string name="inventairePieceLabel">Inventaire de Pièces</string>
     <string name="braceletsLabel">Bracelets</string>
     <string name="inventaireBraceletLabel">Inventaire de Bracelets</string>
 
+    <string name="action_inventaire">Filtrer</string>
+    <string name="title_activity_inventaire">Settings</string>
+
+    <string name="action_piece">Modifier</string>
+    <string name="title_activity_piece">Details</string>
+
+    <string name="pref_code_label">Code</string>
+    <string name="pref_code_key" translatable="false">Code</string>
+    <string name="pref_code_default" translatable="false">911</string>
 
 </resources>

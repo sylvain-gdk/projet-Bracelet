@@ -17,8 +17,21 @@
         </activity>
 
         <activity
+            android:name=".PieceAddActivity"
+            android:label="@string/ajouterPieceBoutonLabel"
+            android:parentActivityName="InventairePiecesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="InventairePiecesActivity" />
+        </activity>
+
+        <activity
             android:name=".PieceEditActivity"
-            android:label="@string/ajouterPieceBoutonLabel">
+            android:label="@string/modifierPieceBoutonLabel"
+            android:parentActivityName="PieceViewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="PieceViewActivity" />
         </activity>
 
         <activity
@@ -48,6 +61,24 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
+
+        <activity
+            android:name=".SettingsInventairePiecesActivity"
+            android:label="@string/title_activity_inventaire"
+            android:parentActivityName="InventairePiecesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="InventairePiecesActivity" />
+        </activity>
+
+        <activity
+            android:name=".SettingsPiecesActivity"
+            android:label="@string/title_activity_piece"
+            android:parentActivityName="PieceViewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="PieceViewActivity" />
+        </activity>
 
     </application>
 

@@ -19,14 +19,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,15 +32,11 @@ import java.util.Date;
  * This class is where the objects PieceModel are created/modified
  */
 
-public class PieceEditActivity extends AppCompatActivity {
+public class PieceAddActivity extends AppCompatActivity {
 
-    // Accesses the InventairePieces class
-    private InventairePieces inventairePieces;
-    // Accesses the PieceModel class
-    private PieceModel piece;
     // The object's position in the collection
     private int positionClicked;
-    // The picture of an object PieceModel
+    // The picture of the object PieceModel
     private File photoPiece = null;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
@@ -56,10 +50,7 @@ public class PieceEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_piece_edit);
-
-        // Creates a collection of objects PieceModel
-        this.inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
+        setContentView(R.layout.activity_piece_add);
 
         // Sets the details of the object PieceModel
         codePiece = (EditText) findViewById(R.id.codePiece_edit);
@@ -75,23 +66,6 @@ public class PieceEditActivity extends AppCompatActivity {
         addListenerToTypeSpinner();
         addItemsToCategorieSpinner();
         addListenerToCategorieSpinner();
-
-        // Gets the collection and object's position from an intent
-        Intent intent = getIntent();
-        positionClicked = intent.getIntExtra("position", -1);
-        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
-
-        // Sets text on EditText fields from an intent (PieceViewFragment)
-        piece = inventairePieces.getInventairePieces().get(positionClicked);
-
-        codePiece.setText(String.valueOf(piece.getCodePiece()), TextView.BufferType.EDITABLE);
-        nomPiece.setText(piece.getNomPiece(), TextView.BufferType.EDITABLE);
-        descriptionPiece.setText(piece.getDescriptionPiece(), TextView.BufferType.EDITABLE);
-        dimensionPiece.setText(String.valueOf(piece.getDimensionPiece()), TextView.BufferType.EDITABLE);
-        prixCoutantPiece.setText(String.valueOf(String.valueOf(piece.getPrixCoutantPiece())), TextView.BufferType.EDITABLE);
-        qtyPiece.setText(String.valueOf(piece.getQtyPiece()), TextView.BufferType.EDITABLE);
-        typePiece.getAdapter().equals(piece.getTypePiece());
-        categoriePiece.getAdapter().equals(piece.getCategoriePiece());
     }
 
     /**
@@ -120,7 +94,7 @@ public class PieceEditActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //TODO
+                // TODO
             }
         });
     }
@@ -180,11 +154,11 @@ public class PieceEditActivity extends AppCompatActivity {
 
     /**
      * Formats the image taken by the camera
-     * @return the image taken by the camera
+     * @return the formatted image
      * @throws IOException
      */
     private File createImageFile() throws IOException {
-        //T he path to store pictures taken from the camera
+        // The path to store pictures taken from the camera
         String photoPath;
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -195,7 +169,6 @@ public class PieceEditActivity extends AppCompatActivity {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Saves a file: path for use with ACTION_VIEW intents
         photoPath = image.getAbsolutePath();
         return image;
@@ -229,7 +202,7 @@ public class PieceEditActivity extends AppCompatActivity {
      * tests if each entries are valid
      * @param view the view
      */
-    public void modifierPieceListener(View view) {
+    public void ajouterPieceListener(View view) {
         PieceModel piece = new PieceModel();
         // Field validation
         try {
@@ -251,10 +224,8 @@ public class PieceEditActivity extends AppCompatActivity {
                     piece.setPhotoPiece(photoPiece);
 
                 Intent intent = new Intent();
-                intent.putExtra("requestCode", EventManager.REQUEST_MODIFY_PIECE);
+                intent.putExtra("requestCode", EventManager.REQUEST_NEW_PIECE);
                 intent.putExtra("piece", piece);
-                intent.putExtra("position", positionClicked);
-                intent.putExtra("inventairePieces", inventairePieces);
 
                 EventBus.getDefault().post(new EventManager.EventIntent(intent));
 
@@ -285,7 +256,7 @@ public class PieceEditActivity extends AppCompatActivity {
 
     /**
      * Button to cancel
-     * Returns to the main activity on cancel
+     * returns to the main activity on cancel
      * @param view the view
      */
     public void annulerAjouterPieceListener(View view) {
