@@ -63,7 +63,7 @@ public class PieceViewFragment extends Fragment {
             // Gets the image of an object PieceModel or uses default image if null
             if(piece.getPhotoPiece() != null){
                 ImageView imageView = (ImageView) rootView.findViewById(R.id.photoPiece_image);
-                imageView.setImageBitmap(getPhotoPieceSize(piece.getPhotoPiece().getAbsolutePath()));
+                setResizedPhotoPiece(piece.getPhotoPiece().getAbsolutePath(), imageView);
             }
         }
         return rootView;
@@ -72,17 +72,16 @@ public class PieceViewFragment extends Fragment {
     /**
      * Creates a scaled down version of the picture
      * @param mCurrentPhotoPath the path of the picture
+     * @param mImageView the ImageView to place the picture
      * @return scaled down version of the picture
      */
-    private Bitmap getPhotoPieceSize(String mCurrentPhotoPath) {
+    private Bitmap setResizedPhotoPiece(String mCurrentPhotoPath, ImageView mImageView) {
+
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
 
-        // How much to scale down the image
+        // Determine how much to scale down the image
         int scaleFactor = 4;
 
         // Decode the image file into a Bitmap sized to fill the View
@@ -91,6 +90,7 @@ public class PieceViewFragment extends Fragment {
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mImageView.setImageBitmap(bitmap);
 
         return bitmap;
     }

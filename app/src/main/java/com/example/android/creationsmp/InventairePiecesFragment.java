@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +24,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.android.creationsmp.EventManager.REQUEST_NEW_PIECE;
 
 /**
  * Created by sylvain on 2017-05-16.
@@ -35,7 +33,9 @@ import static com.example.android.creationsmp.EventManager.REQUEST_NEW_PIECE;
 public class InventairePiecesFragment extends Fragment{
 
     // An adapter for the collection of objects PieceModel
-    private ArrayAdapter<PieceModel> inventairePiecesAdapter;
+    //private ArrayAdapter<PieceModel> inventairePiecesAdapter;
+    private CustomListViewAdapter inventairePiecesAdapter;
+
     // Accesses the InventairePieces class
     private InventairePieces inventairePieces;
     // Accesses the PieceModel class
@@ -70,12 +70,8 @@ public class InventairePiecesFragment extends Fragment{
         // Imports a file that contains the inventory of objects PieceModel
         this.readInventairePiece();
 
-        // Creates an adapter for the collection of objects PieceModel
-        inventairePiecesAdapter = new ArrayAdapter<>(
-                getActivity(),
-                R.layout.liste_pieces_inventaire,
-                R.id.liste_pieces_inventaire_textview,
-                inventairePieces.getInventairePieces());
+        // Creates a custom adapter for the collection of objects PieceModel
+        inventairePiecesAdapter = new CustomListViewAdapter(getActivity(), R.layout.liste_pieces_inventaire, inventairePieces.getInventairePieces());
 
         // Creates a view to display the collection as a list
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
@@ -171,6 +167,7 @@ public class InventairePiecesFragment extends Fragment{
             ex.printStackTrace();
         }
     }
+
 
     /**
      * Returns result for an object PieceModel that was requested to be removed

@@ -34,17 +34,17 @@ import java.util.Date;
 
 public class PieceAddActivity extends AppCompatActivity {
 
-    // The object's position in the collection
-    private int positionClicked;
+    // The request code for the picture of the object PieceModel
+    static final int REQUEST_TAKE_PHOTO = 5;
+
+    // Accesses the InventairePieces class
+    private InventairePieces inventairePieces;
     // The picture of the object PieceModel
-    private File photoPiece = null;
+    private File photoPieceFile = null;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
     private Spinner typePiece, categoriePiece;
     private String type, categorie;
-
-    // The request code for the picture of the object PieceModel
-    static final int REQUEST_TAKE_PHOTO = 5;
 
 
     @Override
@@ -61,6 +61,10 @@ public class PieceAddActivity extends AppCompatActivity {
         qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
+
+        // Gets the collection from an intent
+        Intent intent = getIntent();
+        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
 
         addItemsToTypeSpinner();
         addListenerToTypeSpinner();
@@ -94,7 +98,7 @@ public class PieceAddActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO
+                type = "";
             }
         });
     }
@@ -125,7 +129,7 @@ public class PieceAddActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //TODO
+                categorie = "";
             }
         });
     }
@@ -139,13 +143,13 @@ public class PieceAddActivity extends AppCompatActivity {
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-                photoPiece = createImageFile();
+                photoPieceFile = createImageFile();
             } catch (IOException ex) {
                 Log.v("Error taking picture", String.valueOf(ex));
             }
             // Continue only if the File was successfully created
-            if (photoPiece != null) {
-                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoPiece);
+            if (photoPieceFile != null) {
+                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoPieceFile);
                 photoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(photoIntent, REQUEST_TAKE_PHOTO);
             }
@@ -158,8 +162,6 @@ public class PieceAddActivity extends AppCompatActivity {
      * @throws IOException
      */
     private File createImageFile() throws IOException {
-        // The path to store pictures taken from the camera
-        String photoPath;
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -169,8 +171,6 @@ public class PieceAddActivity extends AppCompatActivity {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-        // Saves a file: path for use with ACTION_VIEW intents
-        photoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -183,6 +183,31 @@ public class PieceAddActivity extends AppCompatActivity {
     }
 
     /**
+     * Creates a scaled down version of the picture
+     * @param mCurrentPhotoPath the path of the picture
+     * @param mImageView the ImageView to place the picture
+     * @return scaled down version of the picture
+     */
+    private Bitmap setResizedPhotoPiece(String mCurrentPhotoPath, ImageView mImageView) {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        // Determine how much to scale down the image
+        int scaleFactor = 16;
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mImageView.setImageBitmap(bitmap);
+
+        return bitmap;
+    }
+
+    /**
      * Sets a thumbnail of the picture taken by the camera from an intent
      * @param requestCode the requested code
      * @param resultCode the result code
@@ -192,8 +217,7 @@ public class PieceAddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView photoPieceThumb = (ImageView) this.findViewById(R.id.cameraIcon);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap thumbNail = BitmapFactory.decodeFile(photoPiece.getAbsolutePath());
-            photoPieceThumb.setImageBitmap(thumbNail);
+            setResizedPhotoPiece(photoPieceFile.getAbsolutePath(), photoPieceThumb);
         }
     }
 
@@ -207,21 +231,22 @@ public class PieceAddActivity extends AppCompatActivity {
         // Field validation
         try {
             if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-                showError("Le code doit avoir entre 1 et 4 chiffres", codePiece);
+                showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
             } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                showError("Le nom de la pièce ne peut être vide", nomPiece);
+                showErrorHighlightField("Le nom de la pièce ne peut être vide", nomPiece);
             } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                showError("La description de la pièce ne peut être vide", descriptionPiece);
+                showErrorHighlightField("La description de la pièce ne peut être vide", descriptionPiece);
             } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-                showError("La dimension doit être entre 4 et 15 mm", dimensionPiece);
+                showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
             } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-                showError("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
+                showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
             } else if (piece.getCodePiece() > 0) {
                 piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
                 piece.setTypePiece(type);
                 piece.setCategoriePiece(categorie);
-                if (photoPiece != null)
-                    piece.setPhotoPiece(photoPiece);
+                if (photoPieceFile != null) {
+                    piece.setPhotoPiece(photoPieceFile);
+                }
 
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_NEW_PIECE);
@@ -240,11 +265,11 @@ public class PieceAddActivity extends AppCompatActivity {
 
 
     /**
-     * Selects the field where an error happened and makes the keyboard visible
+     * Selects the EditText field where an error happened and makes the keyboard visible
      * @param error the error that was triggered
      * @param textField the field where the error happened
      */
-    private void showError(String error, EditText textField){
+    private void showErrorHighlightField(String error, EditText textField){
         textField.requestFocus();
         textField.setError(error);
         InputMethodManager im = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);

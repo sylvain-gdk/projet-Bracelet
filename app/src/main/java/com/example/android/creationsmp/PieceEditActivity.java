@@ -36,6 +36,9 @@ import java.util.Date;
 
 public class PieceEditActivity extends AppCompatActivity {
 
+    // The request code for the picture of the object PieceModel
+    static final int REQUEST_TAKE_PHOTO = 5;
+
     // Accesses the InventairePieces class
     private InventairePieces inventairePieces;
     // Accesses the PieceModel class
@@ -43,14 +46,15 @@ public class PieceEditActivity extends AppCompatActivity {
     // The object's position in the collection
     private int positionClicked;
     // The picture of an object PieceModel
-    private File photoPiece = null;
+    private File photoPieceFile = null;
 
     private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
     private Spinner typePiece, categoriePiece;
     private String type, categorie;
 
-    // The request code for the picture of the object PieceModel
-    static final int REQUEST_TAKE_PHOTO = 5;
+    // The position in the spinners
+    private int typePiecePos;
+    private int catPiecePos;
 
 
     @Override
@@ -71,11 +75,6 @@ public class PieceEditActivity extends AppCompatActivity {
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
 
-        addItemsToTypeSpinner();
-        addListenerToTypeSpinner();
-        addItemsToCategorieSpinner();
-        addListenerToCategorieSpinner();
-
         // Gets the collection and object's position from an intent
         Intent intent = getIntent();
         positionClicked = intent.getIntExtra("position", -1);
@@ -90,8 +89,17 @@ public class PieceEditActivity extends AppCompatActivity {
         dimensionPiece.setText(String.valueOf(piece.getDimensionPiece()), TextView.BufferType.EDITABLE);
         prixCoutantPiece.setText(String.valueOf(String.valueOf(piece.getPrixCoutantPiece())), TextView.BufferType.EDITABLE);
         qtyPiece.setText(String.valueOf(piece.getQtyPiece()), TextView.BufferType.EDITABLE);
-        typePiece.getAdapter().equals(piece.getTypePiece());
-        categoriePiece.getAdapter().equals(piece.getCategoriePiece());
+        photoPieceFile = piece.getPhotoPiece();
+
+        if(photoPieceFile != null){
+            onActivityResult(5, RESULT_OK, intent);
+        }
+
+        addItemsToTypeSpinner();
+        addListenerToTypeSpinner();
+
+        addItemsToCategorieSpinner();
+        addListenerToCategorieSpinner();
     }
 
     /**
@@ -102,6 +110,10 @@ public class PieceEditActivity extends AppCompatActivity {
                 .createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typePiece.setAdapter(typeSpinnerAdapter);
+        if(!typePiece.equals(null)){
+            typePiecePos = typeSpinnerAdapter.getPosition(piece.getTypePiece());
+            typePiece.setSelection(typePiecePos);
+        }
     }
 
     /**
@@ -120,7 +132,7 @@ public class PieceEditActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //TODO
+                type = piece.getTypePiece();
             }
         });
     }
@@ -133,6 +145,10 @@ public class PieceEditActivity extends AppCompatActivity {
                 .createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriePiece.setAdapter(categorieSpinnerAdapter);
+        if(!categoriePiece.equals(null)) {
+            catPiecePos = categorieSpinnerAdapter.getPosition(piece.getCategoriePiece());
+            categoriePiece.setSelection(catPiecePos);
+        }
     }
 
     /**
@@ -151,7 +167,7 @@ public class PieceEditActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //TODO
+                categorie = piece.getCategoriePiece();
             }
         });
     }
@@ -165,13 +181,13 @@ public class PieceEditActivity extends AppCompatActivity {
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-                photoPiece = createImageFile();
+                photoPieceFile = createImageFile();
             } catch (IOException ex) {
                 Log.v("Error taking picture", String.valueOf(ex));
             }
             // Continue only if the File was successfully created
-            if (photoPiece != null) {
-                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoPiece);
+            if (photoPieceFile != null) {
+                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoPieceFile);
                 photoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(photoIntent, REQUEST_TAKE_PHOTO);
             }
@@ -210,6 +226,31 @@ public class PieceEditActivity extends AppCompatActivity {
     }
 
     /**
+     * Creates a scaled down version of the picture
+     * @param mCurrentPhotoPath the path of the picture
+     * @param mImageView the ImageView to place the picture
+     * @return scaled down version of the picture
+     */
+    private Bitmap setResizedPhotoPiece(String mCurrentPhotoPath, ImageView mImageView) {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        // Determine how much to scale down the image
+        int scaleFactor = 16;
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mImageView.setImageBitmap(bitmap);
+
+        return bitmap;
+    }
+
+    /**
      * Sets a thumbnail of the picture taken by the camera from an intent
      * @param requestCode the requested code
      * @param resultCode the result code
@@ -219,8 +260,7 @@ public class PieceEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView photoPieceThumb = (ImageView) this.findViewById(R.id.cameraIcon);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap thumbNail = BitmapFactory.decodeFile(photoPiece.getAbsolutePath());
-            photoPieceThumb.setImageBitmap(thumbNail);
+            setResizedPhotoPiece(photoPieceFile.getAbsolutePath(), photoPieceThumb);
         }
     }
 
@@ -234,21 +274,21 @@ public class PieceEditActivity extends AppCompatActivity {
         // Field validation
         try {
             if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-                showError("Le code doit avoir entre 1 et 4 chiffres", codePiece);
+                showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
             } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                showError("Le nom de la pièce ne peut être vide", nomPiece);
+                showErrorHighlightField("Le nom de la pièce ne peut être vide", nomPiece);
             } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                showError("La description de la pièce ne peut être vide", descriptionPiece);
+                showErrorHighlightField("La description de la pièce ne peut être vide", descriptionPiece);
             } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-                showError("La dimension doit être entre 4 et 15 mm", dimensionPiece);
+                showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
             } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-                showError("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
+                showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
             } else if (piece.getCodePiece() > 0) {
                 piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
                 piece.setTypePiece(type);
                 piece.setCategoriePiece(categorie);
-                if (photoPiece != null)
-                    piece.setPhotoPiece(photoPiece);
+                if (photoPieceFile != null)
+                    piece.setPhotoPiece(photoPieceFile);
 
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_MODIFY_PIECE);
@@ -273,7 +313,7 @@ public class PieceEditActivity extends AppCompatActivity {
      * @param error the error that was triggered
      * @param textField the field where the error happened
      */
-    private void showError(String error, EditText textField){
+    private void showErrorHighlightField(String error, EditText textField){
         textField.requestFocus();
         textField.setError(error);
         InputMethodManager im = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);

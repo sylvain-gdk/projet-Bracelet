@@ -12,15 +12,15 @@ import java.util.regex.Pattern;
 
 public class PieceModel implements Serializable {
 
-    private int codePiece;
-    private String nomPiece;
-    private String descriptionPiece;
-    private int dimensionPiece;
-    private double prixCoutantPiece;
-    private int qtyPiece;
-    private String typePiece;
-    private String categoriePiece;
-    private File photoPiece;
+    private int codePiece = 0;
+    private String nomPiece = "";
+    private String descriptionPiece = "";
+    private int dimensionPiece = 0;
+    private double prixCoutantPiece = 0.00;
+    private int qtyPiece = 0;
+    private String typePiece = "";
+    private String categoriePiece = "";
+    private File photoPiece = null;
 
     /**
      * Gets the code
@@ -142,7 +142,7 @@ public class PieceModel implements Serializable {
         boolean pass;
         Pattern p = Pattern.compile("^(?:0|[1-9]\\d{0,1})(?:\\.\\d{1,2})");
         Matcher m = p.matcher(String.valueOf(prixCoutantPiece));
-        if (prixCoutantPiece > 0) { //m.matches()
+        if (prixCoutantPiece > 0) {
             this.prixCoutantPiece = prixCoutantPiece;
             pass = true;
         }else
@@ -195,8 +195,15 @@ public class PieceModel implements Serializable {
      * Sets the type
      * @param typePiece the type
      */
-    protected void setTypePiece(String typePiece) {
-        this.typePiece = typePiece;
+    protected boolean setTypePiece(String typePiece) {
+        boolean pass;
+        if (!typePiece.isEmpty()) {
+            this.typePiece = typePiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
     /**
@@ -211,8 +218,15 @@ public class PieceModel implements Serializable {
      * Sets the category
      * @param categoriePiece the category
      */
-    protected void setCategoriePiece(String categoriePiece) {
-        this.categoriePiece = categoriePiece;
+    protected boolean setCategoriePiece(String categoriePiece) {
+        boolean pass;
+        if (!categoriePiece.isEmpty()) {
+            this.categoriePiece = categoriePiece;
+            pass = true;
+        }else
+            pass = false;
+
+        return pass;
     }
 
     /**
