@@ -11,52 +11,62 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:id="@+id/voirPieces"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="40dp"
+        android:onClick="voirPiecesListener"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <ImageView
             android:id="@+id/pieceIcon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="60dp"
             app:srcCompat="@drawable/ic_piece" />
 
-        <Button
-            android:id="@+id/voirPieces"
-            style="@style/Widget.AppCompat.Button.Borderless"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="voirPiecesListener"
+            android:layout_height="wrap_content"
             android:text="@string/piecesLabel"
+            android:textAllCaps="true"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginStart="10dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:id="@+id/voirBracelets"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_gravity="start"
+        android:onClick="voirBraceletsListener"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        >
 
         <ImageView
             android:id="@+id/braceletIcon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="60dp"
             app:srcCompat="@drawable/ic_bracelet" />
 
-        <Button
-            android:id="@+id/voirBracelets"
-            style="@style/Widget.AppCompat.Button.Borderless"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="voirBraceletsListener"
+            android:layout_height="wrap_content"
             android:text="@string/braceletsLabel"
+            android:textAllCaps="true"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginStart="10dp" />
 
     </LinearLayout>
 

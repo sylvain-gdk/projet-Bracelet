@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
@@ -37,10 +39,13 @@ public class ConfirmeSuppDialogFragment extends DialogFragment {
         dialogue.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Returns result from the button
+                // Returns result from the button to an intent
                 Intent intent = new Intent();
-                getTargetFragment().onActivityResult(
-                        getTargetRequestCode(), RESULT_OK, intent);
+                intent.putExtra("requestCode", EventManager.REQUEST_DELETE_PIECE);
+                intent.putExtra("resultCode", RESULT_OK);
+                intent.putExtra("piece", piece);
+
+                EventBus.getDefault().post(new EventManager.EventIntentController(intent));
             }
         });
 
@@ -48,10 +53,13 @@ public class ConfirmeSuppDialogFragment extends DialogFragment {
         dialogue.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //Returns result from the button
+                // Returns result from the button to an intent
                 Intent intent = new Intent();
-                getTargetFragment().onActivityResult(
-                        getTargetRequestCode(), RESULT_CANCELED, intent);
+                intent.putExtra("requestCode", EventManager.REQUEST_DELETE_PIECE);
+                intent.putExtra("resultCode", RESULT_CANCELED);
+                intent.putExtra("piece", piece);
+
+                EventBus.getDefault().post(new EventManager.EventIntentController(intent));
             }
         });
 

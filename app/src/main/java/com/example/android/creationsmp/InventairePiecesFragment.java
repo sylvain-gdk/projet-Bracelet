@@ -38,6 +38,7 @@ public class InventairePiecesFragment extends Fragment{
 
     // Accesses the InventairePieces class
     private InventairePieces inventairePieces;
+
     // Accesses the PieceModel class
     private PieceModel piece;
 
@@ -47,11 +48,21 @@ public class InventairePiecesFragment extends Fragment{
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
 
+        // Registers to the EventBus
         EventBus.getDefault().register(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Creates a collection of objects PieceModel
+        inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
+
+        // Imports a file that contains the inventory of objects PieceModel or creates a default object
+        this.readInventairePiece();
+
+        // Creates a custom adapter for the collection of objects PieceModel
+        inventairePiecesAdapter = new CustomListViewAdapter(getActivity(), R.layout.liste_pieces_inventaire, inventairePieces.getInventairePieces());
 
         // Shows a floating plus sign to add a new object PieceModel to the collection
         FloatingActionButton fab = (FloatingActionButton) container.findViewById(R.id.fab);
@@ -59,19 +70,12 @@ public class InventairePiecesFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PieceAddActivity.class);
+                intent.putExtra("requestCode", EventManager.REQUEST_NEW_PIECE);
                 intent.putExtra("inventairePieces", inventairePieces);
                 startActivity(intent);
             }
         });
 
-        // Creates a collection of objects PieceModel
-        inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
-
-        // Imports a file that contains the inventory of objects PieceModel
-        this.readInventairePiece();
-
-        // Creates a custom adapter for the collection of objects PieceModel
-        inventairePiecesAdapter = new CustomListViewAdapter(getActivity(), R.layout.liste_pieces_inventaire, inventairePieces.getInventairePieces());
 
         // Creates a view to display the collection as a list
         View rootView = inflater.inflate(R.layout.fragment_pieces_inventaire, container, false);
@@ -84,7 +88,6 @@ public class InventairePiecesFragment extends Fragment{
         inventairePiecesAdapterView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                piece = inventairePiecesAdapter.getItem(i);
                 Intent intent = new Intent(getActivity(), PieceViewActivity.class);
                 intent.putExtra("position", i);
                 intent.putExtra("inventairePieces", inventairePieces);
@@ -99,7 +102,6 @@ public class InventairePiecesFragment extends Fragment{
                 ConfirmeSuppDialogFragment confirmeSuppDialogFragment = new ConfirmeSuppDialogFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("piece",piece);
-                bundle.putSerializable("inventairePieces",inventairePieces);
                 confirmeSuppDialogFragment.setArguments(bundle);
                 confirmeSuppDialogFragment.setTargetFragment(InventairePiecesFragment.this, EventManager.REQUEST_DELETE_PIECE);
                 confirmeSuppDialogFragment.show(getFragmentManager(), "dialog");
@@ -111,14 +113,47 @@ public class InventairePiecesFragment extends Fragment{
         return rootView;
     }
 
-
     /**
-     * Returns to parent activity and saves the collection of objects PieceModel into a file
+     * Returns to parent activity
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.writeInventairePiece();
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Reads a file containing the collection of objects PieceModel previously saved or creates a default object
+     */
+    private void readInventairePiece(){
+        // Creates a collection of objects PieceModel
+        try {
+            FileInputStream inputFile = this.getContext().openFileInput("InventairePiece.ser");
+            ObjectInputStream inputStream = new ObjectInputStream(inputFile);
+            inventairePieces = (InventairePieces) inputStream.readObject();
+            inputStream.close();
+            inputFile.close();
+            Log.v("––> Reading File", "ok");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.v("––> Reading File", "did not succeed!");
+        }
+        if(inventairePieces.getInventairePieces().isEmpty()) {
+            // Creates an object PieceModel as default if the file is empty or not found
+            PieceModel piece = new PieceModel();
+            piece.setCodePiece(3625);
+            piece.setNomPiece("Pièce Temporaire");
+            piece.setDescriptionPiece("Description temporaire");
+            piece.setDimensionPiece(4);
+            piece.setPrixCoutantPiece(0.95);
+            piece.setQtyPiece(23);
+            piece.setTypePiece("type");
+            piece.setCategoriePiece("categorie");
+
+            inventairePieces.addToInventairePieces(piece);
+
+            Toast.makeText(getActivity(), "#" + piece.getCodePiece() + " " + piece.getNomPiece() + " est ajouté", Toast.LENGTH_SHORT).show();
+            this.writeInventairePiece();
+        }
     }
 
     /**
@@ -131,80 +166,52 @@ public class InventairePiecesFragment extends Fragment{
             outputStream.writeObject(inventairePieces);
             outputStream.close();
             outputFile.close();
+            Log.v("––> Writng File", "ok");
+            if(!inventairePieces.getInventairePieces().isEmpty()) Log.v("––> File", "has " + inventairePieces.getInventairePieces().size() + " member(s)");
         } catch (Exception ex) {
             ex.printStackTrace();
+            Log.v("––> Writing File", "did not succeed!");
         }
     }
 
     /**
-     * Reads a file containing the collection of objects PieceModel
-     */
-    private void readInventairePiece(){
-        try {
-            FileInputStream inputFile = this.getContext().openFileInput("InventairePiece.ser");
-            ObjectInputStream inputStream = new ObjectInputStream(inputFile);
-            inventairePieces = (InventairePieces) inputStream.readObject();
-            inputStream.close();
-            inputFile.close();
-            // Creates an object PieceModel as default if the file is empty
-            if(inventairePieces.getInventairePieces().size() < 1) {
-                Log.v("––> Tried Loading ", "but file is empty... writing default value");
-                PieceModel piece = new PieceModel();
-                piece.setCodePiece(3625);
-                piece.setNomPiece("Pièce Temporaire");
-                piece.setDescriptionPiece("Description temporaire");
-                piece.setDimensionPiece(4);
-                piece.setPrixCoutantPiece(0.95);
-                piece.setQtyPiece(23);
-                piece.setTypePiece("type");
-                piece.setCategoriePiece("categorie");
-
-                inventairePieces.addToInventairePieces(piece);
-                inventairePiecesAdapter.notifyDataSetChanged();
-                this.writeInventairePiece();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Returns result for an object PieceModel that was requested to be removed
-     * also updates the collection information in the fragment
-     * @param requestCode the request code
-     * @param resultCode the result code that tells how to handle the object
-     * @param data the intent that was returned
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == EventManager.REQUEST_DELETE_PIECE && resultCode == RESULT_OK){
-            Toast.makeText(getContext(), inventairePieces.removeFromInventairePieces(piece), Toast.LENGTH_SHORT).show();
-            inventairePiecesAdapter.notifyDataSetChanged();
-            this.writeInventairePiece();
-        }
-    }
-
-    /**
-     * Updates the information in the fragment when the collection has changed
-     * @param eventIntent the event intent
+     * Updates the information when something changes in the collection
+     * @param eventIntentController the event intent passed back to the controller
      */
     @Subscribe
-    public void onEvent(EventManager.EventIntent eventIntent){
+    public void onEvent(EventManager.EventIntentController eventIntentController){
+        String state = "Annulé";
         int requestCode;
+        int resultCode;
         PieceModel piece;
-        if(eventIntent.getEventIntent() != null) {
-            Intent intent = eventIntent.getEventIntent();
+        if(eventIntentController.getEventIntentController() != null) {
+            Intent intent = eventIntentController.getEventIntentController();
             requestCode = intent.getIntExtra("requestCode", -1);
+            resultCode = intent.getIntExtra("resultCode", -1);
             piece = (PieceModel) intent.getSerializableExtra("piece");
-            if(requestCode == EventManager.REQUEST_NEW_PIECE) {
-                Toast.makeText(getContext(), inventairePieces.addToInventairePieces(piece), Toast.LENGTH_SHORT).show();
+            if(requestCode == EventManager.REQUEST_NEW_PIECE && resultCode == RESULT_OK) {
+                inventairePieces.addToInventairePieces(piece);
+                state = "#" + piece.getCodePiece() + " " + piece.getNomPiece() + " est ajouté";
+                Log.v("--> onEvent", "updating controller from add" );
             }
-            else if (requestCode == EventManager.REQUEST_MODIFY_PIECE) {
-                Toast.makeText(getContext(), inventairePieces.setToInventairePieces(intent.getIntExtra("position", -1), piece), Toast.LENGTH_SHORT).show();
+            else if (requestCode == EventManager.REQUEST_MODIFY_PIECE && resultCode == RESULT_OK) {
+                int position = intent.getIntExtra("position", -1);
+                inventairePieces.setToInventairePieces(intent.getIntExtra("position", -1), piece);
+                state = "#" + piece.getCodePiece() + " " + piece.getNomPiece() + " est modifié";
+                Intent detailIntent = new Intent(getActivity(), PieceViewActivity.class);
+                detailIntent.putExtra("position", position);
+                detailIntent.putExtra("inventairePieces", inventairePieces);
+                startActivity(detailIntent);
+                //EventBus.getDefault().post(new EventManager.EventIntentDetail(detailIntent));
+                Log.v("--> onEvent", "updating controller from mod" );
+            }
+            else if (requestCode == EventManager.REQUEST_DELETE_PIECE && resultCode == RESULT_OK) {
+                inventairePieces.removeFromInventairePieces(piece);
+                state = "#" + piece.getCodePiece() + " " + piece.getNomPiece() + " est supprimé";
+                Log.v("--> onEvent", "updating controller from mod" );
             }
             inventairePiecesAdapter.notifyDataSetChanged();
+            Toast.makeText(getActivity(), state, Toast.LENGTH_SHORT).show();
             this.writeInventairePiece();
         }
     }

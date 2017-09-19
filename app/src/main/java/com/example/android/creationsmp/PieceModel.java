@@ -63,8 +63,8 @@ public class PieceModel implements Serializable {
      */
     protected boolean setNomPiece(String nomPiece) {
         boolean pass;
-        if (!nomPiece.isEmpty()) {
-            this.nomPiece = nomPiece;
+        if (nomPiece.length() < 21) {
+            this.nomPiece = nomPiece.substring(0, 1).toUpperCase() + nomPiece.substring(1);
             pass = true;
         }else
             pass = false;
@@ -88,11 +88,10 @@ public class PieceModel implements Serializable {
      */
     protected boolean setDescriptionPiece(String descPiece) {
         boolean pass;
-        if (!descPiece.isEmpty()) {
-            this.descriptionPiece = descPiece;
+        if (descPiece.length() < 65) {
+            this.descriptionPiece = descPiece.substring(0, 1).toUpperCase() + descPiece.substring(1);
             pass = true;
-        }else
-            pass = false;
+        }else pass = false;
 
         return pass;
     }
@@ -244,6 +243,7 @@ public class PieceModel implements Serializable {
      * @return not sure about that one
      */
     public int compareTo(PieceModel piece) {
+
         return Integer.compare(codePiece, piece.codePiece);
     }
 }

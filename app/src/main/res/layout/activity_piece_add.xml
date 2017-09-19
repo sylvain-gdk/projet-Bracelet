@@ -54,7 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nomPieceHint"
-            android:inputType="textPersonName"
+            android:inputType="text|textAutoCorrect|textAutoComplete"
+            android:maxLength="20"
+            android:maxLines="2"
+            android:minLines="2"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
 
@@ -78,7 +81,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/descriptionPieceHint"
-            android:inputType="textMultiLine"
+            android:inputType="textAutoCorrect|textAutoComplete|textMultiLine"
+            android:maxLength="64"
+            android:maxLines="2"
+            android:minLines="2"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
 
@@ -218,21 +224,21 @@
             android:id="@+id/cameraIcon"
             android:layout_width="match_parent"
             android:layout_height="63dp"
-            android:layout_marginTop="20dp"
             android:background="@color/colorField"
             android:onClick="prendrePhotoListener"
             android:scaleType="centerInside"
+            android:layout_margin="5dp"
             app:srcCompat="@drawable/ic_add_a_photo_black_48dp" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingTop="20dp">
+        android:layout_marginTop="5dp">
 
 
         <Button

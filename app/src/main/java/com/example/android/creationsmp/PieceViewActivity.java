@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by sylvain on 2017-05-16.
@@ -39,22 +42,24 @@ public class PieceViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_view);
 
+        // Registers to the EventBus
+        //EventBus.getDefault().register(this);
+
+        // Receives the position of the object when peviously clicked in the collection's list InventairePiecesFragment
+        Intent intent = getIntent();
+        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_piece_view_container, new PieceViewFragment())
+                .add(R.id.activity_piece_view_container, new PieceViewFragment())
                     .commit();
-
             // Create an adapter that when requested, will return a fragment of an object PieceModel in the collection
-            pieceViewPagerAdapter = new PieceViewPagerAdapter(getSupportFragmentManager());
+            pieceViewPagerAdapter = new PieceViewPagerAdapter(getSupportFragmentManager(), inventairePieces);
+
             // Setup the ViewPager, attaching the adapter.
             mViewPager = (ViewPager) findViewById(R.id.activity_piece_view_container);
             mViewPager.setAdapter(pieceViewPagerAdapter);
-
-            // Receives the position of the object when peviously clicked in the collection's list InventairePiecesFragment
-            Intent intent = getIntent();
-            mViewPager.setCurrentItem(intent.getIntExtra("position", -1));
-            inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
-        }
+            mViewPager.setCurrentItem(intent.getIntExtra("position", -1));        }
     }
 
     @Override
@@ -84,6 +89,19 @@ public class PieceViewActivity extends AppCompatActivity {
     }
 
     /**
+     * Updates the information when something changes in the collection
+     * @param eventIntentDetail the event intent passed back to the detail activity
+     */
+    @Subscribe
+    public void onEvent(EventManager.EventIntentDetail eventIntentDetail) {
+        if (eventIntentDetail.getEventIntentDetail() != null) {
+            Intent intent = eventIntentDetail.getEventIntentDetail();
+            inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+            Log.v("––> onEvent", "updating details activity from controller");
+        }
+    }
+
+    /**
      * A {@link android.support.v4.app.FragmentStatePagerAdapter} that returns a fragment
      * representing an object in the collection.
      */
@@ -92,11 +110,9 @@ public class PieceViewActivity extends AppCompatActivity {
         // Accesses the InventairePieces class
         private InventairePieces inventairePieces;
 
-        public PieceViewPagerAdapter(FragmentManager fm) {
+        public PieceViewPagerAdapter(FragmentManager fm, InventairePieces inventairePieces) {
             super(fm);
-
-            Intent intent = getIntent();
-            inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+            this.inventairePieces = inventairePieces;
         }
 
         /**
@@ -111,6 +127,7 @@ public class PieceViewActivity extends AppCompatActivity {
             Fragment fragment = new PieceViewFragment();
             Bundle args = new Bundle();
             args.putInt("position", position);
+            args.putSerializable("inventairePieces", inventairePieces);
             fragment.setArguments(args);
             return fragment;
         }

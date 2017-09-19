@@ -8,17 +8,49 @@
     android:minHeight="?android:attr/listPreferredItemHeight" >
 
     <ImageView
-        android:id="@+id/pieceThumb"
-        android:layout_width="55dp"
-        android:layout_height="40dp"
+        android:id="@+id/liste_pieces_inventaire_imageview_pieceThumb"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
         android:layout_marginRight="10dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/no_image" />
+        android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/liste_pieces_inventaire_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp" />
+    <LinearLayout
+        android:id="@+id/liste_pieces_inventaire_textview_row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/liste_pieces_inventaire_textview_pieceCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:id="@+id/liste_pieces_inventaire_textview_pieceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/liste_pieces_inventaire_textview_pieceQty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

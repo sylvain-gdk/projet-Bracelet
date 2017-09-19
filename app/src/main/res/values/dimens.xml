@@ -1,4 +1,12 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="field_piece_view_height">37dp</dimen>
+
+    <dimen name="field_piece_view_height">30dp</dimen>
+    <dimen name="field_piece_view_height_double">50dp</dimen>
+    <dimen name="field_piece_view_margins">6dp</dimen>
+    <dimen name="field_piece_view_label_paddingright">5dp</dimen>
+    <dimen name="field_piece_view_text_padding">5dp</dimen>
+
+    <dimen name="field_piece_view_textsize">16sp</dimen>
+
 </resources>

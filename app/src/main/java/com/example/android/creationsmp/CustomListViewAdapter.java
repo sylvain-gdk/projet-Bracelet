@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,10 @@ public class CustomListViewAdapter extends ArrayAdapter<PieceModel> {
 
     private class ViewHolder {
 
-        private ImageView imageView;
-        private TextView textView;
+        private ImageView imageViewPieceThumb;
+        private TextView textViewPieceCode;
+        private TextView textViewPieceName;
+        private TextView textViewPieceQty;
     }
 
     /**
@@ -49,18 +52,31 @@ public class CustomListViewAdapter extends ArrayAdapter<PieceModel> {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.liste_pieces_inventaire, null);
             holder = new ViewHolder();
-            holder.textView = (TextView) convertView.findViewById(R.id.liste_pieces_inventaire_textview);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.pieceThumb);
+            holder.imageViewPieceThumb = (ImageView) convertView.findViewById(R.id.liste_pieces_inventaire_imageview_pieceThumb);
+            holder.textViewPieceCode = (TextView) convertView.findViewById(R.id.liste_pieces_inventaire_textview_pieceCode);
+            holder.textViewPieceName = (TextView) convertView.findViewById(R.id.liste_pieces_inventaire_textview_pieceName);
+            holder.textViewPieceQty = (TextView) convertView.findViewById(R.id.liste_pieces_inventaire_textview_pieceQty);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        // Sets the text line of each row
-        holder.textView.setText("#" + piece.getCodePiece() + "  " + piece.getNomPiece() + "  " + "( " + piece.getQtyPiece() + " )");
-        if(piece.getPhotoPiece() != null) {
+        // Sets the thumbnail
+        if(piece.getPhotoPiece() != null)
             // Sets the resized picture of each row
-            holder.imageView.setImageBitmap(setResizedPhotoPiece(piece.getPhotoPiece().getAbsolutePath(), holder.imageView));
-        }
+            holder.imageViewPieceThumb.setImageBitmap(setResizedPhotoPiece(piece.getPhotoPiece().getAbsolutePath(), holder.imageViewPieceThumb));
+        else
+            holder.imageViewPieceThumb.setImageResource(R.drawable.ic_add_a_photo_black_48dp);
+
+
+        holder.textViewPieceCode.setText("#" + piece.getCodePiece());
+        holder.textViewPieceName.setText(piece.getNomPiece());
+        holder.textViewPieceQty.setText(piece.getQtyPiece() + " pièces");
+
+        // Sets the Qty color to red if = 0
+        if(piece.getQtyPiece() == 0)
+            holder.textViewPieceQty.setTextColor(Color.RED);
+        else
+            holder.textViewPieceQty.setTextColor(Color.GRAY);
 
         return convertView;
     }

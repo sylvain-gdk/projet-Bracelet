@@ -39,6 +39,7 @@ public class PieceAddActivity extends AppCompatActivity {
 
     // Accesses the InventairePieces class
     private InventairePieces inventairePieces;
+
     // The picture of the object PieceModel
     private File photoPieceFile = null;
 
@@ -75,7 +76,7 @@ public class PieceAddActivity extends AppCompatActivity {
     /**
      * Adds items to the Type spinner
      */
-    public void addItemsToTypeSpinner() {
+    private void addItemsToTypeSpinner() {
         ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter
                 .createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -85,7 +86,7 @@ public class PieceAddActivity extends AppCompatActivity {
     /**
      * Adds a listener to the Type spinner
      */
-    public void addListenerToTypeSpinner() {
+    private void addListenerToTypeSpinner() {
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
 
         // Sets the type on item selection
@@ -106,7 +107,7 @@ public class PieceAddActivity extends AppCompatActivity {
     /**
      * Adds items to the Categorie spinner
      */
-    public void addItemsToCategorieSpinner() {
+    private void addItemsToCategorieSpinner() {
         ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter
                 .createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -116,7 +117,7 @@ public class PieceAddActivity extends AppCompatActivity {
     /**
      * Adds a listener to the Categorie spinner
      */
-    public void addListenerToCategorieSpinner() {
+    private void addListenerToCategorieSpinner() {
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
 
         // Sets the categorie on item selection
@@ -223,7 +224,7 @@ public class PieceAddActivity extends AppCompatActivity {
 
     /**
      * Button to add the new object PieceModel to the collection
-     * tests if each entries are valid
+     * tests for entry validity
      * @param view the view
      */
     public void ajouterPieceListener(View view) {
@@ -233,9 +234,9 @@ public class PieceAddActivity extends AppCompatActivity {
             if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
                 showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
             } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                showErrorHighlightField("Le nom de la pièce ne peut être vide", nomPiece);
+                showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
             } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                showErrorHighlightField("La description de la pièce ne peut être vide", descriptionPiece);
+                showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
             } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
                 showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
             } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
@@ -250,13 +251,14 @@ public class PieceAddActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_NEW_PIECE);
+                intent.putExtra("resultCode", RESULT_OK);
                 intent.putExtra("piece", piece);
 
-                EventBus.getDefault().post(new EventManager.EventIntent(intent));
+                EventBus.getDefault().post(new EventManager.EventIntentController(intent));
 
                 finish();
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             // Shows the error on screen with Snackbar
             Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -280,8 +282,7 @@ public class PieceAddActivity extends AppCompatActivity {
     }
 
     /**
-     * Button to cancel
-     * returns to the main activity on cancel
+     * Button to cancel and return to the previous activity
      * @param view the view
      */
     public void annulerAjouterPieceListener(View view) {

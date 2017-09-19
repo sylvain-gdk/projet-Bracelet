@@ -26,7 +26,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -41,10 +40,13 @@ public class PieceEditActivity extends AppCompatActivity {
 
     // Accesses the InventairePieces class
     private InventairePieces inventairePieces;
+
     // Accesses the PieceModel class
     private PieceModel piece;
+
     // The object's position in the collection
     private int positionClicked;
+
     // The picture of an object PieceModel
     private File photoPieceFile = null;
 
@@ -61,9 +63,6 @@ public class PieceEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_edit);
-
-        // Creates a collection of objects PieceModel
-        this.inventairePieces = new InventairePieces(new ArrayList<PieceModel>());
 
         // Sets the details of the object PieceModel
         codePiece = (EditText) findViewById(R.id.codePiece_edit);
@@ -92,12 +91,11 @@ public class PieceEditActivity extends AppCompatActivity {
         photoPieceFile = piece.getPhotoPiece();
 
         if(photoPieceFile != null){
-            onActivityResult(5, RESULT_OK, intent);
+            onActivityResult(REQUEST_TAKE_PHOTO, RESULT_OK, intent);
         }
 
         addItemsToTypeSpinner();
         addListenerToTypeSpinner();
-
         addItemsToCategorieSpinner();
         addListenerToCategorieSpinner();
     }
@@ -105,7 +103,7 @@ public class PieceEditActivity extends AppCompatActivity {
     /**
      * Adds items to the Type spinner
      */
-    public void addItemsToTypeSpinner() {
+    private void addItemsToTypeSpinner() {
         ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter
                 .createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -119,7 +117,7 @@ public class PieceEditActivity extends AppCompatActivity {
     /**
      * Adds a listener to the Type spinner
      */
-    public void addListenerToTypeSpinner() {
+    private void addListenerToTypeSpinner() {
         typePiece = (Spinner) findViewById(R.id.typePiece_edit);
 
         // Sets the type on item selection
@@ -140,7 +138,7 @@ public class PieceEditActivity extends AppCompatActivity {
     /**
      * Adds items to the Categorie spinner
      */
-    public void addItemsToCategorieSpinner() {
+    private void addItemsToCategorieSpinner() {
         ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter
                 .createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -154,7 +152,7 @@ public class PieceEditActivity extends AppCompatActivity {
     /**
      * Adds a listener to the Categorie spinner
      */
-    public void addListenerToCategorieSpinner() {
+    private void addListenerToCategorieSpinner() {
         categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
 
         // Sets the categorie on item selection
@@ -200,7 +198,7 @@ public class PieceEditActivity extends AppCompatActivity {
      * @throws IOException
      */
     private File createImageFile() throws IOException {
-        //T he path to store pictures taken from the camera
+        // The path to store pictures taken from the camera
         String photoPath;
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -214,6 +212,7 @@ public class PieceEditActivity extends AppCompatActivity {
 
         // Saves a file: path for use with ACTION_VIEW intents
         photoPath = image.getAbsolutePath();
+
         return image;
     }
 
@@ -276,9 +275,9 @@ public class PieceEditActivity extends AppCompatActivity {
             if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
                 showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
             } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                showErrorHighlightField("Le nom de la pièce ne peut être vide", nomPiece);
+                showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
             } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                showErrorHighlightField("La description de la pièce ne peut être vide", descriptionPiece);
+                showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
             } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
                 showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
             } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
@@ -292,15 +291,16 @@ public class PieceEditActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_MODIFY_PIECE);
+                intent.putExtra("resultCode", RESULT_OK);
                 intent.putExtra("piece", piece);
                 intent.putExtra("position", positionClicked);
                 intent.putExtra("inventairePieces", inventairePieces);
 
-                EventBus.getDefault().post(new EventManager.EventIntent(intent));
+                EventBus.getDefault().post(new EventManager.EventIntentController(intent));
 
                 finish();
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             // Shows the error on screen with Snackbar
             Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();

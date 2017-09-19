@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/photoPiece_image"
             android:layout_width="match_parent"
-            android:layout_height="205dp"
+            android:layout_height="192dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/no_image" />
 
@@ -25,84 +25,73 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center|left"
+        android:layout_height="@dimen/field_piece_view_height"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/codePiece_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_light"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/codePiece_text"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:background="@color/colorField"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:padding="@dimen/field_piece_view_text_padding"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:background="@color/colorAccent"
+            android:textSize="@dimen/field_piece_view_textsize"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/nomPiece_text"
-                android:layout_width="172dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/nomPiece_text"
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/field_piece_view_text_padding"
+            android:layout_weight="2"
+            android:background="@color/colorAccentPale"
+            android:textSize="@dimen/field_piece_view_textsize"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/invCount_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:textSize="18sp" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/invCount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/field_piece_view_text_padding"
+            android:layout_weight="3"
+            android:textAlignment="center"
+            android:textSize="@dimen/field_piece_view_textsize" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/field_piece_view_height"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/field_piece_view_height_double"
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/descriptionPieceLabel"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/field_piece_view_textsize" />
 
             <TextView
                 android:id="@+id/descriptionPiece_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:background="@color/colorField"
+                android:minLines="2"
+                android:padding="@dimen/field_piece_view_text_padding"
+                android:textSize="@dimen/field_piece_view_textsize" />
 
         </LinearLayout>
 
@@ -110,21 +99,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/field_piece_view_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/dimensionPieceLabel"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/field_piece_view_textsize" />
 
             <TextView
                 android:id="@+id/dimensionPiece_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textSize="@dimen/field_piece_view_textsize"
+                android:background="@color/colorField"
+                android:padding="@dimen/field_piece_view_text_padding" />
 
         </LinearLayout>
 
@@ -132,84 +123,92 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/field_piece_view_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/prixCoutantPieceLabel"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/field_piece_view_textsize" />
 
             <TextView
                 android:id="@+id/prixCoutantPiece_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textSize="@dimen/field_piece_view_textsize"
+                android:background="@color/colorField"
+                android:padding="@dimen/field_piece_view_text_padding" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/field_piece_view_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/qtyPieceLabel"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/field_piece_view_textsize" />
 
             <TextView
                 android:id="@+id/qtyPiece_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textSize="@dimen/field_piece_view_textsize"
+                android:background="@color/colorField"
+                android:padding="@dimen/field_piece_view_text_padding" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/field_piece_view_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/typePieceLabel"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/field_piece_view_textsize" />
 
             <TextView
                 android:id="@+id/typePiece_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textSize="@dimen/field_piece_view_textsize"
+                android:background="@color/colorField"
+                android:padding="@dimen/field_piece_view_text_padding" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/field_piece_view_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/categoriePieceLabel"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/field_piece_view_textsize" />
 
             <TextView
                 android:id="@+id/categoriePiece_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textSize="@dimen/field_piece_view_textsize"
+                android:background="@color/colorField"
+                android:padding="@dimen/field_piece_view_text_padding"/>
 
         </LinearLayout>
 
