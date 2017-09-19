@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.android.creationsmp.R.id.codePiece_text;
+
 /**
  * Created by sylvain on 2017-04-10.
  * This class is where the objects PieceModel are created/modified
@@ -50,7 +52,8 @@ public class PieceEditActivity extends AppCompatActivity {
     // The picture of an object PieceModel
     private File photoPieceFile = null;
 
-    private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
+    private EditText nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
+    private TextView codePiece;
     private Spinner typePiece, categoriePiece;
     private String type, categorie;
 
@@ -65,7 +68,7 @@ public class PieceEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_piece_edit);
 
         // Sets the details of the object PieceModel
-        codePiece = (EditText) findViewById(R.id.codePiece_edit);
+        codePiece = (TextView) findViewById(codePiece_text);
         nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
         descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
         dimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
@@ -82,7 +85,7 @@ public class PieceEditActivity extends AppCompatActivity {
         // Sets text on EditText fields from an intent (PieceViewFragment)
         piece = inventairePieces.getInventairePieces().get(positionClicked);
 
-        codePiece.setText(String.valueOf(piece.getCodePiece()), TextView.BufferType.EDITABLE);
+        codePiece.setText(String.valueOf("#" + piece.getCodePiece()));
         nomPiece.setText(piece.getNomPiece(), TextView.BufferType.EDITABLE);
         descriptionPiece.setText(piece.getDescriptionPiece(), TextView.BufferType.EDITABLE);
         dimensionPiece.setText(String.valueOf(piece.getDimensionPiece()), TextView.BufferType.EDITABLE);
@@ -272,9 +275,7 @@ public class PieceEditActivity extends AppCompatActivity {
         PieceModel piece = new PieceModel();
         // Field validation
         try {
-            if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-                showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
-            } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
+            if (!piece.setNomPiece(nomPiece.getText().toString())) {
                 showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
             } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
                 showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
@@ -282,7 +283,8 @@ public class PieceEditActivity extends AppCompatActivity {
                 showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
             } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
                 showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
-            } else if (piece.getCodePiece() > 0) {
+            } else{
+                piece.setCodePiece(this.piece.getCodePiece());
                 piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
                 piece.setTypePiece(type);
                 piece.setCategoriePiece(categorie);

@@ -71,7 +71,7 @@ public class PieceViewFragment extends Fragment {
 
         // Sets the object's details
         ((TextView) rootView.findViewById(R.id.invCount_text)).setText(String.valueOf("(" + (positionClicked + 1) + "/" + inventairePieces.getInventairePieces().size()) + ")");
-        ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("# " + piece.getCodePiece()));
+        ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("#" + piece.getCodePiece()));
         ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
         ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
         ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");

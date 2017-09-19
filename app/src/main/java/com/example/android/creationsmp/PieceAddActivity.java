@@ -230,39 +230,48 @@ public class PieceAddActivity extends AppCompatActivity {
     public void ajouterPieceListener(View view) {
         PieceModel piece = new PieceModel();
         // Field validation
-        try {
-            if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-                showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
-            } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
-            } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
-            } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-                showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
-            } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-                showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
-            } else if (piece.getCodePiece() > 0) {
-                piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
-                piece.setTypePiece(type);
-                piece.setCategoriePiece(categorie);
-                if (photoPieceFile != null) {
-                    piece.setPhotoPiece(photoPieceFile);
-                }
-
-                Intent intent = new Intent();
-                intent.putExtra("requestCode", EventManager.REQUEST_NEW_PIECE);
-                intent.putExtra("resultCode", RESULT_OK);
-                intent.putExtra("piece", piece);
-
-                EventBus.getDefault().post(new EventManager.EventIntentController(intent));
-
-                finish();
-            }
-        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-            // Shows the error on screen with Snackbar
-            Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+        boolean sameCode = false;
+        for (int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
+            if (Integer.compare(Integer.parseInt(String.valueOf(codePiece.getText())),
+                    inventairePieces.getInventairePieces().get(i).getCodePiece()) == 0)
+                sameCode = true;
         }
+        if(!sameCode) {
+            try {
+                if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
+                    showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
+                } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
+                    showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
+                } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
+                    showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
+                } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
+                    showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
+                } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
+                    showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
+                } else if (piece.getCodePiece() > 0) {
+                    piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
+                    piece.setTypePiece(type);
+                    piece.setCategoriePiece(categorie);
+                    if (photoPieceFile != null) {
+                        piece.setPhotoPiece(photoPieceFile);
+                    }
+
+                    Intent intent = new Intent();
+                    intent.putExtra("requestCode", EventManager.REQUEST_NEW_PIECE);
+                    intent.putExtra("resultCode", RESULT_OK);
+                    intent.putExtra("piece", piece);
+
+                    EventBus.getDefault().post(new EventManager.EventIntentController(intent));
+
+                    finish();
+                }
+            } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+                // Shows the error on screen with Snackbar
+                Snackbar.make(view, "Vous devez remplir tous les champs", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        }else
+            showErrorHighlightField("Ce code existe déjà", codePiece);
     }
 
 

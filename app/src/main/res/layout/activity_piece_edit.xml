@@ -19,20 +19,16 @@
         android:weightSum="1">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="5dp"
-            android:text="@string/codePieceLabel"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/codePiece_edit"
+            android:id="@+id/codePiece_text"
             android:layout_width="86dp"
             android:layout_height="wrap_content"
-            android:hint="@string/codePieceHint"
-            android:inputType="numberSigned"
-            android:selectAllOnFocus="true"
-            android:textSize="16sp" />
+            android:padding="@dimen/field_piece_view_text_padding"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:background="@color/colorAccent"
+            android:layout_marginBottom="5dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
