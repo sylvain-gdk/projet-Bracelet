@@ -103,6 +103,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/dimensionLargeurPieceHint"
             android:inputType="numberSigned"
+            android:maxLength="2"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
 
@@ -127,6 +128,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/prixCoutantPieceHint"
             android:inputType="numberDecimal"
+            android:maxLength="5"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
 
@@ -150,6 +152,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/qtyPieceHint"
             android:inputType="numberSigned"
+            android:maxLength="4"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
 

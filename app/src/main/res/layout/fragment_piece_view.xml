@@ -25,8 +25,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/field_piece_view_height"
-        android:gravity="center"
+        android:layout_height="35dp"
         android:orientation="horizontal"
         android:background="@color/colorField">
 
@@ -34,11 +33,10 @@
             android:id="@+id/codePiece_text"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:padding="@dimen/field_piece_view_text_padding"
-            android:layout_weight="1"
             android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:background="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
             android:textSize="@dimen/field_piece_view_textsize"
             android:textStyle="bold" />
 
@@ -46,9 +44,10 @@
             android:id="@+id/nomPiece_text"
             android:layout_width="210dp"
             android:layout_height="match_parent"
-            android:padding="@dimen/field_piece_view_text_padding"
-            android:layout_weight="2"
-            android:background="@color/colorAccentPale"
+            android:paddingStart="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent"
             android:textSize="@dimen/field_piece_view_textsize"
             android:textStyle="bold" />
 
@@ -56,18 +55,19 @@
             android:id="@+id/invCount_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="@dimen/field_piece_view_text_padding"
-            android:layout_weight="3"
+            android:paddingStart="10dp"
             android:textAlignment="center"
-            android:textSize="15sp" />
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="15dp"
         android:gravity="center_vertical"
@@ -82,6 +82,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="@dimen/field_piece_view_label_width"
+                android:gravity="right"
                 android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/descriptionPieceLabel"
                 android:textSize="@dimen/field_piece_view_textsize" />
@@ -107,6 +109,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="@dimen/field_piece_view_label_width"
+                android:gravity="right"
                 android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/dimensionPieceLabel"
                 android:textSize="@dimen/field_piece_view_textsize" />
@@ -131,6 +135,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="@dimen/field_piece_view_label_width"
+                android:gravity="right"
                 android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/prixCoutantPieceLabel"
                 android:textSize="@dimen/field_piece_view_textsize" />
@@ -154,6 +160,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="@dimen/field_piece_view_label_width"
+                android:gravity="right"
                 android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/qtyPieceLabel"
                 android:textSize="@dimen/field_piece_view_textsize" />
@@ -177,6 +185,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="@dimen/field_piece_view_label_width"
+                android:gravity="right"
                 android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/typePieceLabel"
                 android:textSize="@dimen/field_piece_view_textsize" />
@@ -200,6 +210,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="@dimen/field_piece_view_label_width"
+                android:gravity="right"
                 android:paddingRight="@dimen/field_piece_view_label_paddingright"
                 android:text="@string/categoriePieceLabel"
                 android:textSize="@dimen/field_piece_view_textsize" />
