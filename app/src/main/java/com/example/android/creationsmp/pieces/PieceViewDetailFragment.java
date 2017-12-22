@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.creationsmp.R;
+
 import org.greenrobot.eventbus.Subscribe;
 
 /**
@@ -20,16 +22,19 @@ import org.greenrobot.eventbus.Subscribe;
  * This is the fragment for the details of each items
  */
 
-public class PieceViewFragment extends Fragment {
+public class PieceViewDetailFragment extends Fragment {
 
-    // Accesses the InventairePieces class
-    private InventairePieces inventairePieces;
+    // Accesses the GestionPieces class
+    private GestionPieces mGestionPieces;
 
-    // Accesses the PieceModel class
-    private PieceModel piece;
+    // Accesses the GestionTypePieces class
+    private GestionTypePieces mGestionTypePieces;
+
+    // Accesses the Pieces class
+    private Pieces mPiece;
 
     // The object's position in the collection
-    private int positionClicked;
+    private int mPositionClicked;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,10 @@ public class PieceViewFragment extends Fragment {
         //EventBus.getDefault().register(this);
 
         Intent intent = getActivity().getIntent();
-        positionClicked = intent.getIntExtra("position", -1);
-        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
-        piece = inventairePieces.getInventairePieces().get(positionClicked);
+        mPositionClicked = intent.getIntExtra("position", -1);
+        mGestionPieces = (GestionPieces) intent.getSerializableExtra("mGestionPieces");
+        mGestionTypePieces = (GestionTypePieces) intent.getSerializableExtra("mGestionTypePieces");
+        mPiece = mGestionPieces.getInventairePieces().get(mPositionClicked);
     }
 
     @Override
@@ -55,9 +61,10 @@ public class PieceViewFragment extends Fragment {
         Bundle args = getArguments();
 
         if(args != null) {
-            positionClicked = args.getInt("position");
-            inventairePieces = (InventairePieces) args.getSerializable("inventairePieces");
-            piece = inventairePieces.getInventairePieces().get(positionClicked);
+            mPositionClicked = args.getInt("position");
+            mGestionPieces = (GestionPieces) args.getSerializable("mGestionPieces");
+            mGestionTypePieces = (GestionTypePieces) args.getSerializable("mGestionTypePieces");
+            mPiece = mGestionPieces.getInventairePieces().get(mPositionClicked);
             this.updateDetails(rootView);
         }
 
@@ -65,30 +72,30 @@ public class PieceViewFragment extends Fragment {
     }
 
     /**
-     * Sets the collection and position of an object PieceModel from an intent
+     * Sets the collection and position of an object Pieces from an intent
      */
     private View updateDetails(View rootView){
 
         // Sets the object's details
-        ((TextView) rootView.findViewById(R.id.invCount_text)).setText(String.valueOf("(" + (positionClicked + 1) + "/" + inventairePieces.getInventairePieces().size()) + ")");
-        ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("#" + piece.getCodePiece()));
-        ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(piece.getNomPiece());
-        ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(piece.getDescriptionPiece());
-        ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(piece.getDimensionPiece()) + " mm");
-        ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(piece.getPrixCoutantPiece()) + " $");
-        ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(piece.getQtyPiece()));
+        ((TextView) rootView.findViewById(R.id.invCount_text)).setText(String.valueOf("(" + (mPositionClicked + 1) + "/" + mGestionPieces.getInventairePieces().size()) + ")");
+        ((TextView) rootView.findViewById(R.id.codePiece_text)).setText(String.valueOf("#" + mPiece.getCodePiece()));
+        ((TextView) rootView.findViewById(R.id.nomPiece_text)).setText(mPiece.getNomPiece());
+        ((TextView) rootView.findViewById(R.id.descriptionPiece_text)).setText(mPiece.getDescriptionPiece());
+        ((TextView) rootView.findViewById(R.id.dimensionPiece_text)).setText(String.valueOf(mPiece.getDimensionPiece()) + " mm");
+        ((TextView) rootView.findViewById(R.id.prixCoutantPiece_text)).setText(String.valueOf(mPiece.getPrixCoutantPiece()) + " $");
+        ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setText(String.valueOf(mPiece.getQtyPiece()));
 
         // Sets the color to red if = 0
-        if(piece.getQtyPiece() == 0)
+        if(mPiece.getQtyPiece() == 0)
             ((TextView) rootView.findViewById(R.id.qtyPiece_text)).setTextColor(Color.RED);
 
-        ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(piece.getTypePiece());
-        ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(piece.getCategoriePiece());
+        ((TextView) rootView.findViewById(R.id.typePiece_text)).setText(mPiece.getTypePiece().getNomTypePieces());
+        ((TextView) rootView.findViewById(R.id.categoriePiece_text)).setText(mPiece.getCategoriePiece().getNomCategorie());
 
-        // Gets the image of an object PieceModel or uses default image if null
-        if(piece.getPhotoPiece() != null){
+        // Gets the image of an object Pieces or uses default image if null
+        if(mPiece.getPhotoPiece() != null){
             ImageView imageView = (ImageView) rootView.findViewById(R.id.photoPiece_image);
-            setResizedPhotoPiece(piece.getPhotoPiece().getAbsolutePath(), imageView);
+            setResizedPhotoPiece(mPiece.getPhotoPiece().getAbsolutePath(), imageView);
         }
 
         return rootView;
@@ -128,10 +135,9 @@ public class PieceViewFragment extends Fragment {
     public void onEvent(EventManager.EventIntentDetail eventIntentDetail) {
         if (eventIntentDetail.getEventIntentDetail() != null) {
             Intent intent = eventIntentDetail.getEventIntentDetail();
-            positionClicked = intent.getIntExtra("position", -1);
-            inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
-            //this.updateDetails(getView());
-            //getChildFragmentManager().beginTransaction().detach(this).attach(this).commit();
+            mPositionClicked = intent.getIntExtra("position", -1);
+            mGestionPieces = (GestionPieces) intent.getSerializableExtra("mGestionPieces");
+            mGestionTypePieces = (GestionTypePieces) intent.getSerializableExtra("mGestionTypePieces");
             Log.v("––> onEvent", "updating details fragment from controller");
         }
     }

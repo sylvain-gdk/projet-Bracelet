@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.content.Intent;
 

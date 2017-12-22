@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android.creationsmp.R;
+
 /**
  * Created by sylvain on 2017-05-16.
  * This class is the activity for the inventory of items PieceModel
  */
 
-public class InventairePiecesActivity extends AppCompatActivity {
+public class PiecesInventaireActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,7 @@ public class InventairePiecesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pieces_inventaire);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_pieces_inventaire_container, new InventairePiecesFragment())
+                    .add(R.id.activity_pieces_inventaire_container, new PiecesInventaireFragment())
                     .commit();
         }
     }
@@ -42,7 +44,7 @@ public class InventairePiecesActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_inventaire) {
-            startActivity(new Intent(this, SettingsInventairePiecesActivity.class));
+            startActivity(new Intent(this, SettingsPiecesInventaireActivity.class));
             return true;
         }
         finish();

@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.example.android.creationsmp.R;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
@@ -29,23 +31,27 @@ import java.util.Date;
 
 /**
  * Created by sylvain on 2017-04-10.
- * This class is where the objects PieceModel are created/modified
+ * This class is where the objects Pieces are created/modified
  */
 
-public class PieceAddActivity extends AppCompatActivity {
+public class PieceAddDetailActivity extends AppCompatActivity {
 
-    // The request code for the picture of the object PieceModel
-    static final int REQUEST_TAKE_PHOTO = 5;
+    // The request code for the picture of the object Pieces
+    private static final int REQUEST_TAKE_PHOTO = 5;
 
-    // Accesses the InventairePieces class
-    private InventairePieces inventairePieces;
+    // Accesses the GestionPieces class
+    private GestionPieces mGestionPieces;
 
-    // The picture of the object PieceModel
-    private File photoPieceFile = null;
+    // Accesses the GestionTypePieces class
+    private GestionTypePieces mGestionTypePieces;
 
-    private EditText codePiece, nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
-    private Spinner typePiece, categoriePiece;
-    private String type, categorie;
+    // The picture of the object Pieces
+    private File mPhotoPieceFile = null;
+
+    private EditText mCodePiece, mNomPiece, mDescriptionPiece, mDimensionPiece, mPrixCoutantPiece, mQtyPiece;
+    private Spinner mTypePieceSpinner, mCategorieSpinner;
+    private TypePieces mTypePiece = null;
+    private Categories mCategorie = null;
 
 
     @Override
@@ -53,84 +59,80 @@ public class PieceAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_add);
 
-        // Sets the details of the object PieceModel
-        codePiece = (EditText) findViewById(R.id.codePiece_edit);
-        nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
-        descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
-        dimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
-        prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
-        qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
-        typePiece = (Spinner) findViewById(R.id.typePiece_edit);
-        categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
+        // Sets the details of the object Pieces
+        mCodePiece = (EditText) findViewById(R.id.codePiece_edit);
+        mNomPiece = (EditText) findViewById(R.id.nomPiece_edit);
+        mDescriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
+        mDimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
+        mPrixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
+        mQtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
+        mTypePieceSpinner = (Spinner) findViewById(R.id.typePiece_edit);
+        mCategorieSpinner = (Spinner) findViewById(R.id.categoriePiece_edit);
 
         // Gets the collection from an intent
         Intent intent = getIntent();
-        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+        mGestionPieces = (GestionPieces) intent.getSerializableExtra("mGestionPieces");
+        mGestionTypePieces = (GestionTypePieces) intent.getSerializableExtra("mGestionTypePieces");
 
         addItemsToTypeSpinner();
         addListenerToTypeSpinner();
-        addItemsToCategorieSpinner();
-        addListenerToCategorieSpinner();
     }
 
     /**
-     * Adds items to the Type spinner
+     * Adds items to the TypePieceSpinner
      */
     private void addItemsToTypeSpinner() {
-        ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter
-                .createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
+        ArrayAdapter<TypePieces> typeSpinnerAdapter =
+                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, mGestionTypePieces.getCollectionTypePieces());
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typePiece.setAdapter(typeSpinnerAdapter);
+        mTypePieceSpinner.setAdapter(typeSpinnerAdapter);
     }
 
     /**
-     * Adds a listener to the Type spinner
+     * Adds a listener to the TypePieceSpinner
      */
     private void addListenerToTypeSpinner() {
-        typePiece = (Spinner) findViewById(R.id.typePiece_edit);
-
-        // Sets the type on item selection
-        typePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Sets the TypePieces on item selection
+        mTypePieceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                String itemSelectedInSpinner = adapterView.getItemAtPosition(pos).toString();
-                type = itemSelectedInSpinner;
+                mTypePiece = (TypePieces) adapterView.getItemAtPosition(pos);
+                addItemsToCategorieSpinner();
+                addListenerToCategorieSpinner();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                type = "";
+                mTypePiece = null;
             }
         });
     }
 
     /**
-     * Adds items to the Categorie spinner
+     * Adds items to the CategorieSpinner
      */
     private void addItemsToCategorieSpinner() {
-        ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter
-                .createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
+        ArrayAdapter<Categories> categorieSpinnerAdapter =
+                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item,
+                        mGestionTypePieces.getCollectionTypePieces().get(mGestionTypePieces.getCollectionTypePieces().indexOf(mTypePiece)).getCollectionCategories());
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categoriePiece.setAdapter(categorieSpinnerAdapter);
+        mCategorieSpinner.setAdapter(categorieSpinnerAdapter);
     }
 
     /**
-     * Adds a listener to the Categorie spinner
+     * Adds a listener to the CategorieSpinner
      */
     private void addListenerToCategorieSpinner() {
-        categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
-
-        // Sets the categorie on item selection
-        categoriePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Sets the Categorie on item selection
+        mCategorieSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                String itemSelectedInSpinner = adapterView.getItemAtPosition(pos).toString();
-                categorie = itemSelectedInSpinner;
+                mCategorie = (Categories) adapterView.getItemAtPosition(pos);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                categorie = "";
+                mCategorie = null;
             }
         });
     }
@@ -144,13 +146,13 @@ public class PieceAddActivity extends AppCompatActivity {
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-                photoPieceFile = createImageFile();
+                mPhotoPieceFile = createImageFile();
             } catch (IOException ex) {
                 Log.v("Error taking picture", String.valueOf(ex));
             }
             // Continue only if the File was successfully created
-            if (photoPieceFile != null) {
-                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoPieceFile);
+            if (mPhotoPieceFile != null) {
+                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", mPhotoPieceFile);
                 photoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(photoIntent, REQUEST_TAKE_PHOTO);
             }
@@ -218,42 +220,42 @@ public class PieceAddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView photoPieceThumb = (ImageView) this.findViewById(R.id.cameraIcon);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            setResizedPhotoPiece(photoPieceFile.getAbsolutePath(), photoPieceThumb);
+            setResizedPhotoPiece(mPhotoPieceFile.getAbsolutePath(), photoPieceThumb);
         }
     }
 
     /**
-     * Button to add the new object PieceModel to the collection
+     * Button to add the new object Pieces to the collection
      * tests for entry validity
      * @param view the view
      */
     public void ajouterPieceListener(View view) {
-        PieceModel piece = new PieceModel();
+        Pieces piece = new Pieces();
         // Field validation
         boolean sameCode = false;
-        for (int i = 0; i < inventairePieces.getInventairePieces().size(); i++) {
-            if (Integer.compare(Integer.parseInt(String.valueOf(codePiece.getText())),
-                    inventairePieces.getInventairePieces().get(i).getCodePiece()) == 0)
+        for (int i = 0; i < mGestionPieces.getInventairePieces().size(); i++) {
+            if (Integer.compare(Integer.parseInt(String.valueOf(mCodePiece.getText())),
+                    mGestionPieces.getInventairePieces().get(i).getCodePiece()) == 0)
                 sameCode = true;
         }
         if(!sameCode) {
             try {
-                if (!piece.setCodePiece(Integer.parseInt(codePiece.getText().toString()))) {
-                    showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", codePiece);
-                } else if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                    showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
-                } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                    showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
-                } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-                    showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
-                } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-                    showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
+                if (!piece.setCodePiece(Integer.parseInt(mCodePiece.getText().toString()))) {
+                    showErrorHighlightField("Le code doit avoir entre 1 et 4 chiffres", mCodePiece);
+                } else if (!piece.setNomPiece(mNomPiece.getText().toString())) {
+                    showErrorHighlightField("La nom est trop long (max 20 char.)", mNomPiece);
+                } else if (!piece.setDescriptionPiece(mDescriptionPiece.getText().toString())) {
+                    showErrorHighlightField("La description est trop longue (max 64 char.)", mDescriptionPiece);
+                } else if (!piece.setDimensionPiece(Integer.parseInt(mDimensionPiece.getText().toString()))) {
+                    showErrorHighlightField("La dimension doit être entre 4 et 15 mm", mDimensionPiece);
+                } else if (!piece.setPrixCoutantPiece(Double.parseDouble(mPrixCoutantPiece.getText().toString()))) {
+                    showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", mPrixCoutantPiece);
                 } else if (piece.getCodePiece() > 0) {
-                    piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
-                    piece.setTypePiece(type);
-                    piece.setCategoriePiece(categorie);
-                    if (photoPieceFile != null) {
-                        piece.setPhotoPiece(photoPieceFile);
+                    piece.setQtyPiece(Integer.parseInt(mQtyPiece.getText().toString()));
+                    piece.setTypePiece(mTypePiece);
+                    piece.setCategoriePiece(mCategorie);
+                    if (mPhotoPieceFile != null) {
+                        piece.setPhotoPiece(mPhotoPieceFile);
                     }
 
                     Intent intent = new Intent();
@@ -271,7 +273,7 @@ public class PieceAddActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         }else
-            showErrorHighlightField("Ce code existe déjà", codePiece);
+            showErrorHighlightField("Ce code existe déjà", mCodePiece);
     }
 
 

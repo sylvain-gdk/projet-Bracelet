@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,20 +20,20 @@ import static android.app.Activity.RESULT_OK;
 
 public class ConfirmeSuppDialogFragment extends DialogFragment {
 
-    // Accesses the PieceModel class
-    private PieceModel piece;
+    // Accesses the Pieces class
+    private Pieces mPiece;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // Gets the object "piece" from a bundle
+        // Gets the object "mPiece" from a bundle
         Bundle args = getArguments();
-        piece = (PieceModel) args.get("piece");
+        mPiece = (Pieces) args.get("piece");
 
         // Creates an alert dialog
         AlertDialog.Builder dialogue = new AlertDialog.Builder(getActivity());
         dialogue.setTitle("Attention!");
-        dialogue.setMessage("Êtes-vous certain de vouloir supprimer #" + piece.getCodePiece() + " " + piece.getNomPiece() + "?");
+        dialogue.setMessage("Êtes-vous certain de vouloir supprimer #" + mPiece.getCodePiece() + " " + mPiece.getNomPiece() + "?");
 
         // Adds text for a positive answer button
         dialogue.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -43,7 +43,7 @@ public class ConfirmeSuppDialogFragment extends DialogFragment {
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_DELETE_PIECE);
                 intent.putExtra("resultCode", RESULT_OK);
-                intent.putExtra("piece", piece);
+                intent.putExtra("piece", mPiece);
 
                 EventBus.getDefault().post(new EventManager.EventIntentController(intent));
             }
@@ -57,7 +57,7 @@ public class ConfirmeSuppDialogFragment extends DialogFragment {
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_DELETE_PIECE);
                 intent.putExtra("resultCode", RESULT_CANCELED);
-                intent.putExtra("piece", piece);
+                intent.putExtra("piece", mPiece);
 
                 EventBus.getDefault().post(new EventManager.EventIntentController(intent));
             }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.creationsmp.PieceViewFragment">
+    tools:context="com.example.android.creationsmp.pieces.PieceViewDetailFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

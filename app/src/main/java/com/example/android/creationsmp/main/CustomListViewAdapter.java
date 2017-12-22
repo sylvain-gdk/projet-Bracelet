@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.main;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,17 +12,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.creationsmp.pieces.Pieces;
+import com.example.android.creationsmp.R;
+
 import java.util.ArrayList;
 
 /**
  * Created by sylvain on 2017-09-01.
  */
 
-public class CustomListViewAdapter extends ArrayAdapter<PieceModel> {
+public class CustomListViewAdapter extends ArrayAdapter<Pieces> {
 
     private Context context;
 
-    public CustomListViewAdapter(Context context, int resourceId, ArrayList<PieceModel> inventairePieces) {
+    public CustomListViewAdapter(Context context, int resourceId, ArrayList<Pieces> inventairePieces) {
         super(context, resourceId, inventairePieces);
         this.context = context;
     }
@@ -37,7 +40,7 @@ public class CustomListViewAdapter extends ArrayAdapter<PieceModel> {
 
     /**
      * Gets a view and applies a ViewHolder to format differently
-     * @param position the position of the PieceModel object in the collection
+     * @param position the position of the Pieces object in the collection
      * @param convertView the incoming view
      * @param parent the group
      * @return the reformated view
@@ -45,7 +48,7 @@ public class CustomListViewAdapter extends ArrayAdapter<PieceModel> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-        PieceModel piece = getItem(position);
+        Pieces piece = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);

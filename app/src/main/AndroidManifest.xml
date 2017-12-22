@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,39 +17,39 @@
         </activity>
 
         <activity
-            android:name=".PieceAddActivity"
+            android:name=".pieces.PieceAddDetailActivity"
             android:label="@string/ajouterPieceBoutonLabel"
-            android:parentActivityName="InventairePiecesActivity" >
+            android:parentActivityName=".pieces.PiecesInventaireActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="InventairePiecesActivity" />
+                android:value=".pieces.PiecesInventaireActivity" />
         </activity>
 
         <activity
-            android:name=".PieceEditActivity"
+            android:name=".pieces.PieceEditDetailActivity"
             android:label="@string/modifierPieceBoutonLabel"
-            android:parentActivityName="PieceViewActivity" >
+            android:parentActivityName=".pieces.PieceViewDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="PieceViewActivity" />
+                android:value=".pieces.PieceViewDetailActivity" />
         </activity>
 
         <activity
-            android:name=".PieceViewActivity"
+            android:name=".pieces.PieceViewDetailActivity"
             android:label="@string/piecesLabel"
-            android:parentActivityName="InventairePiecesActivity" >
+            android:parentActivityName=".pieces.PiecesInventaireActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="InventairePiecesActivity" />
+                android:value=".pieces.PiecesInventaireActivity" />
         </activity>
 
         <activity
-            android:name=".InventairePiecesActivity"
+            android:name=".pieces.PiecesInventaireActivity"
             android:label="@string/inventairePieceLabel"
-            android:parentActivityName="MainActivity" >
+            android:parentActivityName=".main.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+                android:value=".main.MainActivity" />
         </activity>
 
         <provider
@@ -63,21 +63,21 @@
         </provider>
 
         <activity
-            android:name=".SettingsInventairePiecesActivity"
+            android:name=".pieces.SettingsPiecesInventaireActivity"
             android:label="@string/title_activity_inventaire"
-            android:parentActivityName="InventairePiecesActivity" >
+            android:parentActivityName=".pieces.PiecesInventaireActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="InventairePiecesActivity" />
+                android:value=".pieces.PiecesInventaireActivity" />
         </activity>
 
         <activity
-            android:name=".SettingsPiecesActivity"
+            android:name=".pieces.SettingsPieceDetailActivity"
             android:label="@string/title_activity_piece"
-            android:parentActivityName="PieceViewActivity" >
+            android:parentActivityName=".pieces.PieceViewDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="PieceViewActivity" />
+                android:value=".pieces.PieceViewDetailActivity" />
         </activity>
 
     </application>

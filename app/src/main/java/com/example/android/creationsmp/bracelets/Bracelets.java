@@ -1,16 +1,19 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.bracelets;
 
 import android.media.Image;
 
+import com.example.android.creationsmp.pieces.Pieces;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by sylvain on 2017-04-10.
  */
 
-public class Bracelets {
+public class Bracelets implements Serializable {
 
-    ArrayList<PieceModel> bracelet;
+    ArrayList<Pieces> bracelet;
 
     private int codeBracelet;
     private String nomBracelet;
@@ -23,16 +26,16 @@ public class Bracelets {
 
     public Bracelets() {}
 
-    public ArrayList<PieceModel> getBracelet() {
+    public ArrayList<Pieces> getBracelet() {
         return bracelet;
     }
 
-    public void addBracelet(PieceModel piece) {
+    public void addBracelet(Pieces piece) {
         bracelet = new ArrayList();
         bracelet.add(piece);
     }
 
-    public void removeBracelet(PieceModel piece) {
+    public void removeBracelet(Pieces piece) {
         bracelet.remove(piece);
     }
 

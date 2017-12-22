@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -6,11 +6,13 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.example.android.creationsmp.R;
+
 /**
  * Created by sylvain on 2017-08-15.
  */
 
-public class SettingsInventairePiecesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+public class SettingsPieceDetailActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
 
     @Override

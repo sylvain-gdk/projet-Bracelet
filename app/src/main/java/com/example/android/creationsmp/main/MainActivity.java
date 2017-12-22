@@ -1,10 +1,14 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.example.android.creationsmp.R;
+import com.example.android.creationsmp.pieces.PieceAddDetailActivity;
+import com.example.android.creationsmp.pieces.PiecesInventaireActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void ajouterPieceListener(View view) {
 
-        startActivity(new Intent(this, PieceAddActivity.class));
+        startActivity(new Intent(this, PieceAddDetailActivity.class));
     }
 
     /**
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void voirPiecesListener(View view) {
 
-        startActivity(new Intent(this, InventairePiecesActivity.class));
+        startActivity(new Intent(this, PiecesInventaireActivity.class));
     }
 
     /**

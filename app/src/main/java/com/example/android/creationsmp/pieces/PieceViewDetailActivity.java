@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android.creationsmp.R;
+
 import org.greenrobot.eventbus.Subscribe;
 
 /**
@@ -18,7 +20,7 @@ import org.greenrobot.eventbus.Subscribe;
  * This class is the Activity for the details of each item
  */
 
-public class PieceViewActivity extends AppCompatActivity {
+public class PieceViewDetailActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments representing
@@ -29,8 +31,11 @@ public class PieceViewActivity extends AppCompatActivity {
      */
     PieceViewPagerAdapter pieceViewPagerAdapter;
 
-    // Accesses the InventairePieces class
-    private InventairePieces inventairePieces;
+    // Accesses the GestionPieces class
+    private GestionPieces mGestionPieces;
+
+    // Accesses the GestionTypePieces class
+    private GestionTypePieces mGestionTypePieces;
 
     /**
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
@@ -45,16 +50,17 @@ public class PieceViewActivity extends AppCompatActivity {
         // Registers to the EventBus
         //EventBus.getDefault().register(this);
 
-        // Receives the position of the object when peviously clicked in the collection's list InventairePiecesFragment
+        // Receives the position of the object when peviously clicked in the collection's list PiecesInventaireFragment
         Intent intent = getIntent();
-        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+        mGestionPieces = (GestionPieces) intent.getSerializableExtra("mGestionPieces");
+        mGestionTypePieces = (GestionTypePieces) intent.getSerializableExtra("mGestionTypePieces");
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                .add(R.id.activity_piece_view_container, new PieceViewFragment())
+                .add(R.id.activity_piece_view_container, new PieceViewDetailFragment())
                     .commit();
             // Create an adapter that when requested, will return a fragment of an object PieceModel in the collection
-            pieceViewPagerAdapter = new PieceViewPagerAdapter(getSupportFragmentManager(), inventairePieces);
+            pieceViewPagerAdapter = new PieceViewPagerAdapter(getSupportFragmentManager(), mGestionPieces, mGestionTypePieces);
 
             // Setup the ViewPager, attaching the adapter.
             mViewPager = (ViewPager) findViewById(R.id.activity_piece_view_container);
@@ -76,11 +82,12 @@ public class PieceViewActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        // Opens PieceEditActivity to modify the object
+        // Opens PieceEditDetailActivity to modify the object
         if (id == R.id.action_piece) {
-            Intent intent = new Intent(this, PieceEditActivity.class);
+            Intent intent = new Intent(this, PieceEditDetailActivity.class);
             intent.putExtra("position", mViewPager.getCurrentItem());
-            intent.putExtra("inventairePieces", inventairePieces);
+            intent.putExtra("mGestionPieces", mGestionPieces);
+            intent.putExtra("mGestionTypePieces", mGestionTypePieces);
             startActivity(intent);
             finish();
         }
@@ -96,7 +103,8 @@ public class PieceViewActivity extends AppCompatActivity {
     public void onEvent(EventManager.EventIntentDetail eventIntentDetail) {
         if (eventIntentDetail.getEventIntentDetail() != null) {
             Intent intent = eventIntentDetail.getEventIntentDetail();
-            inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+            mGestionPieces = (GestionPieces) intent.getSerializableExtra("mGestionPieces");
+            mGestionTypePieces = (GestionTypePieces) intent.getSerializableExtra("mGestionTypePieces");
             Log.v("––> onEvent", "updating details activity from controller");
         }
     }
@@ -107,12 +115,16 @@ public class PieceViewActivity extends AppCompatActivity {
      */
     public class PieceViewPagerAdapter extends FragmentStatePagerAdapter {
 
-        // Accesses the InventairePieces class
-        private InventairePieces inventairePieces;
+        // Accesses the GestionPieces class
+        private GestionPieces mGestionPieces;
 
-        public PieceViewPagerAdapter(FragmentManager fm, InventairePieces inventairePieces) {
+        // Accesses the GestionTypePieces class
+        private GestionTypePieces mGestionTypePieces;
+
+        public PieceViewPagerAdapter(FragmentManager fm, GestionPieces mGestionPieces, GestionTypePieces mGestionTypePieces) {
             super(fm);
-            this.inventairePieces = inventairePieces;
+            this.mGestionPieces = mGestionPieces;
+            this.mGestionTypePieces = mGestionTypePieces;
         }
 
         /**
@@ -124,10 +136,11 @@ public class PieceViewActivity extends AppCompatActivity {
          */
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment = new PieceViewFragment();
+            Fragment fragment = new PieceViewDetailFragment();
             Bundle args = new Bundle();
             args.putInt("position", position);
-            args.putSerializable("inventairePieces", inventairePieces);
+            args.putSerializable("mGestionPieces", mGestionPieces);
+            args.putSerializable("mGestionTypePieces", mGestionTypePieces);
             fragment.setArguments(args);
             return fragment;
         }
@@ -139,7 +152,7 @@ public class PieceViewActivity extends AppCompatActivity {
          */
         @Override
         public int getCount() {
-            return inventairePieces.getInventairePieces().size();
+            return mGestionPieces.getInventairePieces().size();
         }
     }
 }

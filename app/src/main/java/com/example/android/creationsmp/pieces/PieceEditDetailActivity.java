@@ -1,4 +1,4 @@
-package com.example.android.creationsmp;
+package com.example.android.creationsmp.pieces;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.android.creationsmp.R;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
@@ -32,34 +34,38 @@ import static com.example.android.creationsmp.R.id.codePiece_text;
 
 /**
  * Created by sylvain on 2017-04-10.
- * This class is where the objects PieceModel are created/modified
+ * This class is where the objects Pieces are created/modified
  */
 
-public class PieceEditActivity extends AppCompatActivity {
+public class PieceEditDetailActivity extends AppCompatActivity {
 
-    // The request code for the picture of the object PieceModel
+    // The request code for the picture of the object Pieces
     static final int REQUEST_TAKE_PHOTO = 5;
 
-    // Accesses the InventairePieces class
-    private InventairePieces inventairePieces;
+    // Accesses the GestionPieces class
+    private GestionPieces mGestionPieces;
 
-    // Accesses the PieceModel class
-    private PieceModel piece;
+    // Accesses the GestionTypePieces class
+    private GestionTypePieces mGestionTypePieces;
+
+    // Accesses the Pieces class
+    private Pieces mPiece;
 
     // The object's position in the collection
-    private int positionClicked;
+    private int mPositionClicked;
 
-    // The picture of an object PieceModel
-    private File photoPieceFile = null;
+    // The picture of an object Pieces
+    private File mPhotoPiece = null;
 
-    private EditText nomPiece, descriptionPiece, dimensionPiece, prixCoutantPiece, qtyPiece;
-    private TextView codePiece;
-    private Spinner typePiece, categoriePiece;
-    private String type, categorie;
+    private EditText mNomPiece, mDescriptionPiece, mDimensionPiece, mPrixCoutantPiece, mQtyPiece;
+    private TextView mCodePiece;
+    private Spinner mTypePieceSpinner, mCategorieSpinner;
+    private TypePieces mTypePiece;
+    private Categories mCategorie;
 
     // The position in the spinners
-    private int typePiecePos;
-    private int catPiecePos;
+    private int mTypePiecePos;
+    private int mCatPiecePos;
 
 
     @Override
@@ -67,108 +73,96 @@ public class PieceEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_edit);
 
-        // Sets the details of the object PieceModel
-        codePiece = (TextView) findViewById(codePiece_text);
-        nomPiece = (EditText) findViewById(R.id.nomPiece_edit);
-        descriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
-        dimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
-        prixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
-        qtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
-        typePiece = (Spinner) findViewById(R.id.typePiece_edit);
-        categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
+        // Sets the details of the object Pieces
+        mCodePiece = (TextView) findViewById(codePiece_text);
+        mNomPiece = (EditText) findViewById(R.id.nomPiece_edit);
+        mDescriptionPiece = (EditText) findViewById(R.id.descriptionPiece_edit);
+        mDimensionPiece = (EditText) findViewById(R.id.dimensionPiece_edit);
+        mPrixCoutantPiece = (EditText) findViewById(R.id.prixCoutantPiece_edit);
+        mQtyPiece = (EditText) findViewById(R.id.qtyPiece_edit);
+        mTypePieceSpinner = (Spinner) findViewById(R.id.typePiece_edit);
+        mCategorieSpinner = (Spinner) findViewById(R.id.categoriePiece_edit);
 
         // Gets the collection and object's position from an intent
         Intent intent = getIntent();
-        positionClicked = intent.getIntExtra("position", -1);
-        inventairePieces = (InventairePieces) intent.getSerializableExtra("inventairePieces");
+        mPositionClicked = intent.getIntExtra("position", -1);
+        mGestionPieces = (GestionPieces) intent.getSerializableExtra("mGestionPieces");
+        mGestionTypePieces = (GestionTypePieces) intent.getSerializableExtra("mGestionTypePieces");
 
-        // Sets text on EditText fields from an intent (PieceViewFragment)
-        piece = inventairePieces.getInventairePieces().get(positionClicked);
+        // Sets text on EditText fields from an intent (PieceViewDetailFragment)
+        mPiece = mGestionPieces.getInventairePieces().get(mPositionClicked);
 
-        codePiece.setText(String.valueOf("#" + piece.getCodePiece()));
-        nomPiece.setText(piece.getNomPiece(), TextView.BufferType.EDITABLE);
-        descriptionPiece.setText(piece.getDescriptionPiece(), TextView.BufferType.EDITABLE);
-        dimensionPiece.setText(String.valueOf(piece.getDimensionPiece()), TextView.BufferType.EDITABLE);
-        prixCoutantPiece.setText(String.valueOf(String.valueOf(piece.getPrixCoutantPiece())), TextView.BufferType.EDITABLE);
-        qtyPiece.setText(String.valueOf(piece.getQtyPiece()), TextView.BufferType.EDITABLE);
-        photoPieceFile = piece.getPhotoPiece();
+        mCodePiece.setText(String.valueOf("#" + mPiece.getCodePiece()));
+        mNomPiece.setText(mPiece.getNomPiece(), TextView.BufferType.EDITABLE);
+        mDescriptionPiece.setText(mPiece.getDescriptionPiece(), TextView.BufferType.EDITABLE);
+        mDimensionPiece.setText(String.valueOf(mPiece.getDimensionPiece()), TextView.BufferType.EDITABLE);
+        mPrixCoutantPiece.setText(String.valueOf(String.valueOf(mPiece.getPrixCoutantPiece())), TextView.BufferType.EDITABLE);
+        mQtyPiece.setText(String.valueOf(mPiece.getQtyPiece()), TextView.BufferType.EDITABLE);
+        mPhotoPiece = mPiece.getPhotoPiece();
 
-        if(photoPieceFile != null){
+        if(mPhotoPiece != null){
             onActivityResult(REQUEST_TAKE_PHOTO, RESULT_OK, intent);
         }
 
         addItemsToTypeSpinner();
         addListenerToTypeSpinner();
-        addItemsToCategorieSpinner();
-        addListenerToCategorieSpinner();
     }
 
     /**
-     * Adds items to the Type spinner
+     * Adds items to the TypePieceSpinner
      */
     private void addItemsToTypeSpinner() {
-        ArrayAdapter<CharSequence> typeSpinnerAdapter = ArrayAdapter
-                .createFromResource(this, R.array.type_piece, android.R.layout.simple_spinner_item);
+        ArrayAdapter<TypePieces> typeSpinnerAdapter =
+                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, mGestionTypePieces.getCollectionTypePieces());
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typePiece.setAdapter(typeSpinnerAdapter);
-        if(!typePiece.equals(null)){
-            typePiecePos = typeSpinnerAdapter.getPosition(piece.getTypePiece());
-            typePiece.setSelection(typePiecePos);
-        }
+        mTypePieceSpinner.setAdapter(typeSpinnerAdapter);
     }
 
     /**
-     * Adds a listener to the Type spinner
+     * Adds a listener to the TypePieceSpinner
      */
     private void addListenerToTypeSpinner() {
-        typePiece = (Spinner) findViewById(R.id.typePiece_edit);
-
-        // Sets the type on item selection
-        typePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Sets the TypePieces on item selection
+        mTypePieceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                String itemSelectedInSpinner = adapterView.getItemAtPosition(pos).toString();
-                type = itemSelectedInSpinner;
+                mTypePiece = (TypePieces) adapterView.getItemAtPosition(pos);
+                addItemsToCategorieSpinner();
+                addListenerToCategorieSpinner();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                type = piece.getTypePiece();
+                mTypePiece = null;
             }
         });
     }
 
     /**
-     * Adds items to the Categorie spinner
+     * Adds items to the CategorieSpinner
      */
     private void addItemsToCategorieSpinner() {
-        ArrayAdapter<CharSequence> categorieSpinnerAdapter = ArrayAdapter
-                .createFromResource(this, R.array.categorie_piece, android.R.layout.simple_spinner_item);
+        ArrayAdapter<Categories> categorieSpinnerAdapter =
+                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item,
+                        mGestionTypePieces.getCollectionTypePieces().get(mGestionTypePieces.getCollectionTypePieces().indexOf(mTypePiece)).getCollectionCategories());
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categoriePiece.setAdapter(categorieSpinnerAdapter);
-        if(!categoriePiece.equals(null)) {
-            catPiecePos = categorieSpinnerAdapter.getPosition(piece.getCategoriePiece());
-            categoriePiece.setSelection(catPiecePos);
-        }
+        mCategorieSpinner.setAdapter(categorieSpinnerAdapter);
     }
 
     /**
-     * Adds a listener to the Categorie spinner
+     * Adds a listener to the CategorieSpinner
      */
     private void addListenerToCategorieSpinner() {
-        categoriePiece = (Spinner) findViewById(R.id.categoriePiece_edit);
-
-        // Sets the categorie on item selection
-        categoriePiece.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Sets the Categorie on item selection
+        mCategorieSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                String itemSelectedInSpinner = adapterView.getItemAtPosition(pos).toString();
-                categorie = itemSelectedInSpinner;
+                mCategorie = (Categories) adapterView.getItemAtPosition(pos);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                categorie = piece.getCategoriePiece();
+                mCategorie = null;
             }
         });
     }
@@ -182,13 +176,13 @@ public class PieceEditActivity extends AppCompatActivity {
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-                photoPieceFile = createImageFile();
+                mPhotoPiece = createImageFile();
             } catch (IOException ex) {
                 Log.v("Error taking picture", String.valueOf(ex));
             }
             // Continue only if the File was successfully created
-            if (photoPieceFile != null) {
-                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoPieceFile);
+            if (mPhotoPiece != null) {
+                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", mPhotoPiece);
                 photoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(photoIntent, REQUEST_TAKE_PHOTO);
             }
@@ -262,41 +256,41 @@ public class PieceEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView photoPieceThumb = (ImageView) this.findViewById(R.id.cameraIcon);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            setResizedPhotoPiece(photoPieceFile.getAbsolutePath(), photoPieceThumb);
+            setResizedPhotoPiece(mPhotoPiece.getAbsolutePath(), photoPieceThumb);
         }
     }
 
     /**
-     * Button to add the new object PieceModel to the collection
+     * Button to add the new object Pieces to the collection
      * tests if each entries are valid
      * @param view the view
      */
     public void modifierPieceListener(View view) {
-        PieceModel piece = new PieceModel();
+        Pieces piece = new Pieces();
         // Field validation
         try {
-            if (!piece.setNomPiece(nomPiece.getText().toString())) {
-                showErrorHighlightField("La nom est trop long (max 20 char.)", nomPiece);
-            } else if (!piece.setDescriptionPiece(descriptionPiece.getText().toString())) {
-                showErrorHighlightField("La description est trop longue (max 64 char.)", descriptionPiece);
-            } else if (!piece.setDimensionPiece(Integer.parseInt(dimensionPiece.getText().toString()))) {
-                showErrorHighlightField("La dimension doit être entre 4 et 15 mm", dimensionPiece);
-            } else if (!piece.setPrixCoutantPiece(Double.parseDouble(prixCoutantPiece.getText().toString()))) {
-                showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", prixCoutantPiece);
+            if (!piece.setNomPiece(mNomPiece.getText().toString())) {
+                showErrorHighlightField("La nom est trop long (max 20 char.)", mNomPiece);
+            } else if (!piece.setDescriptionPiece(mDescriptionPiece.getText().toString())) {
+                showErrorHighlightField("La description est trop longue (max 64 char.)", mDescriptionPiece);
+            } else if (!piece.setDimensionPiece(Integer.parseInt(mDimensionPiece.getText().toString()))) {
+                showErrorHighlightField("La dimension doit être entre 4 et 15 mm", mDimensionPiece);
+            } else if (!piece.setPrixCoutantPiece(Double.parseDouble(mPrixCoutantPiece.getText().toString()))) {
+                showErrorHighlightField("Le prix ne peut être 0 et doit être au format 0.00", mPrixCoutantPiece);
             } else{
-                piece.setCodePiece(this.piece.getCodePiece());
-                piece.setQtyPiece(Integer.parseInt(qtyPiece.getText().toString()));
-                piece.setTypePiece(type);
-                piece.setCategoriePiece(categorie);
-                if (photoPieceFile != null)
-                    piece.setPhotoPiece(photoPieceFile);
+                piece.setCodePiece(this.mPiece.getCodePiece());
+                piece.setQtyPiece(Integer.parseInt(mQtyPiece.getText().toString()));
+                piece.setTypePiece(mTypePiece);
+                piece.setCategoriePiece(mCategorie);
+                if (mPhotoPiece != null)
+                    piece.setPhotoPiece(mPhotoPiece);
 
                 Intent intent = new Intent();
                 intent.putExtra("requestCode", EventManager.REQUEST_MODIFY_PIECE);
                 intent.putExtra("resultCode", RESULT_OK);
                 intent.putExtra("piece", piece);
-                intent.putExtra("position", positionClicked);
-                intent.putExtra("inventairePieces", inventairePieces);
+                intent.putExtra("position", mPositionClicked);
+                intent.putExtra("mGestionPieces", mGestionPieces);
 
                 EventBus.getDefault().post(new EventManager.EventIntentController(intent));
 
