@@ -20,14 +20,14 @@
 
         <TextView
             android:id="@+id/codePiece_text"
-            android:layout_width="86dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/field_piece_view_text_padding"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:background="@color/colorAccent"
             android:layout_marginBottom="5dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -173,14 +173,13 @@
 
         <Spinner
             android:id="@+id/typePiece_edit"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
-            android:layout_height="29dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/colorField"
             android:hint="@string/typePieceHint"
-            android:popupBackground="?attr/colorButtonNormal"
             android:spinnerMode="dropdown"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -200,14 +199,13 @@
 
         <Spinner
             android:id="@+id/categoriePiece_edit"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
-            android:layout_height="29dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/colorField"
             android:hint="@string/categoriePieceHint"
-            android:popupBackground="?attr/colorButtonNormal"
             android:spinnerMode="dropdown"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -220,11 +218,11 @@
         <ImageView
             android:id="@+id/cameraIcon"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:background="@color/colorField"
             android:onClick="prendrePhotoListener"
             android:scaleType="centerInside"
-            android:layout_margin="5dp"
             app:srcCompat="@drawable/ic_add_a_photo_black_48dp" />
 
 
@@ -234,25 +232,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
-
-        <Button
-            android:id="@+id/modifierPieceBouton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="modifierPieceListener"
-            android:text="@string/modifierBoutonLabel" />
 
         <Button
             android:id="@+id/annulerAjouterPieceBouton"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="annulerAjouterPieceListener"
             android:text="@string/annulerBoutonLabel" />
+
+        <Button
+            android:id="@+id/modifierPieceBouton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="modifierPieceListener"
+            android:text="@string/modifierBoutonLabel" />
 
 
     </LinearLayout>

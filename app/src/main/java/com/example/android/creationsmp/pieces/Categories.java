@@ -79,4 +79,9 @@ public class Categories implements Serializable {
         mCollectionPiecesComp.remove(mPiece);
     }
 
+    @Override
+    public String toString(){
+        return mNomCategorie;
+    }
+
 }

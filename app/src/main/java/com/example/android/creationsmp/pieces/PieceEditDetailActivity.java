@@ -91,6 +91,8 @@ public class PieceEditDetailActivity extends AppCompatActivity {
 
         // Sets text on EditText fields from an intent (PieceViewDetailFragment)
         mPiece = mGestionPieces.getInventairePieces().get(mPositionClicked);
+        mTypePiece = mPiece.getTypePiece();
+        mCategorie = mPiece.getCategoriePiece();
 
         mCodePiece.setText(String.valueOf("#" + mPiece.getCodePiece()));
         mNomPiece.setText(mPiece.getNomPiece(), TextView.BufferType.EDITABLE);
@@ -99,6 +101,7 @@ public class PieceEditDetailActivity extends AppCompatActivity {
         mPrixCoutantPiece.setText(String.valueOf(String.valueOf(mPiece.getPrixCoutantPiece())), TextView.BufferType.EDITABLE);
         mQtyPiece.setText(String.valueOf(mPiece.getQtyPiece()), TextView.BufferType.EDITABLE);
         mPhotoPiece = mPiece.getPhotoPiece();
+
 
         if(mPhotoPiece != null){
             onActivityResult(REQUEST_TAKE_PHOTO, RESULT_OK, intent);
@@ -113,9 +116,10 @@ public class PieceEditDetailActivity extends AppCompatActivity {
      */
     private void addItemsToTypeSpinner() {
         ArrayAdapter<TypePieces> typeSpinnerAdapter =
-                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, mGestionTypePieces.getCollectionTypePieces());
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mGestionTypePieces.getCollectionTypePieces());
         typeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTypePieceSpinner.setAdapter(typeSpinnerAdapter);
+        mTypePieceSpinner.setSelection(mGestionTypePieces.getCollectionTypePieces().indexOf(mPiece.getTypePiece()));
     }
 
     /**
@@ -143,10 +147,11 @@ public class PieceEditDetailActivity extends AppCompatActivity {
      */
     private void addItemsToCategorieSpinner() {
         ArrayAdapter<Categories> categorieSpinnerAdapter =
-                new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item,
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                         mGestionTypePieces.getCollectionTypePieces().get(mGestionTypePieces.getCollectionTypePieces().indexOf(mTypePiece)).getCollectionCategories());
         categorieSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCategorieSpinner.setAdapter(categorieSpinnerAdapter);
+        mCategorieSpinner.setSelection(mGestionTypePieces.getCollectionCategories().indexOf(mPiece.getTypePiece().getCollectionCategories().indexOf(mPiece.getCategoriePiece())));
     }
 
     /**

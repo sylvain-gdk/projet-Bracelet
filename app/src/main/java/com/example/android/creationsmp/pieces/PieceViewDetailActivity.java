@@ -89,7 +89,6 @@ public class PieceViewDetailActivity extends AppCompatActivity {
             intent.putExtra("mGestionPieces", mGestionPieces);
             intent.putExtra("mGestionTypePieces", mGestionTypePieces);
             startActivity(intent);
-            finish();
         }
 
         return super.onOptionsItemSelected(item);
