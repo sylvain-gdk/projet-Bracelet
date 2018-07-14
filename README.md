@@ -11,16 +11,16 @@ This is an undergoing project for Android phones that is meant for a jewelry cre
 ## Screenshots
 
 #### Main screen
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/main.png)
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/main.png =400x)
 
 #### Listing the inventory
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/list.png)
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/list.png =400x)
 
 #### Viewing the details
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/detail.png)
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/detail.png =400x)
 
 #### Modify the information
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/modify.png)
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/modify.png =400x)
 
 #### Delete an item
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/delete.png)
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/delete.png =400x)
