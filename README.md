@@ -11,16 +11,16 @@ This is an undergoing project for Android phones that is meant for a jewelry cre
 ## Screenshots
 
 #### Main screen
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/main.png){:height="50%" width="50%"}
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/main.png)
 
 #### Listing the inventory
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/list.png){:height="50%" width="50%"}
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/list.png)
 
 #### Viewing the details
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/detail.png){:height="50%" width="50%"}
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/detail.png)
 
 #### Modify the information
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/modify.png){:height="50%" width="50%"}
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/modify.png)
 
 #### Delete an item
-!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/delete.png){:height="50%" width="50%"}
+!["starting.png"](https://github.com/sylvain-gdk/projet-Bracelet/blob/master/docs/delete.png)
